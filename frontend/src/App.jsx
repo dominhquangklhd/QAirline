@@ -1,15 +1,14 @@
-import './App.css'
-import Footer from './HomePage/Footer';
-import Home from './HomePage/Home';
-import Info from './HomePage/Info';
-import Lounge from './HomePage/Lounge';
-import Navbar from './HomePage/Navbar';
-import Search from './HomePage/Search';
-import Subscribers from "./HomePage/Subscribers";
-import Support from "./HomePage/Support";
-import Travelers from "./HomePage/Travelers";
+import "./App.css";
+import Footer from "./Component/Footer";
+import Home from "./Pages/HomePage/Home";
+import Info from "./Pages/HomePage/Info";
+import Lounge from "./Pages/HomePage/Lounge";
+import Navbar from "./Component/Header";
+import Search from "./Pages/HomePage/Search";
+import Subscribers from "./Pages/HomePage/Subscribers";
+import Support from "./Pages/HomePage/Support";
+import Travelers from "./Pages/HomePage/Travelers";
 function App() {
-
   return (
     <div>
       <Navbar></Navbar>
@@ -22,7 +21,7 @@ function App() {
       <Subscribers></Subscribers>
       <Footer></Footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
