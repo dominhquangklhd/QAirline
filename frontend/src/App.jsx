@@ -1,20 +1,19 @@
+import { useState } from "react";
 import "./App.css";
-import Footer from "./Component/Footer";
-import Home from "./Pages/HomePage/Home";
-import Info from "./Pages/HomePage/Info";
-import Lounge from "./Pages/HomePage/Lounge";
-import Navbar from "./Component/Header";
-import Search from "./Pages/HomePage/Search";
-import Subscribers from "./Pages/HomePage/Subscribers";
-import Support from "./Pages/HomePage/Support";
-import Travelers from "./Pages/HomePage/Travelers";
+import Footer from "./CommonComponents/Footer";
+import Header from "./CommonComponents/Header";
+import FlightResults from "./Pages/FlightResults/FlightResults";
+import HomePage from "./Pages/HomePage/HomePage";
+
 function App() {
+  const [onHomePage, setOnHomePage] = useState(true);
+
   return (
+    // Header dung chung cho tat ca trang khac tru HomePage
     <div>
-      <Header/>
-      {/* <Navbar/> 
-      <HomePage/> */}
-      <FlightResults/>
+      {!onHomePage ? <Header/> : null} 
+      <HomePage/>
+      {/* <FlightResults/> */}
       <Footer/>
     </div>
   );
