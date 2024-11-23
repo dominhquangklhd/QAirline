@@ -1,12 +1,14 @@
-import './App.css'
-import HomePage from './HomePage/HomePage'
-import Navbar from './HomePage/Navbar';
-import Header from './CommonComponents/Header';
-import Footer from './HomePage/Footer';
-import FlightResults from './FlightResults/FlightResults'
-
+import "./App.css";
+import Footer from "./Component/Footer";
+import Home from "./Pages/HomePage/Home";
+import Info from "./Pages/HomePage/Info";
+import Lounge from "./Pages/HomePage/Lounge";
+import Navbar from "./Component/Header";
+import Search from "./Pages/HomePage/Search";
+import Subscribers from "./Pages/HomePage/Subscribers";
+import Support from "./Pages/HomePage/Support";
+import Travelers from "./Pages/HomePage/Travelers";
 function App() {
-
   return (
     <div>
       <Header/>
@@ -15,7 +17,7 @@ function App() {
       <FlightResults/>
       <Footer/>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
