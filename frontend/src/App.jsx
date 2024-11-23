@@ -1,26 +1,19 @@
 import './App.css'
-import Footer from './HomePage/Footer';
-import Home from './HomePage/Home';
-import Info from './HomePage/Info';
-import Lounge from './HomePage/Lounge';
+import HomePage from './HomePage/HomePage'
 import Navbar from './HomePage/Navbar';
-import Search from './HomePage/Search';
-import Subscribers from "./HomePage/Subscribers";
-import Support from "./HomePage/Support";
-import Travelers from "./HomePage/Travelers";
+import Header from './CommonComponents/Header';
+import Footer from './HomePage/Footer';
+import FlightResults from './FlightResults/FlightResults'
+
 function App() {
 
   return (
     <div>
-      <Navbar></Navbar>
-      <Home></Home>
-      <Search></Search>
-      <Support></Support>
-      <Info></Info>
-      <Lounge></Lounge>
-      <Travelers></Travelers>
-      <Subscribers></Subscribers>
-      <Footer></Footer>
+      <Header/>
+      {/* <Navbar/> 
+      <HomePage/> */}
+      <FlightResults/>
+      <Footer/>
     </div>
   )
 }

@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="sectionContainer container grid">
           <div className="gridOne">
             <div className="logoDiv">
-              <img src="assets/logo.png" alt="" className='logo' />
+              <img src="./assets/logo.png" alt="" className='logo' />
             </div>
             <p>Your mind should be stronger than your feelings, fly!</p>
             <div className="socialIcon flex">
