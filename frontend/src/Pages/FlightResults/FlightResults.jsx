@@ -28,6 +28,7 @@ const flightsData = [
 const FlightResults = () => {
   return (
     <div className="flight-results">
+     
       <FlightInfoBar/>
       <h1>Available Flights</h1>
       {flightsData.map((flight, index) => (

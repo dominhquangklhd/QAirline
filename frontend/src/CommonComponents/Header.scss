@@ -1,50 +1,57 @@
+.container {
+  //   max-width: 1200px;
+  //   margin: 0 auto;
+  //   width: 1000px;
+}
 .app-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: var(--SecondaryColor);
-    padding: 10px 20px;
-    color: var(--blackColor);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--SecondaryColor);
+  padding: 10px 20px;
+  color: var(--blackColor);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  //   width: 100%;
 }
 
 .logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    &:hover {
-        cursor: pointer;
-    }
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .logo img {
-    height: 40px;
+  height: 40px;
 }
 
 .auth-buttons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .auth-buttons .btn-login,
 .auth-buttons .btn-logout {
-    background-color: white;
-    color: #007bff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
 }
 
 .auth-buttons .btn-login:hover,
 .auth-buttons .btn-logout:hover {
-    background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
 
 @media screen and (max-width: 450px) {
-    .btn-login, .btn-logout {
-        display: none;
-    }
+  .btn-login,
+  .btn-logout {
+    display: none;
+  }
 }

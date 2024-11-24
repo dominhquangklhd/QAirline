@@ -125,6 +125,7 @@ h2 {
   flex-direction: column;
   width: 100%;
   z-index: 3000;
+  // transform: translateX(-120px);
 
   .navBarOne,
   .navBarTwo {
@@ -227,7 +228,7 @@ h2 {
 
   .navbarWithBg {
     background: var(--SecondaryColor);
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     box-shadow: var(--boxShadow);
   }
 }
@@ -1029,6 +1030,7 @@ h2 {
   }
 
   .navBar {
+    transform: translateX(-120px);
     .navBarOne,
     .navBarTwo {
       padding: 1.5rem 5rem;

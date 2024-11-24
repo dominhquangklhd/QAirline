@@ -1,8 +1,9 @@
 import { useRoutes } from "react-router-dom";
 
 import Information from "./Pages/BookingPage/Information";
-import SelectFlight from "./Pages/BookingPage/SelectFlight";
+import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/Homepage";
+// import FlightResults from "./Pages/FlightResults/FlightResults";
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -10,8 +11,8 @@ export default function useRouteElement() {
       element: <Homepage />,
     },
     {
-      path: "/selectFlight",
-      element: <SelectFlight />,
+      path: "/FlightResults",
+      element: <FlightResults />,
     },
     {
       path: "/Information",
