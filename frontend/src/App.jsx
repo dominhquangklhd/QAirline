@@ -1,20 +1,17 @@
-import { useState } from "react";
 import "./App.css";
-import Footer from "./CommonComponents/Footer";
+import useRouteElement from "./useRouteElement";
 import Header from "./CommonComponents/Header";
-import FlightResults from "./Pages/FlightResults/FlightResults";
-import HomePage from "./Pages/HomePage/HomePage";
-
+import Footer from "./CommonComponents/Footer";
+// import Home from "./Pages/HomePage/Home";
+import HomePage from "./Pages/HomePage/Homepage";
 function App() {
-  const [onHomePage, setOnHomePage] = useState(true);
-
+  const routeElement = useRouteElement();
   return (
-    // Header dung chung cho tat ca trang khac tru HomePage
     <div>
-      {!onHomePage ? <Header/> : null} 
-      <HomePage/>
-      {/* <FlightResults/> */}
-      <Footer/>
+      {routeElement.props.children.type === HomePage ? null : <Header />}
+      {/* {console.log(routeElement)} */}
+      {routeElement}
+      <Footer />
     </div>
   );
 }
