@@ -121,7 +121,7 @@ h2 {
 }
 
 .navBar {
-  position: absolute;
+  position: fixed;
   flex-direction: column;
   width: 100%;
   z-index: 3000;
@@ -226,10 +226,9 @@ h2 {
   }
 
   .navbarWithBg {
-    // background: var(--SecondaryColor);
-    // padding: .5rem 1rem;
-    // box-shadow: var(--boxShadow);
-    display: none;
+    background: var(--SecondaryColor);
+    padding: .5rem 1rem;
+    box-shadow: var(--boxShadow);
   }
 }
 
@@ -1033,7 +1032,6 @@ h2 {
     .navBarOne,
     .navBarTwo {
       padding: 1.5rem 5rem;
-      transform: translateX(-122px);
     }
 
     .navbarWithBg {
