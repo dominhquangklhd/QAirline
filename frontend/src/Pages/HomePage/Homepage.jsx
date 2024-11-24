@@ -1,25 +1,25 @@
-import Navbar from "../../Component/Header";
-import Home from "./Home";
-import Search from "./Search";
-import Support from "./Support";
-import Info from "./Info";
-import Lounge from "./Lounge";
-import Travelers from "./Travelers";
+import Home from './Home';
+import Info from './Info';
+import Lounge from './Lounge';
+import Search from './Search';
 import Subscribers from "./Subscribers";
-import Footer from "../../Component/Footer";
+import Support from "./Support";
+import Travelers from "./Travelers";
+import Navbar from "./Navbar"
 
-export default function Homepage() {
+function HomePage() {
   return (
     <div>
-      <Navbar></Navbar>
-      <Home></Home>
-      <Search></Search>
-      <Support></Support>
-      <Info></Info>
-      <Lounge></Lounge>
-      <Travelers></Travelers>
-      <Subscribers></Subscribers>
-      <Footer></Footer>
+        <Navbar/>    
+        <Home></Home>
+        <Search></Search>
+        <Support></Support>
+        <Info></Info>
+        <Lounge></Lounge>
+        <Travelers></Travelers>
+        <Subscribers></Subscribers>
     </div>
-  );
+  )
 }
+
+export default HomePage
