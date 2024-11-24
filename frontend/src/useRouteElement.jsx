@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 
-import Information from "./Pages/BookingPage/Information";
+import Booking from "./Pages/BookingPage/Booking";
 import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/Homepage";
 // import FlightResults from "./Pages/FlightResults/FlightResults";
@@ -15,8 +15,8 @@ export default function useRouteElement() {
       element: <FlightResults />,
     },
     {
-      path: "/Information",
-      element: <Information />,
+      path: "/Booking",
+      element: <Booking />,
     },
   ]);
   return routeElement;
