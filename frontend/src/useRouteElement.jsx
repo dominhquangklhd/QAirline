@@ -1,6 +1,6 @@
 import { useRoutes } from "react-router-dom";
 
-import Information from "./Pages/BookingPage/Information";
+import Information from "./Pages/Information/Information";
 import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/Homepage";
 // import FlightResults from "./Pages/FlightResults/FlightResults";
