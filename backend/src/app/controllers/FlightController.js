@@ -1,6 +1,6 @@
 const Flight = require("../models/flight");
 const Airport = require("../models/airport");
-const mongoose = require("mongoose");
+
 class FlightController {
   async getAllFlights(req, res) {
     try {

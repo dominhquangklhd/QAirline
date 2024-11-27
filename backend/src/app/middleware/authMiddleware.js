@@ -1,6 +1,11 @@
 // middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 const rateLimit = require("express-rate-limit");
+const Booking = require("../models/Booking");
+const Flight = require("../models/flight");
+
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 // Xác thực token
 const verifyToken = (req, res, next) => {
@@ -38,19 +43,24 @@ const isCustomer = (req, res, next) => {
 // Kiểm tra booking hợp lệ
 const validateBooking = async (req, res, next) => {
   try {
-    const booking = await Booking.findById(req.params.bookingId);
-    if (!booking) {
-      return res.status(404).json({ message: "Không tìm thấy booking" });
-    }
-    if (booking.user.toString() !== req.user.id && req.user.role !== "admin") {
+    const { bookingId } = req.params;
+    if (!ObjectId.isValid(bookingId)) {
       return res
-        .status(403)
-        .json({ message: "Không có quyền truy cập booking này" });
+        .status(400)
+        .json({ message: "ID booking không hợp lệ " + bookingId });
     }
+
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy booking" + req.params });
+    }
+
     req.booking = booking;
     next();
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err.message + " lỗi ở validateBooking" });
   }
 };
 
@@ -58,10 +68,10 @@ const validateBooking = async (req, res, next) => {
 const checkCancellationDeadline = async (req, res, next) => {
   try {
     const booking = req.booking;
-    const flight = await Flight.findById(booking.flight);
+    const flight = await Flight.findById(booking.flight_id);
 
     // Kiểm tra thời hạn hủy (24h trước giờ khởi hành)
-    const cancellationDeadline = new Date(flight.scheduledDeparture);
+    const cancellationDeadline = new Date(flight.scheduled_departure);
     cancellationDeadline.setHours(cancellationDeadline.getHours() - 24);
 
     if (new Date() > cancellationDeadline) {
@@ -71,7 +81,9 @@ const checkCancellationDeadline = async (req, res, next) => {
     }
     next();
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res
+      .status(500)
+      .json({ message: err.message + " Lỗi ở checkCancelation Deadline" });
   }
 };
 

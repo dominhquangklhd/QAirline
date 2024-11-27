@@ -4,10 +4,23 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema(
   {
-    user_id: {
-      type: Schema.Types.ObjectId,
-      ref: "Users",
-      required: true,
+    customer_info: {
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      phone: {
+        type: String,
+        required: true,
+      },
+      identity_number: {
+        type: String,
+        required: true,
+      },
     },
     flight_id: {
       type: Schema.Types.ObjectId,
@@ -17,6 +30,7 @@ const bookingSchema = new Schema(
     booking_date: {
       type: Date,
       required: true,
+      default: Date.now,
     },
     status: {
       type: String,
@@ -36,7 +50,5 @@ const bookingSchema = new Schema(
     timestamps: true,
   }
 );
-// Index for user's bookings
-bookingSchema.index({ user: 1, flight: 1 });
 
 module.exports = mongoose.model("Booking", bookingSchema, "Bookings");
