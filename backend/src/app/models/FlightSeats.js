@@ -3,16 +3,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const flightSeatSchema = new Schema({
-  flight: {
+  flight_id: {
     type: Schema.Types.ObjectId,
-    ref: "Flight",
+    ref: "Flights",
     required: true,
   },
-  seatNumber: {
+  seat_number: {
     type: String,
     required: true,
   },
-  seatClass: {
+  seat_class: {
     type: String,
     enum: ["economy", "business", "first"],
     required: true,
@@ -20,11 +20,10 @@ const flightSeatSchema = new Schema({
   price: {
     type: Number,
     required: true,
-    min: 0,
   },
   status: {
     type: String,
-    enum: ["available", "reserved", "occupied"],
+    enum: ["available", "booked"],
     default: "available",
   },
 });

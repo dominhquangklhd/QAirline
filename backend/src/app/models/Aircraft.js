@@ -3,10 +3,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const aircraftSchema = new Schema({
-  aircraftCode: {
+  aircraft_code: {
     type: String,
     required: true,
-    unique: true,
   },
   manufacturer: {
     type: String,
@@ -16,12 +15,12 @@ const aircraftSchema = new Schema({
     type: String,
     required: true,
   },
-  totalSeats: {
+  total_seats: {
     type: Number,
     required: true,
     min: 1,
   },
-  manufactureDate: {
+  manufacture_date: {
     type: Date,
     required: true,
   },

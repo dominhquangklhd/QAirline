@@ -4,31 +4,44 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema(
   {
-    user: {
+    customer_info: {
+      name: {
+        type: String,
+        required: true,
+      },
+      email: {
+        type: String,
+        required: true,
+      },
+      phone: {
+        type: String,
+        required: true,
+      },
+      identity_number: {
+        type: String,
+        required: true,
+      },
+    },
+    flight_id: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: "Flights",
       required: true,
     },
-    flight: {
-      type: Schema.Types.ObjectId,
-      ref: "Flight",
-      required: true,
-    },
-    bookingDate: {
+    booking_date: {
       type: Date,
+      required: true,
       default: Date.now,
     },
     status: {
       type: String,
-      enum: ["pending", "confirmed", "cancelled"],
-      default: "pending",
+      enum: ["confirmed", "cancelled"],
+      default: "confirmed",
     },
-    totalAmount: {
+    total_amount: {
       type: Number,
       required: true,
-      min: 0,
     },
-    cancellationDeadline: {
+    cancellation_deadline: {
       type: Date,
       required: true,
     },
@@ -37,8 +50,5 @@ const bookingSchema = new Schema(
     timestamps: true,
   }
 );
-
-// Index for user's bookings
-bookingSchema.index({ user: 1, flight: 1 });
 
 module.exports = mongoose.model("Booking", bookingSchema, "Bookings");
