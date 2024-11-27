@@ -1,20 +1,25 @@
 // middleware/authMiddleware.js
 const jwt = require("jsonwebtoken");
 const rateLimit = require("express-rate-limit");
+const Booking = require("../models/Booking");
+const Flight = require("../models/flight");
+
+const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Types;
 
 // Xác thực token
 const verifyToken = (req, res, next) => {
-  // const token = req.headers.authorization?.split(" ")[1];
-  // if (!token) {
-  //   return res.status(401).json({ message: "Không có token xác thực" });
-  // }
-  // try {
-  //   const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  //   req.user = decoded;
-  next();
-  // } catch (err) {
-  //   return res.status(401).json({ message: "Token không hợp lệ" });
-  // }
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Không có token xác thực" });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Token không hợp lệ" });
+  }
 };
 
 // Kiểm tra quyền admin
@@ -28,51 +33,58 @@ const isAdmin = (req, res, next) => {
 
 // Kiểm tra quyền customer
 const isCustomer = (req, res, next) => {
-  // if (req.user && req.user.role === "customer") {
-  next();
-  // } else {
-  //   res.status(403).json({ message: "Yêu cầu quyền customer" });
-  // }
+  if (req.user && req.user.role === "user") {
+    next();
+  } else {
+    res.status(403).json({ message: "Yêu cầu quyền user" });
+  }
 };
 
 // Kiểm tra booking hợp lệ
 const validateBooking = async (req, res, next) => {
-  // try {
-  //   const booking = await Booking.findById(req.params.bookingId);
-  //   if (!booking) {
-  //     return res.status(404).json({ message: "Không tìm thấy booking" });
-  //   }
-  //   if (booking.user.toString() !== req.user.id && req.user.role !== "admin") {
-  //     return res
-  //       .status(403)
-  //       .json({ message: "Không có quyền truy cập booking này" });
-  //   }
-  //   req.booking = booking;
-  next();
-  // } catch (err) {
-  //   res.status(500).json({ message: err.message });
-  // }
+  try {
+    const { bookingId } = req.params;
+    if (!ObjectId.isValid(bookingId)) {
+      return res
+        .status(400)
+        .json({ message: "ID booking không hợp lệ " + bookingId });
+    }
+
+    const booking = await Booking.findById(bookingId);
+    if (!booking) {
+      return res
+        .status(404)
+        .json({ message: "Không tìm thấy booking" + req.params });
+    }
+
+    req.booking = booking;
+    next();
+  } catch (err) {
+    res.status(500).json({ message: err.message + " lỗi ở validateBooking" });
+  }
 };
 
 // Kiểm tra thời hạn hủy vé
 const checkCancellationDeadline = async (req, res, next) => {
-  // try {
-  //   const booking = req.booking;
-  //   const flight = await Flight.findById(booking.flight);
+  try {
+    const booking = req.booking;
+    const flight = await Flight.findById(booking.flight_id);
 
-  //   // Kiểm tra thời hạn hủy (24h trước giờ khởi hành)
-  //   const cancellationDeadline = new Date(flight.scheduledDeparture);
-  //   cancellationDeadline.setHours(cancellationDeadline.getHours() - 24);
+    // Kiểm tra thời hạn hủy (24h trước giờ khởi hành)
+    const cancellationDeadline = new Date(flight.scheduled_departure);
+    cancellationDeadline.setHours(cancellationDeadline.getHours() - 24);
 
-  //   if (new Date() > cancellationDeadline) {
-  //     return res
-  //       .status(400)
-  //       .json({ message: "Đã quá thời hạn hủy vé (24h trước giờ khởi hành)" });
-  //   }
-  next();
-  // } catch (err) {
-  //   res.status(500).json({ message: err.message });
-  // }
+    if (new Date() > cancellationDeadline) {
+      return res
+        .status(400)
+        .json({ message: "Đã quá thời hạn hủy vé (24h trước giờ khởi hành)" });
+    }
+    next();
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: err.message + " Lỗi ở checkCancelation Deadline" });
+  }
 };
 
 // Giới hạn request

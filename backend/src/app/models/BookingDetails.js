@@ -3,28 +3,27 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const bookingDetailSchema = new Schema({
-  booking: {
+  booking_id: {
     type: Schema.Types.ObjectId,
-    ref: "Booking",
+    ref: "Bookings",
     required: true,
   },
-  flightSeat: {
+  flight_seat_id: {
     type: Schema.Types.ObjectId,
-    ref: "FlightSeat",
+    ref: "FlightSeats",
     required: true,
   },
-  passengerName: {
+  passenger_name: {
     type: String,
     required: true,
   },
-  passengerIdNumber: {
+  passenger_id_number: {
     type: String,
     required: true,
   },
   price: {
     type: Number,
     required: true,
-    min: 0,
   },
 });
 

@@ -3,12 +3,11 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const airportSchema = new Schema({
-  airportCode: {
+  airport_code: {
     type: String,
     required: true,
-    unique: true,
   },
-  airportName: {
+  airport_name: {
     type: String,
     required: true,
   },
