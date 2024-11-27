@@ -8,6 +8,10 @@ body {
 
 .flight-results {
     padding: 20px;
+
+    h1 {
+        margin: 30px;
+    }
 }
 
 // Css at FlightCard
@@ -139,6 +143,189 @@ body {
         }
     }
 }
+
+// Css at FlightCardV2
+
+.flight-card2 {
+    display: flex;
+    gap: 20px;
+    background-color: var(--SecondaryColor);
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    position: relative; /* Để định vị pseudo-elements */
+    /* Phần lõm */
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        left: 641px;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        z-index: 1; 
+        border-radius: 50%;
+    }
+
+    /* Phần lõm trên */
+    &::before {
+        top: -5px; /* Dịch lên trên */
+        transform: translateY(-50%);
+    }
+
+    /* Phần lõm dưới */
+    &::after {
+        bottom: -5px; /* Dịch xuống dưới */
+        transform: translateY(50%);
+    }
+
+    .flight-info2 {
+        padding-right: 40px;
+        border-right: 2px dashed var(--greyText);
+
+        .details2 {
+            display: flex;
+            flex-direction: row;
+
+            .logoCard {
+                width: 15%;
+                height: auto;
+                margin: 10px;
+            }
+
+            .text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .name {
+                    color: var(--blackColor);
+                    text-align: left;
+                    a {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    
+        .timeline2 {
+            display: flex; 
+            flex-direction: row; 
+            justify-content: center;
+            align-items: center;
+
+            .timeCard {
+                width: 130px;
+                text-align: center;
+                padding: 16px;
+            }
+
+            .iconCard {
+                color: var(--greyText);
+                margin: 5px;
+                width: 20px;
+                height: auto;
+            }
+
+            .line {
+                width: 280px;
+                .solid-line2 {
+                    width: 100%; /* Chiều dài của đường */
+                    height: 2px; /* Độ dày của đường */
+                    background-color: var(--greyText); /* Màu sắc của đường */
+                    margin: 10px 0; /* Khoảng cách trên và dưới */
+                }
+            }  
+        }
+    }
+
+    .flight-classes2 {
+        display: flex;
+        flex-direction: row;
+        flex: 1;    
+        
+        .box-eco2,
+        .box-busi2 {
+            button {
+                width: 130px;
+                height: 40px;
+                border-radius: 3px;
+                cursor: pointer;
+                font-weight: 600;
+                color: var(--blackColor);
+            }
+        }
+
+        .box-eco2 {
+            flex: 0 0 50%;
+            h2 {
+                color: #0b67ca;
+            }
+            border-right: 2px solid var(--greyText);
+            button {
+                background-color: #0b67ca;
+            }
+        }
+
+        .box-busi2 {
+            flex: 1;
+            h2 {
+                color: #ebba52;
+            }
+            button {
+                background-color: #ebba52;
+            }
+        }
+    }   
+}   
+
+@media screen and (max-width: 1000px) {
+    .flight-card2 {
+        flex-direction: column;
+        &::before,
+        &::after {
+            display: none;
+        }
+        .flight-info2 {
+            border-right: none;
+        }
+    }
+}
+
+@media screen and (max-width: 335px) {
+    .flight-card2 {
+        .flight-info2 {
+            .timeline2 {
+                flex-direction: column;
+
+                .line {
+                    display: none;
+                }
+            }
+        }
+        
+        .flight-classes2 {
+            flex-direction: column;
+
+            .box-eco2 {
+                border-right: none;
+            }
+        }
+    }
+}
+
+// @media screen and (max-width: 860px) {
+//     .flight-card {
+//         flex-direction: column;
+//         .timeline {
+//             border-right: none;
+//             flex: 0 0 100%;
+//         }
+
+//         .details {
+//             display: none;
+//         }
+//     }
+// }
 
 // css at FlightInfoBar  
 .flight-info-bar {

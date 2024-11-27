@@ -5,7 +5,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 
 const Header = () => {
   return (
-    <div className="container">
+    <div className="headerCommon">
       <header className="app-header">
         <div className="logo">
           <img src="./assets/logo.png" alt="Logo" />

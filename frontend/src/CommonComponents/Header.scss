@@ -1,14 +1,12 @@
-.container {
-  //   max-width: 1200px;
-  //   margin: 0 auto;
-  //   width: 1000px;
+.headerCommon {
+  
 }
+
 .app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: var(--SecondaryColor);
-  padding: 10px 20px;
   color: var(--blackColor);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   //   width: 100%;
