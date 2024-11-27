@@ -1,9 +1,11 @@
 import { useRoutes } from "react-router-dom";
 
-//import Booking from "./Pages/BookingPage/Booking";
+import Booking from "./Pages/BookingPage/Booking";
+import Information from "./Pages/Information/Information";
 import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/Homepage";
-// import FlightResults from "./Pages/FlightResults/FlightResults";
+import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
+
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -14,10 +16,14 @@ export default function useRouteElement() {
       path: "/FlightResults",
       element: <FlightResults />,
     },
-    // {
-    //   path: "/Booking",
-    //   element: <Booking />,
-    // },
+    {
+      path: "/Booking",
+      element: <Booking />,
+    },
+    {
+      path: "/BookingUserInfo",
+      element: <BookingUserInfo />,
+    },
   ]);
   return routeElement;
 }

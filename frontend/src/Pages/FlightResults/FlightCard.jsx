@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+// import React, { FC, useState } from "react";
 import PropTypes from "prop-types";
 
 const FlightCard = ({ flight }) => {
@@ -20,7 +20,7 @@ const FlightCard = ({ flight }) => {
             <p>
               {arrival.time} ({arrival.location})
             </p>
-          </div> 
+          </div>
         </div>
         <div className="details">
           <p>Thời gian bay: {duration}</p>
@@ -33,8 +33,7 @@ const FlightCard = ({ flight }) => {
           <h5>Economy</h5>
           <p>{prices.economy} VND</p>
         </div>
-        <div
-          className="class-box busi">
+        <div className="class-box busi">
           <h5>Business</h5>
           <p>{prices.business} VND</p>
         </div>
