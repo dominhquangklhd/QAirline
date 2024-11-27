@@ -1,7 +1,7 @@
 // controllers/AdminController.js
 const Post = require("../models/Post");
 const Aircraft = require("../models/Aircraft");
-const Flight = require("../models/Flight");
+// const Flight = require("../models/Flight");
 const Booking = require("../models/Booking");
 
 class AdminController {

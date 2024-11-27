@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Booking.scss"
+import "./Booking.scss";
 
 const Booking = () => {
   const [origin, setOrigin] = useState("");
@@ -8,7 +8,7 @@ const Booking = () => {
   const [returnDate, setReturnDate] = useState("");
   const [adultCount, setAdultCount] = useState("0");
   const [childrenCount, setChildrenCount] = useState("0");
-  const [flightClass, setFlightClass] = useState("Any");
+  const [flightclassName, setFlightclassName] = useState("Any");
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
@@ -19,9 +19,9 @@ const Booking = () => {
       returnDate,
       adultCount,
       childrenCount,
-      flightClass,
+      flightclassName,
     });
-    // Theem logic submit o day 
+    // Theem logic submit o day
   };
 
   return (
@@ -36,33 +36,34 @@ const Booking = () => {
                   <div className="col-md-6">
                     <div className="form-group">
                       <span className="form-label">Flying from</span>
-                      <div 
+                      <div
                         id="from"
                         name="from"
-                        className="form-control departsfrom-select"
-                        class="select animated zoomIn"
+                        className="form-control departsfrom-select select animated zoomIn"
+                        // className="select animated zoomIn"
                         value={origin}
                         onChange={(e) => setOrigin(e.target.value)}
-                        required>
-                        <input type="radio" name="option"/>
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                        <span class="placeholder">Select city</span>
-                        <label class="option" value="Mumbai">
-                            <input type="radio" name="option"/>
-                            <span class="title">Mumbai</span>
+                        required
+                      >
+                        <input type="radio" name="option" />
+                        <i className="toggle icon icon-arrow-down"></i>
+                        <i className="toggle icon icon-arrow-up"></i>
+                        <span className="placeholder">Select city</span>
+                        <label className="option" value="Mumbai">
+                          <input type="radio" name="option" />
+                          <span className="title">Mumbai</span>
                         </label>
-                        <label class="option" value="Tokyo">
-                            <input type="radio" name="option"/>
-                            <span class="title">Tokyo</span>
+                        <label className="option" value="Tokyo">
+                          <input type="radio" name="option" />
+                          <span className="title">Tokyo</span>
                         </label>
-                        <label class="option" value="Hanoi">
-                            <input type="radio" name="option"/>
-                            <span class="title">Hanoi</span>
+                        <label className="option" value="Hanoi">
+                          <input type="radio" name="option" />
+                          <span className="title">Hanoi</span>
                         </label>
-                        <label class="option" value="Delhi">
-                            <input type="radio" name="option"/>
-                            <span class="title">Delhi</span>
+                        <label className="option" value="Delhi">
+                          <input type="radio" name="option" />
+                          <span className="title">Delhi</span>
                         </label>
                       </div>
                     </div>
@@ -71,33 +72,34 @@ const Booking = () => {
                   <div className="col-md-6">
                     <div className="form-group">
                       <span className="form-label">Flying to</span>
-                      <div 
+                      <div
                         id="from"
                         name="from"
-                        className="form-control departsfrom-select"
-                        class="select animated zoomIn"
+                        className="form-control departsfrom-select select animated zoomIn"
+                        // className="select animated zoomIn"
                         value={origin}
                         onChange={(e) => setOrigin(e.target.value)}
-                        required>
-                        <input type="radio" name="option"/>
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                        <span class="placeholder">Select city</span>
-                        <label class="option" value="Mumbai">
-                            <input type="radio" name="option"/>
-                            <span class="title">Mumbai</span>
+                        required
+                      >
+                        <input type="radio" name="option" />
+                        <i className="toggle icon icon-arrow-down"></i>
+                        <i className="toggle icon icon-arrow-up"></i>
+                        <span className="placeholder">Select city</span>
+                        <label className="option" value="Mumbai">
+                          <input type="radio" name="option" />
+                          <span className="title">Mumbai</span>
                         </label>
-                        <label class="option" value="Tokyo">
-                            <input type="radio" name="option"/>
-                            <span class="title">Tokyo</span>
+                        <label className="option" value="Tokyo">
+                          <input type="radio" name="option" />
+                          <span className="title">Tokyo</span>
                         </label>
-                        <label class="option" value="Hanoi">
-                            <input type="radio" name="option"/>
-                            <span class="title">Hanoi</span>
+                        <label className="option" value="Hanoi">
+                          <input type="radio" name="option" />
+                          <span className="title">Hanoi</span>
                         </label>
-                        <label class="option" value="Delhi">
-                            <input type="radio" name="option"/>
-                            <span class="title">Delhi</span>
+                        <label className="option" value="Delhi">
+                          <input type="radio" name="option" />
+                          <span className="title">Delhi</span>
                         </label>
                       </div>
                     </div>
@@ -136,33 +138,34 @@ const Booking = () => {
                   <div className="col-md-3">
                     <div className="form-group">
                       <span className="form-label">Adults (18+)</span>
-                      <div 
+                      <div
                         id="from"
                         name="from"
-                        className="form-control departsfrom-select"
-                        class="select animated zoomIn"
+                        className="form-control departsfrom-select select animated zoomIn"
+                        // className="select animated zoomIn"
                         value={origin}
                         onChange={(e) => setOrigin(e.target.value)}
-                        required>
-                        <input type="radio" name="option"/>
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                        <span class="placeholder">0</span>
-                        <label class="option" value="Mumbai">
-                            <input type="radio" name="option"/>
-                            <span class="title">0</span>
+                        required
+                      >
+                        <input type="radio" name="option" />
+                        <i className="toggle icon icon-arrow-down"></i>
+                        <i className="toggle icon icon-arrow-up"></i>
+                        <span className="placeholder">0</span>
+                        <label className="option" value="Mumbai">
+                          <input type="radio" name="option" />
+                          <span className="title">0</span>
                         </label>
-                        <label class="option" value="Tokyo">
-                            <input type="radio" name="option"/>
-                            <span class="title">1</span>
+                        <label className="option" value="Tokyo">
+                          <input type="radio" name="option" />
+                          <span className="title">1</span>
                         </label>
-                        <label class="option" value="Hanoi">
-                            <input type="radio" name="option"/>
-                            <span class="title">2</span>
+                        <label className="option" value="Hanoi">
+                          <input type="radio" name="option" />
+                          <span className="title">2</span>
                         </label>
-                        <label class="option" value="Delhi">
-                            <input type="radio" name="option"/>
-                            <span class="title">3</span>
+                        <label className="option" value="Delhi">
+                          <input type="radio" name="option" />
+                          <span className="title">3</span>
                         </label>
                       </div>
                     </div>
@@ -171,66 +174,68 @@ const Booking = () => {
                   <div className="col-md-3">
                     <div className="form-group">
                       <span className="form-label">Children (0 - 17)</span>
-                      <div 
+                      <div
                         id="from"
                         name="from"
-                        className="form-control departsfrom-select"
-                        class="select animated zoomIn"
+                        className="form-control departsfrom-select select animated zoomIn"
+                        // className="select animated zoomIn"
                         value={origin}
                         onChange={(e) => setOrigin(e.target.value)}
-                        required>
-                        <input type="radio" name="option"/>
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                        <span class="placeholder">0</span>
-                        <label class="option" value="Mumbai">
-                            <input type="radio" name="option"/>
-                            <span class="title">0</span>
+                        required
+                      >
+                        <input type="radio" name="option" />
+                        <i className="toggle icon icon-arrow-down"></i>
+                        <i className="toggle icon icon-arrow-up"></i>
+                        <span className="placeholder">0</span>
+                        <label className="option" value="Mumbai">
+                          <input type="radio" name="option" />
+                          <span className="title">0</span>
                         </label>
-                        <label class="option" value="Tokyo">
-                            <input type="radio" name="option"/>
-                            <span class="title">1</span>
+                        <label className="option" value="Tokyo">
+                          <input type="radio" name="option" />
+                          <span className="title">1</span>
                         </label>
-                        <label class="option" value="Hanoi">
-                            <input type="radio" name="option"/>
-                            <span class="title">2</span>
+                        <label className="option" value="Hanoi">
+                          <input type="radio" name="option" />
+                          <span className="title">2</span>
                         </label>
-                        <label class="option" value="Delhi">
-                            <input type="radio" name="option"/>
-                            <span class="title">3</span>
+                        <label className="option" value="Delhi">
+                          <input type="radio" name="option" />
+                          <span className="title">3</span>
                         </label>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="row">
-                  {/* Travel Class */}
+                  {/* Travel className */}
                   <div className="col-md-5">
                     <div className="form-group">
-                      <span className="form-label">Travel class</span>
-                      <div 
+                      <span className="form-label">Travel className</span>
+                      <div
                         id="from"
                         name="from"
-                        className="form-control departsfrom-select"
-                        class="select animated zoomIn"
+                        className="form-control departsfrom-select select animated zoomIn"
+                        // className="select animated zoomIn"
                         value={origin}
                         onChange={(e) => setOrigin(e.target.value)}
-                        required>
-                        <input type="radio" name="option"/>
-                        <i class="toggle icon icon-arrow-down"></i>
-                        <i class="toggle icon icon-arrow-up"></i>
-                        <span class="placeholder">Any</span>
-                        <label class="option" value="Mumbai">
-                            <input type="radio" name="option"/>
-                            <span class="title">Economy Class</span>
+                        required
+                      >
+                        <input type="radio" name="option" />
+                        <i className="toggle icon icon-arrow-down"></i>
+                        <i className="toggle icon icon-arrow-up"></i>
+                        <span className="placeholder">Any</span>
+                        <label className="option" value="Mumbai">
+                          <input type="radio" name="option" />
+                          <span className="title">Economy className</span>
                         </label>
-                        <label class="option" value="Tokyo">
-                            <input type="radio" name="option"/>
-                            <span class="title">Business Class</span>
+                        <label className="option" value="Tokyo">
+                          <input type="radio" name="option" />
+                          <span className="title">Business className</span>
                         </label>
-                        <label class="option" value="Hanoi">
-                            <input type="radio" name="option"/>
-                            <span class="title">First Class</span>
+                        <label className="option" value="Hanoi">
+                          <input type="radio" name="option" />
+                          <span className="title">First className</span>
                         </label>
                       </div>
                     </div>

@@ -1,6 +1,6 @@
 // controllers/BookingController.js
 const Booking = require("../models/Booking");
-const Flight = require("../models/Flight");
+// const Flight = require("../models/Flight");
 
 class BookingController {
   // Customer: Create booking
