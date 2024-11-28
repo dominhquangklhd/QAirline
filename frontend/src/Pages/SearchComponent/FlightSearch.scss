@@ -1,0 +1,103 @@
+.container-flight-search {
+  width: 100%;
+  max-width: 1200px;
+  margin-top: 150px;
+  padding: 20px;
+
+  border: 1px solid black;
+  background-color: #f0feff;
+
+  .row1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    .input-r1 {
+      padding: 10px;
+      input {
+        vertical-align: middle;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #555; /* Viền radio */
+        border-radius: 50%; /* Bo tròn thành hình tròn */
+        outline: none;
+        cursor: pointer;
+        background-color: #fff; /* Nền mặc định */
+        transition: all 0.3s ease;
+      }
+      label {
+        font-size: 13px;
+        font-weight: 400;
+        text-align: center;
+        align-items: center;
+      }
+    }
+  }
+
+  .row2 {
+    display: flex;
+    align-items: center;
+
+    gap: 20px; /* Khoảng cách giữa các phần tử */
+
+    .row2-1 {
+      display: flex;
+      flex: 1;
+      flex-wrap: wrap; /* Đảm bảo xuống dòng nếu không đủ không gian */
+      gap: 10px; /* Khoảng cách giữa các input-r2 */
+    }
+
+    .row-2-2 {
+      display: flex;
+
+      // flex-shrink: 0; /* Không cho phép thu nhỏ */
+    }
+
+    .input-r2 {
+      flex: 1 1 calc(20% - 10px); /* Các input chiếm đều không gian, trừ khoảng cách gap */
+      min-width: 150px; /* Kích thước tối thiểu */
+      // border: 1px solid #007bff;
+      background-color: whitesmoke;
+      padding: 10px;
+      label {
+        width: 100%;
+        float: left;
+        text-align: left;
+        font-size: 10px;
+        font-weight: 400;
+      }
+      input {
+        width: 100%;
+        border: none;
+      }
+    }
+
+    .input-r2-btn {
+      button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px;
+        background-color: #327c23;
+        color: #fff;
+
+        border-radius: 10px;
+        cursor: pointer;
+        height: 80%;
+        font-size: 10px;
+      }
+    }
+
+    .row3 {
+      padding-top: 20px;
+
+      float: right;
+      label {
+        font-size: 13px;
+        font-weight: 400;
+        text-align: center;
+        align-items: center;
+      }
+    }
+  }
+}
