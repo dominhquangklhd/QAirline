@@ -1,7 +1,7 @@
 import Home from "./Home";
 import Info from "./Info";
 import Lounge from "./Lounge";
-import Search from "./Search";
+// import Search from "./Search";
 import Subscribers from "./Subscribers";
 import Support from "./Support";
 import Travelers from "./Travelers";
