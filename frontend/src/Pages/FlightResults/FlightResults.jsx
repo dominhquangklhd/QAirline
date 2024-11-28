@@ -1,4 +1,5 @@
 import FlightCard from "./FlightCard";
+import FlightCardV2 from "./FlightCardV2";
 import FlightInfoBar from "./FlightInfoBar";
 import "./FlightResults.scss"
 
@@ -32,7 +33,7 @@ const FlightResults = () => {
       <FlightInfoBar/>
       <h1>Available Flights</h1>
       {flightsData.map((flight, index) => (
-        <FlightCard key={index} flight={flight} />
+        <FlightCardV2 key={index} flight={flight} />
       ))}
     </div>
   );
