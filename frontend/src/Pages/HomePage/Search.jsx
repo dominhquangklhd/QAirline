@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { HiOutlineLocationMarker } from "react-icons/hi";
-import { RiAccountPinCircleLine } from "react-icons/ri";
-import { RxBookmark, RxCalendar } from "react-icons/rx";
+// import { HiOutlineLocationMarker } from "react-icons/hi";
+// import { RiAccountPinCircleLine } from "react-icons/ri";
+// import { RxBookmark, RxCalendar } from "react-icons/rx";
 import Aos from "aos";
 import "aos/dist/aos.css";
 

@@ -1,10 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&family=Spartan:wght@300;400;500&display=swap");
-
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Spartan", sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
@@ -132,6 +130,16 @@ h2 {
     display: flex;
     align-items: center;
     width: 100%;
+    height: 10%;
+  }
+
+  .navBarOne::after {
+    content: "";
+    position: absolute;
+    bottom: 0; 
+    left: 10%; 
+    width: 80%;
+    border-bottom: 2px solid var(--greyText); 
   }
 
   .navBarOne::after {
