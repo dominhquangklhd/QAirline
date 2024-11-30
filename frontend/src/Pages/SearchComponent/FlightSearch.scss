@@ -1,102 +1,194 @@
 .container-flight-search {
-  width: 100%;
-  max-width: 1200px;
-  margin-top: 150px;
-  padding: 20px;
+  margin-top: 4rem;
+  .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.5rem 2rem; /* Padding để tạo khoảng cách nội bộ */
+    background-color: var(--greyText); /* Nền sáng cho header */
+    border-top-left-radius: 20px; /* Bo cong góc trên trái */
+    border-top-right-radius: 20px; /* Bo cong góc trên phải */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho header */
+    position: relative;
+    z-index: 10;
+    width: 40%;
+    margin: 0 auto;
+  }
 
-  border: 1px solid black;
-  background-color: #f0feff;
+  .content {
+    width: 100%;
+    background-color: var(--greyBg);
+    padding: 20px;
+    border-radius: 20px; /* Bo cong góc cho content */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ cho content */
+    position: relative;
+  }
 
   .row1 {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
+  }
 
-    .input-r1 {
-      padding: 10px;
-      input {
-        vertical-align: middle;
-        width: 20px;
-        height: 20px;
-        border: 2px solid #555; /* Viền radio */
-        border-radius: 50%; /* Bo tròn thành hình tròn */
-        outline: none;
-        cursor: pointer;
-        background-color: #fff; /* Nền mặc định */
-        transition: all 0.3s ease;
-      }
-      label {
-        font-size: 13px;
-        font-weight: 400;
-        text-align: center;
-        align-items: center;
-      }
+  .input-r1 {
+    padding: 10px;
+    input {
+      vertical-align: middle;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #555;
+      border-radius: 50%;
+      outline: none;
+      cursor: pointer;
+      background-color: #fff;
+      transition: all 0.3s ease;
+    }
+    label {
+      font-size: 13px;
+      font-weight: 400;
+      text-align: center;
+      align-items: center;
     }
   }
+
+  .hidden {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+  
 
   .row2 {
     display: flex;
     align-items: center;
-
-    gap: 20px; /* Khoảng cách giữa các phần tử */
+    gap: 20px;
 
     .row2-1 {
       display: flex;
       flex: 1;
-      flex-wrap: wrap; /* Đảm bảo xuống dòng nếu không đủ không gian */
-      gap: 10px; /* Khoảng cách giữa các input-r2 */
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .row-2-2 {
       display: flex;
-
-      // flex-shrink: 0; /* Không cho phép thu nhỏ */
     }
 
     .input-r2 {
-      flex: 1 1 calc(20% - 10px); /* Các input chiếm đều không gian, trừ khoảng cách gap */
-      min-width: 150px; /* Kích thước tối thiểu */
-      // border: 1px solid #007bff;
+      flex: 1 1 calc(20% - 10px);
+      min-width: 150px;
       background-color: whitesmoke;
       padding: 10px;
+      border-radius: 5px; /* Bo cong nhẹ cho input */
       label {
         width: 100%;
-        float: left;
         text-align: left;
-        font-size: 10px;
+        font-size: 15px;
         font-weight: 400;
       }
       input {
         width: 100%;
         border: none;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: #fff;
+      }
+    }
+  }
+
+  .row3 {
+    display: flex;
+    position: relative;
+    justify-content: center; /* Căn giữa .row3-2 */
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa .row3-1 và .row3-2 */
+
+
+    .row3-1 {
+      /* Giữ .row3-1 ở bên trái của .row3-2 */
+    }
+
+    .row3-2 {
+      display: flex;
+      align-items: center; /* Căn giữa các phần tử trong .row3-2 */
+      
+    }
+
+    #discount-code {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid #ccc;
+      outline: none;
+      font-size: 14px;
+      transition: all 10s ease;
+      animation: rainbowBorder 10s linear infinite;
+    }
+
+    /* Hiệu ứng khi trường nhập có focus */
+    #discount-code:focus {
+      border-color: #327c23; /* Viền khi focus */
+      background-color: #f0f8f0; /* Màu nền khi focus */
+      box-shadow: 0 0 10px rgba(50, 124, 35, 0.5); /* Đổ bóng xung quanh */
+    }
+
+    /* Hiệu ứng khi hover vào trường nhập */
+    #discount-code:hover {
+      border-color: #327c23; /* Viền khi hover */
+      background-color: #f9faf7; /* Màu nền khi hover */
+    }
+
+    /* Tạo hiệu ứng cầu vồng quanh border */
+    @keyframes rainbowBorder {
+      0% {
+        border-color: var(--PrimaryColor);
+      }
+      14% {
+        border-color: var(--whiteColor);
+      }
+      28% {
+        border-color: var(--PrimaryColor);
+      }
+      42% {
+        border-color: var(--whiteColor);
+      }
+      57% {
+        border-color: var(--PrimaryColor);
+      }
+      71% {
+        border-color: var(--whiteColor);
+      }
+      85% {
+        border-color: var(--PrimaryColor);
+      }
+      100% {
+        border-color: var(--whiteColor);
       }
     }
 
-    .input-r2-btn {
+    .input-r3-btn {
       button {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: row;
+        justify-content: center;  /* Căn giữa nội dung theo chiều ngang */
+        align-items: center;  /* Căn giữa nội dung theo chiều dọc */  
         padding: 10px;
-        background-color: #327c23;
+        background-color: var(--PrimaryColor);
         color: #fff;
-
         border-radius: 10px;
+        border: 2px solid var(--blackColor);
         cursor: pointer;
-        height: 80%;
-        font-size: 10px;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
       }
-    }
-
-    .row3 {
-      padding-top: 20px;
-
-      float: right;
+  
+      button:hover {
+        background-color: var(--HoverColor); /* Màu khi hover */
+      }
       label {
         font-size: 13px;
         font-weight: 400;
-        text-align: center;
-        align-items: center;
       }
     }
   }
