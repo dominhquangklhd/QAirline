@@ -16,6 +16,7 @@ const Navbar = ({ onSearchClick  }) => {
           <li className="itemButton">
             <button onClick={onSearchClick}>Đặt vé ngay</button>
           </li>
+          <li className="listItem">Trang chủ</li>
           <li className="listItem">Thông tin chuyến bay</li>
           <li className="listItem">Hủy vé</li>
         </ul>
