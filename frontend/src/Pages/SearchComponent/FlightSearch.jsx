@@ -88,23 +88,28 @@ const FlightSearch = forwardRef((props, ref) => {
     };
 
     try {
-      // Gọi API tìm kiếm chuyến bay
       const response = await axios.get("/flights/search", {
         params: searchParams,
       });
-      console.log(searchParams);
-      // console.log(searchParams);
-      // console.log(response);
-      // Lưu kết quả vào state và chuyển hướng sang trang kết quả
       navigate("/FlightResults", {
         state: {
-          searchResults: response,
+          searchResults: response.data,
           searchParams,
+          error: null,
         },
       });
     } catch (error) {
       console.error("Error searching flights:", error);
-      setError("Không thể tìm kiếm chuyến bay. Vui lòng thử lại sau.");
+      navigate("/FlightResults", {
+        state: {
+          searchResults: null,
+          searchParams,
+          error:
+            error.response?.status === 404
+              ? "Không tìm thấy chuyến bay phù hợp."
+              : "Đã xảy ra lỗi, vui lòng thử lại sau.",
+        },
+      });
     } finally {
       setLoading(false);
     }
