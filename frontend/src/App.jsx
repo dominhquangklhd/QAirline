@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       {routeElement.props.children.type === HomePage ? null : <Header />}
-      {/* {console.log(routeElement)} */}
+
       {routeElement}
       <Footer />
     </div>

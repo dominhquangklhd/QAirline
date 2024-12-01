@@ -1,17 +1,56 @@
-import React, { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef, useEffect } from "react";
 import "./FlightSearch.scss";
-import { FaPlane } from 'react-icons/fa';
+import { FaPlane } from "react-icons/fa";
+import axios from "../../Apis/axios";
+import { useNavigate } from "react-router-dom";
 
 const FlightSearch = forwardRef((props, ref) => {
+  const navigate = useNavigate();
   const [tripType, setTripType] = useState("round-trip");
-  const [from, setFrom] = useState("Hà Nội");
-  const [to, setTo] = useState("HAN");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState(1);
   const [discountCode, setDiscountCode] = useState("");
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const flightSearchRef = useRef(null);
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get("/flights/airports"); // Endpoint API
+        // console.log(response);
+        const formattedData = response.map((airport) => ({
+          city: airport.city,
+          airportCode: airport.airport_code,
+          airportName: airport.airport_name,
+        }));
+
+        setCities(formattedData);
+      } catch (error) {
+        console.error("Error fetching airport data:", error);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  const handleCitySelect = (type, city) => {
+    if (type === "from") {
+      setFrom(city);
+      setShowFromDropdown(false);
+    } else if (type === "to") {
+      setTo(city);
+      setShowToDropdown(false);
+    }
+  };
+
+  // const flightSearchRef = useRef(null);
 
   const handleSwapLocations = () => {
     const tempFrom = from;
@@ -19,18 +58,56 @@ const FlightSearch = forwardRef((props, ref) => {
     setTo(tempFrom);
   };
 
-  const handleSearch = (e) => {
+  const extractAirportCode = (cityString) => {
+    const match = cityString.match(/\(([^)]+)\)/);
+    return match ? match[1] : null;
+  };
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    // Implement search logic here
-    console.log({
-      tripType,
-      from,
-      to,
-      departureDate,
-      returnDate,
+    setLoading(true);
+    setError(null);
+    const originCode = extractAirportCode(from);
+    const destinationCode = extractAirportCode(to);
+
+    if (!originCode || !destinationCode) {
+      setError("Vui lòng chọn sân bay đi và đến");
+      setLoading(false);
+      return;
+    }
+
+    const searchParams = {
+      origin: originCode,
+      destination: destinationCode,
+      date: departureDate,
+      returnDate: tripType === "round-trip" ? returnDate : null,
       passengers,
-      discountCode,
-    });
+      cityFrom: from.replace(/\s+\([^)]+\)/, ""),
+      cityTo: to.replace(/\s+\([^)]+\)/, ""),
+      discountCode: discountCode || undefined,
+    };
+
+    try {
+      // Gọi API tìm kiếm chuyến bay
+      const response = await axios.get("/flights/search", {
+        params: searchParams,
+      });
+      console.log(searchParams);
+      // console.log(searchParams);
+      // console.log(response);
+      // Lưu kết quả vào state và chuyển hướng sang trang kết quả
+      navigate("/FlightResults", {
+        state: {
+          searchResults: response,
+          searchParams,
+        },
+      });
+    } catch (error) {
+      console.error("Error searching flights:", error);
+      setError("Không thể tìm kiếm chuyến bay. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -39,7 +116,7 @@ const FlightSearch = forwardRef((props, ref) => {
         <FaPlane />
         Đặt vé
       </div>
-      <div className="content">
+      <form onSubmit={handleSearch} className="content">
         <div className="row1">
           <div className="input-r1">
             <input
@@ -69,11 +146,73 @@ const FlightSearch = forwardRef((props, ref) => {
           <div className="row2-1">
             <div className="input-r2">
               <label htmlFor="from">TỪ</label>
-              <input type="text" id="from" value={from} />
+              <input
+                type="text"
+                id="from"
+                value={from}
+                placeholder="Chọn địa điểm"
+                onFocus={() => setShowFromDropdown(true)}
+                onChange={(e) => setFrom(e.target.value)}
+                autoComplete="off"
+              />
+              {showFromDropdown && (
+                <div className="dropdown">
+                  {cities.map((city) => (
+                    <div
+                      key={city.airportCode}
+                      className="dropdown-item"
+                      onClick={() =>
+                        handleCitySelect(
+                          "from",
+                          `${city.city} (${city.airportCode})`
+                        )
+                      }
+                    >
+                      <strong>{city.city}</strong> - {city.airportName}
+                      <div className="airport-code">{city.airportCode}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+            <button
+              id="swap-button"
+              type="button"
+              onClick={handleSwapLocations}
+              className="swap-button"
+            >
+              ⇄
+            </button>
             <div className="input-r2">
               <label htmlFor="to">TỚI</label>
-              <input type="text" id="to" value={to} />
+              <input
+                type="text"
+                id="to"
+                value={to}
+                placeholder="Chọn địa điểm"
+                onFocus={() => setShowToDropdown(true)}
+                onChange={(e) => setTo(e.target.value)}
+                autoComplete="off"
+              />
+              {showToDropdown && (
+                <div className="dropdown">
+                  {cities.map((city) => (
+                    <div
+                      key={city.airportCode}
+                      className="dropdown-item"
+                      onClick={() =>
+                        handleCitySelect(
+                          "to",
+                          `${city.city} (${city.airportCode})`
+                        )
+                      }
+                    >
+                      <strong>{city.city}</strong> - {city.airportName}
+                      <div className="airport-code">{city.airportCode}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="input-r2">
               <label htmlFor="departure-date">NGÀY ĐI</label>
@@ -82,9 +221,13 @@ const FlightSearch = forwardRef((props, ref) => {
                 id="departure-date"
                 value={departureDate}
                 onChange={(e) => setDepartureDate(e.target.value)}
+                min={new Date().toISOString().split("T")[0]}
+                required
               />
             </div>
-            <div className={`input-r2 ${tripType === "one-way" ? "hidden" : ""}`}>
+            <div
+              className={`input-r2 ${tripType === "one-way" ? "hidden" : ""}`}
+            >
               <label htmlFor="return-date">NGÀY VỀ</label>
               <input
                 type="date"
@@ -92,6 +235,8 @@ const FlightSearch = forwardRef((props, ref) => {
                 value={returnDate}
                 onChange={(e) => setReturnDate(e.target.value)}
                 disabled={tripType === "one-way"}
+                min={departureDate || new Date().toISOString().split("T")[0]}
+                required={tripType === "round-trip"}
               />
             </div>
             <div className="input-r2">
@@ -101,7 +246,11 @@ const FlightSearch = forwardRef((props, ref) => {
                 id="passengers"
                 value={passengers}
                 min="1"
-                onChange={(e) => setPassengers(parseInt(e.target.value))}
+                max="9"
+                onChange={(e) =>
+                  setPassengers(Math.max(1, parseInt(e.target.value) || 1))
+                }
+                required
               />
             </div>
           </div>
@@ -109,13 +258,13 @@ const FlightSearch = forwardRef((props, ref) => {
 
         <div className="row3">
           <div className="row3-1">
-            <label htmlFor="discount-code"></label>
+            <label htmlFor="discount-code">MÃ GIẢM GIÁ</label>
             <input
               type="text"
               id="discount-code"
               value={discountCode}
               onChange={(e) => setDiscountCode(e.target.value)}
-              placeholder="MÃ GIẢM GIÁ"
+              placeholder="Nhập mã giảm giá (nếu có)"
             />
           </div>
           <div className="row3-2">
@@ -140,11 +289,11 @@ const FlightSearch = forwardRef((props, ref) => {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
-  )
+  );
 });
 
-FlightSearch.displayName = 'FlightSearch';  // Ensure the component has a display name
+FlightSearch.displayName = "FlightSearch";
 
 export default FlightSearch;
