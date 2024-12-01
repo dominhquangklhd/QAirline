@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <div className='home flex container'>
       <div className='mainText'>
-        <h1 data-aos='fade-up' data-aos-duration='2500'>Create Ever-lasting Memonies With Us</h1>
+        <h1 data-aos='fade-up' data-aos-duration='2500'>QAirline kính chào quý khách!</h1>
       </div>
 
       <div className='homeImages flex'>
@@ -22,6 +22,7 @@ const Home = () => {
 
         <img src="assets/plane-nobg.png" alt="" className='plane'/>
       </div>
+      <img src="assets/support.jpg" alt="" className='supportImg'/>
     </div>
   )
 }

@@ -21,10 +21,10 @@ export default function useRouteElement() {
       path: "/BookingUserInfo",
       element: <BookingUserInfo />,
     },
-    {
-      // path: "/Information",
-      // element: <Information />,
-    },
+    // {
+    //   // path: "/Information",
+    //   // element: <Information />,
+    // },
   ]);
   return routeElement;
 }
