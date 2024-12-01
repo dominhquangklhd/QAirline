@@ -5,8 +5,7 @@ import Search from './Search';
 import Subscribers from "./Subscribers";
 import Support from "./Support";
 import Travelers from "./Travelers";
-import Navbar from "./Navbar";
-import FlightSearch from "../SearchComponent/FlightSearch";
+import Navbar from "./Navbar"
 
 function HomePage() {
   return (
