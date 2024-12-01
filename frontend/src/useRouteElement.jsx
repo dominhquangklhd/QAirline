@@ -5,6 +5,7 @@ import { useRoutes } from "react-router-dom";
 import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/Homepage";
 import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
+import SearchResults from "./Pages/SearchResult/SearchResults";
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -21,10 +22,10 @@ export default function useRouteElement() {
       path: "/BookingUserInfo",
       element: <BookingUserInfo />,
     },
-    // {
-    //   // path: "/Information",
-    //   // element: <Information />,
-    // },
+    {
+      path: "/SearchResults",
+      element: <SearchResults />,
+    },
   ]);
   return routeElement;
 }

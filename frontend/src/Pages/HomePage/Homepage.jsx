@@ -12,6 +12,7 @@ function HomePage() {
     <div>
       <Navbar />
       <Home></Home>
+
       <FlightSearch></FlightSearch>
       <Support></Support>
       <Info></Info>

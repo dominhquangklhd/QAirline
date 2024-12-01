@@ -1,27 +1,56 @@
-import React, { useState, useRef, forwardRef } from "react";
+import { useState, useRef, forwardRef, useEffect } from "react";
 import "./FlightSearch.scss";
 import { FaPlane } from "react-icons/fa";
 import axios from "../../Apis/axios";
+import { useNavigate } from "react-router-dom";
 
 const FlightSearch = forwardRef((props, ref) => {
+  const navigate = useNavigate();
   const [tripType, setTripType] = useState("round-trip");
-  const [from, setFrom] = useState("Hà Nội");
-  const [to, setTo] = useState("HAN");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
   const [returnDate, setReturnDate] = useState("");
   const [passengers, setPassengers] = useState(1);
   const [discountCode, setDiscountCode] = useState("");
+  const [showFromDropdown, setShowFromDropdown] = useState(false);
+  const [showToDropdown, setShowToDropdown] = useState(false);
+  const [cities, setCities] = useState([]);
+  const [searchResults, setSearchResults] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const flightSearchRef = useRef(null);
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const response = await axios.get("/flights/airports"); // Endpoint API
+        // console.log(response);
+        const formattedData = response.map((airport) => ({
+          city: airport.city,
+          airportCode: airport.airport_code,
+          airportName: airport.airport_name,
+        }));
 
-  const fetchFlightData = async () => {
-    try {
-      const response = await axios.get("/flights");
-      console.log(response);
-    } catch (error) {
-      console.error(error + " from search component");
+        setCities(formattedData);
+      } catch (error) {
+        console.error("Error fetching airport data:", error);
+      }
+    };
+
+    fetchCities();
+  }, []);
+
+  const handleCitySelect = (type, city) => {
+    if (type === "from") {
+      setFrom(city);
+      setShowFromDropdown(false);
+    } else if (type === "to") {
+      setTo(city);
+      setShowToDropdown(false);
     }
   };
+
+  // const flightSearchRef = useRef(null);
 
   const handleSwapLocations = () => {
     const tempFrom = from;
@@ -29,18 +58,56 @@ const FlightSearch = forwardRef((props, ref) => {
     setTo(tempFrom);
   };
 
-  const handleSearch = (e) => {
+  const extractAirportCode = (cityString) => {
+    const match = cityString.match(/\(([^)]+)\)/);
+    return match ? match[1] : null;
+  };
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    fetchFlightData();
-    console.log({
-      tripType,
-      from,
-      to,
-      departureDate,
-      returnDate,
+    setLoading(true);
+    setError(null);
+    const originCode = extractAirportCode(from);
+    const destinationCode = extractAirportCode(to);
+
+    if (!originCode || !destinationCode) {
+      setError("Vui lòng chọn sân bay đi và đến");
+      setLoading(false);
+      return;
+    }
+
+    const searchParams = {
+      origin: originCode,
+      destination: destinationCode,
+      date: departureDate,
+      returnDate: tripType === "round-trip" ? returnDate : null,
       passengers,
-      discountCode,
-    });
+      cityFrom: from.replace(/\s+\([^)]+\)/, ""),
+      cityTo: to.replace(/\s+\([^)]+\)/, ""),
+      discountCode: discountCode || undefined,
+    };
+
+    try {
+      // Gọi API tìm kiếm chuyến bay
+      const response = await axios.get("/flights/search", {
+        params: searchParams,
+      });
+      console.log(searchParams);
+      // console.log(searchParams);
+      // console.log(response);
+      // Lưu kết quả vào state và chuyển hướng sang trang kết quả
+      navigate("/FlightResults", {
+        state: {
+          searchResults: response,
+          searchParams,
+        },
+      });
+    } catch (error) {
+      console.error("Error searching flights:", error);
+      setError("Không thể tìm kiếm chuyến bay. Vui lòng thử lại sau.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -83,8 +150,30 @@ const FlightSearch = forwardRef((props, ref) => {
                 type="text"
                 id="from"
                 value={from}
+                placeholder="Chọn địa điểm"
+                onFocus={() => setShowFromDropdown(true)}
                 onChange={(e) => setFrom(e.target.value)}
+                autoComplete="off"
               />
+              {showFromDropdown && (
+                <div className="dropdown">
+                  {cities.map((city) => (
+                    <div
+                      key={city.airportCode}
+                      className="dropdown-item"
+                      onClick={() =>
+                        handleCitySelect(
+                          "from",
+                          `${city.city} (${city.airportCode})`
+                        )
+                      }
+                    >
+                      <strong>{city.city}</strong> - {city.airportName}
+                      <div className="airport-code">{city.airportCode}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <button
               id="swap-button"
@@ -100,8 +189,30 @@ const FlightSearch = forwardRef((props, ref) => {
                 type="text"
                 id="to"
                 value={to}
+                placeholder="Chọn địa điểm"
+                onFocus={() => setShowToDropdown(true)}
                 onChange={(e) => setTo(e.target.value)}
+                autoComplete="off"
               />
+              {showToDropdown && (
+                <div className="dropdown">
+                  {cities.map((city) => (
+                    <div
+                      key={city.airportCode}
+                      className="dropdown-item"
+                      onClick={() =>
+                        handleCitySelect(
+                          "to",
+                          `${city.city} (${city.airportCode})`
+                        )
+                      }
+                    >
+                      <strong>{city.city}</strong> - {city.airportName}
+                      <div className="airport-code">{city.airportCode}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="input-r2">
               <label htmlFor="departure-date">NGÀY ĐI</label>
