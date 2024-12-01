@@ -1,6 +1,7 @@
 import React, { useState, useRef, forwardRef } from "react";
 import "./FlightSearch.scss";
-import { FaPlane } from 'react-icons/fa';
+import { FaPlane } from "react-icons/fa";
+import axios from "../../Apis/axios";
 
 const FlightSearch = forwardRef((props, ref) => {
   const [tripType, setTripType] = useState("round-trip");
@@ -13,6 +14,15 @@ const FlightSearch = forwardRef((props, ref) => {
 
   const flightSearchRef = useRef(null);
 
+  const fetchFlightData = async () => {
+    try {
+      const response = await axios.get("/flights");
+      console.log(response);
+    } catch (error) {
+      console.error(error + " from search component");
+    }
+  };
+  fetchFlightData();
   const handleSwapLocations = () => {
     const tempFrom = from;
     setFrom(to);
@@ -21,7 +31,7 @@ const FlightSearch = forwardRef((props, ref) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    // Implement search logic here
+    fetchFlightData();
     console.log({
       tripType,
       from,
@@ -39,7 +49,7 @@ const FlightSearch = forwardRef((props, ref) => {
         <FaPlane />
         Đặt vé
       </div>
-      <div className="content">
+      <form onSubmit={handleSearch} className="content">
         <div className="row1">
           <div className="input-r1">
             <input
@@ -73,7 +83,12 @@ const FlightSearch = forwardRef((props, ref) => {
             </div>
             <div className="input-r2">
               <label htmlFor="to">TỚI</label>
-              <input type="text" id="to" value={to} />
+              <input
+                type="text"
+                id="to"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+              />
             </div>
             <div className="input-r2">
               <label htmlFor="departure-date">NGÀY ĐI</label>
@@ -82,9 +97,13 @@ const FlightSearch = forwardRef((props, ref) => {
                 id="departure-date"
                 value={departureDate}
                 onChange={(e) => setDepartureDate(e.target.value)}
+                min={new Date().toISOString().split("T")[0]}
+                required
               />
             </div>
-            <div className={`input-r2 ${tripType === "one-way" ? "hidden" : ""}`}>
+            <div
+              className={`input-r2 ${tripType === "one-way" ? "hidden" : ""}`}
+            >
               <label htmlFor="return-date">NGÀY VỀ</label>
               <input
                 type="date"
@@ -92,6 +111,8 @@ const FlightSearch = forwardRef((props, ref) => {
                 value={returnDate}
                 onChange={(e) => setReturnDate(e.target.value)}
                 disabled={tripType === "one-way"}
+                min={departureDate || new Date().toISOString().split("T")[0]}
+                required={tripType === "round-trip"}
               />
             </div>
             <div className="input-r2">
@@ -101,7 +122,11 @@ const FlightSearch = forwardRef((props, ref) => {
                 id="passengers"
                 value={passengers}
                 min="1"
-                onChange={(e) => setPassengers(parseInt(e.target.value))}
+                max="9"
+                onChange={(e) =>
+                  setPassengers(Math.max(1, parseInt(e.target.value) || 1))
+                }
+                required
               />
             </div>
           </div>
@@ -109,13 +134,13 @@ const FlightSearch = forwardRef((props, ref) => {
 
         <div className="row3">
           <div className="row3-1">
-            <label htmlFor="discount-code"></label>
+            <label htmlFor="discount-code">MÃ GIẢM GIÁ</label>
             <input
               type="text"
               id="discount-code"
               value={discountCode}
               onChange={(e) => setDiscountCode(e.target.value)}
-              placeholder="MÃ GIẢM GIÁ"
+              placeholder="Nhập mã giảm giá (nếu có)"
             />
           </div>
           <div className="row3-2">
@@ -140,11 +165,11 @@ const FlightSearch = forwardRef((props, ref) => {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
-  )
+  );
 });
 
-FlightSearch.displayName = 'FlightSearch';  // Ensure the component has a display name
+FlightSearch.displayName = "FlightSearch";
 
 export default FlightSearch;
