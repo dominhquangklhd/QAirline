@@ -12,8 +12,6 @@ function HomePage() {
     <div>
       <Navbar />
       <Home></Home>
-      {/* <Search></Search>
-       */}
       <FlightSearch></FlightSearch>
       <Support></Support>
       <Info></Info>
