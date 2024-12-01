@@ -22,7 +22,7 @@ const FlightSearch = forwardRef((props, ref) => {
       console.error(error + " from search component");
     }
   };
-  fetchFlightData();
+
   const handleSwapLocations = () => {
     const tempFrom = from;
     setFrom(to);
@@ -79,8 +79,21 @@ const FlightSearch = forwardRef((props, ref) => {
           <div className="row2-1">
             <div className="input-r2">
               <label htmlFor="from">TỪ</label>
-              <input type="text" id="from" value={from} />
+              <input
+                type="text"
+                id="from"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+              />
             </div>
+            <button
+              id="swap-button"
+              type="button"
+              onClick={handleSwapLocations}
+              className="swap-button"
+            >
+              ⇄
+            </button>
             <div className="input-r2">
               <label htmlFor="to">TỚI</label>
               <input
