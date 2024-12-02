@@ -17,19 +17,11 @@ function HomePage() {
     }
   };
 
-  const bg = {
-    backgroundImage: "url('/assets/bg2.jpg')",
-    backgroundSize: "contain", // Đảm bảo ảnh phủ kín container
-    backgroundPosition: "center", // Căn ảnh ở chính giữa
-    backgroundRepeat: "no-repeat", // Ngăn lặp lại hình ảnh
-    width: "100%",
-    height: "100vh",
-  };
-
   return (
-    <div style={bg}>
+    <div>
       <Navbar onSearchClick={handleScrollToFlightSearch} />
-      <Home /> <FlightSearch ref={flightSearchRef} />
+      <Home />
+      <FlightSearch ref={flightSearchRef} />
       <Support />
       <Info />
       <Lounge />
