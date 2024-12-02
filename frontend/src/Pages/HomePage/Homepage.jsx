@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
-import Navbar from './Navbar';
-import Home from './Home';
-import FlightSearch from '../SearchComponent/FlightSearch';
-import Support from './Support';
-import Info from './Info';
-import Lounge from './Lounge';
-import Travelers from './Travelers';
-import Subscribers from './Subscribers';
+import React, { useRef } from "react";
+import Navbar from "./Navbar";
+import Home from "./Home";
+import FlightSearch from "../SearchComponent/FlightSearch";
+import Support from "./Support";
+import Info from "./Info";
+import Lounge from "./Lounge";
+import Travelers from "./Travelers";
+import Subscribers from "./Subscribers";
 
 function HomePage() {
   const flightSearchRef = useRef(null);
@@ -17,18 +17,10 @@ function HomePage() {
     }
   };
 
-  // const bg = {
-  //   backgroundImage: "url('/assets/bg2.jpg')",
-  //   backgroundSize: "contain", // Đảm bảo ảnh phủ kín container
-  //   backgroundPosition: "center", // Căn ảnh ở chính giữa
-  //   backgroundRepeat: "no-repeat", // Ngăn lặp lại hình ảnh
-  // };
-  
-
   return (
-    <div >
+    <div>
       <Navbar onSearchClick={handleScrollToFlightSearch} />
-      <Home /> 
+      <Home />
       <FlightSearch ref={flightSearchRef} />
       <Support />
       <Info />

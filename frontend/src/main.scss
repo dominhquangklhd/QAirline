@@ -141,19 +141,19 @@ h2 {
   .navBarOne::after {
     content: "";
     position: absolute;
-    bottom: 0; 
-    left: 10%; 
+    bottom: 0;
+    left: 10%;
     width: 80%;
-    border-bottom: 2px solid var(--greyText); 
+    border-bottom: 2px solid var(--greyText);
   }
 
   .navBarOne::after {
     content: "";
     position: absolute;
-    bottom: 0; 
-    left: 10%; 
+    bottom: 0;
+    left: 10%;
     width: 80%;
-    border-bottom: 2px solid var(--greyText); 
+    border-bottom: 2px solid var(--greyText);
   }
 
   .navBarOne {
@@ -163,7 +163,7 @@ h2 {
       display: flex;
       border-radius: 50%;
       width: 100px;
-      height: 100px; 
+      height: 100px;
       overflow: hidden;
     }
 
@@ -183,18 +183,18 @@ h2 {
         font-weight: bold;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng đổ bóng */
         transition: transform 0.2s, box-shadow 0.2s; /* Hiệu ứng hover */
-        
+
         &:hover {
           cursor: pointer;
           transform: translateY(-2px); /* Nhấn mạnh khi hover */
           box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2); /* Tăng hiệu ứng đổ bóng */
         }
-      
+
         /* Animation */
         position: relative;
         overflow: hidden; /* Giới hạn hiệu ứng bên trong button */
       }
-      
+
       .itemButton button::after {
         content: ""; /* Tạo phần tử ảo */
         position: absolute;
@@ -206,7 +206,7 @@ h2 {
         filter: blur(10px); /* Tạo hiệu ứng nhòe */
         animation: shine 2s linear infinite; /* Hiệu ứng lặp */
       }
-      
+
       @keyframes shine {
         0% {
           left: -100%;
@@ -1044,7 +1044,6 @@ h2 {
 }
 
 @media screen and (min-width: 480px) {
-
   .search {
     .sectionContainer {
       .searchInputs {
