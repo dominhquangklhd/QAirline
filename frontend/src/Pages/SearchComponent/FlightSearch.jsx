@@ -160,6 +160,14 @@ const FlightSearch = forwardRef((props, ref) => {
                 onChange={(e) => setFrom(e.target.value)}
                 autoComplete="off"
               />
+              <button
+              id="swap-button"
+              type="button"
+              onClick={handleSwapLocations}
+              className="swap-button"
+              >
+                ⇄
+              </button>
               {showFromDropdown && (
                 <div className="dropdown">
                   {cities.map((city) => (
@@ -180,14 +188,6 @@ const FlightSearch = forwardRef((props, ref) => {
                 </div>
               )}
             </div>
-            <button
-              id="swap-button"
-              type="button"
-              onClick={handleSwapLocations}
-              className="swap-button"
-            >
-              ⇄
-            </button>
             <div className="input-r2">
               <label htmlFor="to">TỚI</label>
               <input
@@ -244,7 +244,7 @@ const FlightSearch = forwardRef((props, ref) => {
                 required={tripType === "round-trip"}
               />
             </div>
-            <div className="input-r2">
+            <div className="input-r2 passengers">
               <label htmlFor="passengers">HÀNH KHÁCH</label>
               <input
                 type="number"
@@ -259,10 +259,7 @@ const FlightSearch = forwardRef((props, ref) => {
               />
             </div>
           </div>
-        </div>
-
-        <div className="row3">
-          <div className="row3-1">
+          <div className="row2-2">
             <label htmlFor="discount-code">MÃ GIẢM GIÁ</label>
             <input
               type="text"
@@ -272,24 +269,15 @@ const FlightSearch = forwardRef((props, ref) => {
               placeholder="Nhập mã giảm giá (nếu có)"
             />
           </div>
+        </div>
+
+        <div className="row3">
+          <div className="row3-1">
+          </div>
           <div className="row3-2">
             <div className="input-r3-btn">
               <button type="submit">
                 Tìm chuyến bay
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                </svg>
               </button>
             </div>
           </div>

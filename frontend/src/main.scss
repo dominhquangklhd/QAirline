@@ -129,6 +129,7 @@ h2 {
   left: 0;
   flex-direction: column;
   width: 100%;
+  background-image: url(/frontend/public/assets/bg.jpg);
 
   .navBarOne {
     display: flex;
@@ -268,6 +269,10 @@ h2 {
   text-align: center;
   gap: 1rem;
   flex-direction: column;
+  // background-image: url(/assets/bg2.jpg);
+  // background-size: cover;
+  // background-position: left top; 
+  // background-repeat: no-repeat; 
 
   .mainText {
     color: var(--blackColor);
