@@ -1,12 +1,12 @@
-import React, { useRef } from 'react';
-import Navbar from './Navbar';
-import Home from './Home';
-import FlightSearch from '../SearchComponent/FlightSearch';
-import Support from './Support';
-import Info from './Info';
-import Lounge from './Lounge';
-import Travelers from './Travelers';
-import Subscribers from './Subscribers';
+import React, { useRef } from "react";
+import Navbar from "./Navbar";
+import Home from "./Home";
+import FlightSearch from "../SearchComponent/FlightSearch";
+import Support from "./Support";
+import Info from "./Info";
+import Lounge from "./Lounge";
+import Travelers from "./Travelers";
+import Subscribers from "./Subscribers";
 
 function HomePage() {
   const flightSearchRef = useRef(null);
@@ -17,11 +17,19 @@ function HomePage() {
     }
   };
 
+  const bg = {
+    backgroundImage: "url('/assets/bg2.jpg')",
+    backgroundSize: "contain", // Đảm bảo ảnh phủ kín container
+    backgroundPosition: "center", // Căn ảnh ở chính giữa
+    backgroundRepeat: "no-repeat", // Ngăn lặp lại hình ảnh
+    width: "100%",
+    height: "100vh",
+  };
+
   return (
-    <div>
+    <div style={bg}>
       <Navbar onSearchClick={handleScrollToFlightSearch} />
-      <Home />
-      <FlightSearch ref={flightSearchRef} />
+      <Home /> <FlightSearch ref={flightSearchRef} />
       <Support />
       <Info />
       <Lounge />
@@ -34,7 +42,8 @@ function HomePage() {
 const smoothScrollTo = (targetRef) => {
   const targetElement = targetRef.current;
   const startPosition = window.pageYOffset;
-  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+  const targetPosition =
+    targetElement.getBoundingClientRect().top + window.pageYOffset;
   const distance = targetPosition - startPosition;
   const duration = 1000; // thời gian cuộn (1 giây)
   let startTime = null;
@@ -58,6 +67,5 @@ const smoothScrollTo = (targetRef) => {
 
   requestAnimationFrame(scrollAnimation);
 };
-
 
 export default HomePage;
