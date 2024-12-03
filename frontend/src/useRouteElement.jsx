@@ -6,6 +6,7 @@ import FlightResults from "./Pages/FlightResults/FlightResults";
 import Homepage from "./Pages/HomePage/HomePage";
 import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
 import SearchResults from "./Pages/SearchResult/SearchResults";
+import FlightInfo from "./Pages/FlightInfo/FlightInfo";
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -26,6 +27,10 @@ export default function useRouteElement() {
       path: "/SearchResults",
       element: <SearchResults />,
     },
+    {
+      path: "/FlightInfo",
+      element: <FlightInfo />,
+    }
   ]);
   return routeElement;
 }

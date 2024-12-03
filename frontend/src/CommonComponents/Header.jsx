@@ -2,7 +2,7 @@
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from "prop-types";
 
-const Navbar = ({ onSearchClick }) => {
+const Header = () => {
   let login = false;
 
   return (
@@ -13,9 +13,7 @@ const Navbar = ({ onSearchClick }) => {
         </div>
 
         <ul className="items flex">
-          <li className="itemButton">
-            <button onClick={onSearchClick}>Đặt vé ngay</button>
-          </li>
+          <li className="listItem nohidden">Trang chủ</li>
           <li className="listItem">Thông tin chuyến bay</li>
           <li className="listItem">Hủy vé</li>
         </ul>
@@ -36,10 +34,10 @@ const Navbar = ({ onSearchClick }) => {
   );
 };
 
-Navbar.propTypes = {
+Header.propTypes = {
   onSearchClick: PropTypes.shape({
     current: PropTypes.instanceOf(Element),
   }),
 };
 
-export default Navbar;
+export default Header;

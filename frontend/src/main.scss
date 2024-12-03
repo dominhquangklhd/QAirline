@@ -1021,6 +1021,7 @@ h2 {
 
     .footerLinks {
       display: grid;
+      text-align: left;
 
       .linkTitle {
         color: var(--blackColor);
@@ -1446,6 +1447,9 @@ h2 {
         .listItem {
           display: none;
         }
+        .nohidden {
+          display: block;
+        }
       }
     }
   }
@@ -1460,6 +1464,11 @@ h2 {
     .navBarOne {
       li.flex {
         display: none;
+      }
+      .items {
+        .nohidden {
+          display: none;
+        }
       }
     }
   }
