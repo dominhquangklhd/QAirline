@@ -1,6 +1,7 @@
 // import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from "prop-types";
+import "./Header.scss"
 
 const Header = () => {
   let login = false;

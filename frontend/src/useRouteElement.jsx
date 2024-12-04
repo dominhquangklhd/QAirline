@@ -7,6 +7,7 @@ import Homepage from "./Pages/HomePage/HomePage";
 import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
 import SearchResults from "./Pages/SearchResult/SearchResults";
 import FlightInfo from "./Pages/FlightInfo/FlightInfo";
+import CancelFlight from "./Pages/CancelFlight/CancelFlight";
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -30,7 +31,11 @@ export default function useRouteElement() {
     {
       path: "/FlightInfo",
       element: <FlightInfo />,
-    }
+    },
+    {
+      path: "/CancelFlight",
+      element: <CancelFlight />,
+    },
   ]);
   return routeElement;
 }
