@@ -6,91 +6,243 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
 
 class BookingController {
-  // Customer: Create booking
+  // Create booking for both guest and registered users
   async createBooking(req, res) {
-    const { flightId, customer_info, total_amount } = req.body;
+    // Start a transaction
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
     try {
-      // Tìm chuyến bay theo flightId
-      const flight = await Flight.findById(flightId);
+      const { flight_id, guest_info } = req.body;
+      const userId = req.user?.id; // From authentication middleware
+
+      // Find flight and check availability within transaction
+      const flight = await Flight.findById(flight_id).session(session);
       if (!flight) {
+        await session.abortTransaction();
         return res.status(404).json({ message: "Flight not found" });
       }
 
-      // Kiểm tra giá vé và thời gian khởi hành
-      const ticketPrice = flight.base_price;
-      if (total_amount !== ticketPrice) {
-        return res.status(400).json({ message: "Incorrect ticket price" });
+      // Check if seats are available
+      if (flight.available_seats <= 0) {
+        await session.abortTransaction();
+        return res.status(400).json({ message: "No seats available" });
       }
 
-      // Tạo booking mới
-      const booking = new Booking({
-        customer_info,
-        flight_id: flightId,
-        total_amount,
+      // Validate ticket price
+      // if (total_amount !== flight.base_price) {
+      //   await session.abortTransaction();
+      //   return res.status(400).json({ message: "Incorrect ticket price" });
+      // }
+
+      // Create booking object
+      const bookingData = {
+        flight_id: flight_id,
+        total_amount: flight.base_price,
         status: "confirmed",
         booking_date: new Date(),
         cancellation_deadline: new Date(
           flight.scheduled_departure.getTime() - 24 * 60 * 60 * 1000
         ),
-      });
+      };
 
-      // Lưu booking và trả về phản hồi
-      await booking.save();
-      res.status(201).json(booking);
+      // Add user information based on authentication status
+      if (userId) {
+        bookingData.userId = userId;
+      } else if (guest_info) {
+        bookingData.guest_info = guest_info;
+      } else {
+        await session.abortTransaction();
+        return res.status(400).json({
+          message: "Guest information required for non-registered users",
+        });
+      }
+
+      // Create booking within transaction
+      const booking = new Booking(bookingData);
+      await booking.save({ session });
+
+      // Update flight's available seats
+      flight.available_seats -= 1;
+      await flight.save({ session });
+
+      // Commit transaction
+      await session.commitTransaction();
+
+      // Populate flight info and return response
+      const populatedBooking = await Booking.findById(booking._id).populate(
+        "flight_id"
+      );
+
+      res.status(201).json(populatedBooking);
     } catch (error) {
-      res.status(500).json({ message: error.message + " Lỗi ở createBooking" });
+      // Abort transaction on error
+      await session.abortTransaction();
+      res.status(500).json({ message: error.message });
+    } finally {
+      // End session
+      session.endSession();
     }
   }
 
-  // Customer: Cancel booking
+  //cancel booking
   async cancelBooking(req, res) {
-    const { bookingId } = req.params;
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
-      const booking = await Booking.findById(bookingId);
+      const { bookingId } = req.params;
+
+      const booking = await Booking.findById(bookingId).session(session);
       if (!booking) {
+        await session.abortTransaction();
         return res.status(404).json({ message: "Booking not found" });
       }
 
-      // Kiểm tra thời hạn hủy vé
+      // Check cancellation deadline
       if (new Date() > booking.cancellation_deadline) {
-        return res
-          .status(400)
-          .json({ message: "Cancellation deadline passed" });
+        await session.abortTransaction();
+        return res.status(400).json({
+          message: "Cancellation deadline passed",
+        });
       }
 
-      // Cập nhật trạng thái booking thành "cancelled"
+      // Find flight and update seats
+      const flight = await Flight.findById(booking.flight_id).session(session);
+      if (!flight) {
+        await session.abortTransaction();
+        return res.status(404).json({ message: "Flight not found" });
+      }
+
+      // Update booking status and flight seats
       booking.status = "cancelled";
-      await booking.save();
+      flight.available_seats += 1;
+
+      // Save both changes within transaction
+      await booking.save({ session });
+      await flight.save({ session });
+
+      // Commit transaction
+      await session.commitTransaction();
+
       res.json({ message: "Booking cancelled successfully" });
+    } catch (error) {
+      await session.abortTransaction();
+      res.status(500).json({ message: error.message });
+    } finally {
+      session.endSession();
+    }
+  }
+  // Admin: Update booking
+  async updateBooking(req, res) {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    try {
+      const { bookingId } = req.params;
+      const { status, flightId } = req.body;
+
+      const booking = await Booking.findById(bookingId).session(session);
+      if (!booking) {
+        await session.abortTransaction();
+        return res.status(404).json({ message: "Booking not found" });
+      }
+
+      // Handle status change to cancelled
+      if (status === "cancelled" && booking.status !== "cancelled") {
+        const flight = await Flight.findById(booking.flight_id).session(
+          session
+        );
+        if (flight) {
+          flight.available_seats += 1;
+          await flight.save({ session });
+        }
+      }
+
+      // Handle flight change
+      if (flightId && flightId !== booking.flight_id.toString()) {
+        // Increase seats in old flight
+        const oldFlight = await Flight.findById(booking.flight_id).session(
+          session
+        );
+        if (oldFlight) {
+          oldFlight.available_seats += 1;
+          await oldFlight.save({ session });
+        }
+
+        // Decrease seats in new flight
+        const newFlight = await Flight.findById(flightId).session(session);
+        if (!newFlight) {
+          await session.abortTransaction();
+          return res.status(404).json({ message: "New flight not found" });
+        }
+        if (newFlight.available_seats <= 0) {
+          await session.abortTransaction();
+          return res
+            .status(400)
+            .json({ message: "No seats available in new flight" });
+        }
+        newFlight.available_seats -= 1;
+        await newFlight.save({ session });
+      }
+
+      // Update booking
+      const updatedBooking = await Booking.findByIdAndUpdate(
+        bookingId,
+        req.body,
+        { new: true, session }
+      ).populate("flight_id");
+
+      // Commit transaction
+      await session.commitTransaction();
+
+      res.json(updatedBooking);
+    } catch (error) {
+      await session.abortTransaction();
+      res.status(500).json({ message: error.message });
+    } finally {
+      session.endSession();
+    }
+  }
+
+  // Get user's bookings (for registered users)
+  async getUserBookings(req, res) {
+    const userId = req.user.id;
+    try {
+      const bookings = await Booking.find({ userId })
+        .populate("flight_id")
+        .sort({ booking_date: -1 });
+      res.json(bookings);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   }
 
-  // Customer: View booking details
-  async getBookingDetails(req, res) {
-    const { bookingId } = req.params;
+  // Get booking by reference (for both guests and registered users)
+  async getBookingByReference(req, res) {
+    const { bookingId, email } = req.query;
     try {
-      const booking = await Booking.findById(bookingId).populate("flight_id");
+      const query = {};
+      if (bookingId) {
+        query._id = bookingId;
+      }
+      if (email) {
+        query["guest_info.email"] = email;
+      }
+
+      // Kiểm tra nếu không có tham số hợp lệ
+      if (!bookingId && !email) {
+        return res.status(400).json({ message: "Provide bookingId or email" });
+      }
+
+      // Tìm kiếm booking
+      const booking = await Booking.findOne(query).populate("flight_id");
+
       if (!booking) {
         return res.status(404).json({ message: "Booking not found" });
       }
-      res.json(booking);
-    } catch (error) {
-      res
-        .status(500)
-        .json({ message: error.message + " Lỗi ở getBookingDetails" });
-    }
-  }
 
-  async getAllBookings(req, res) {
-    try {
-      const bookings = await Booking.find(); //.populate("flight_id");
-      if (!bookings || bookings.length === 0) {
-        return res.status(404).json({ message: "No bookings found" });
-      }
-      res.json(bookings);
+      res.json(booking);
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

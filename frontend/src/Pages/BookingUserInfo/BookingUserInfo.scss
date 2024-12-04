@@ -119,21 +119,13 @@
   .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    gap: 30px;
   }
 
   .form-group {
     &.full-width {
       grid-column: 1 / -1;
-    }
-
-    &.phone-group {
-      display: flex;
-      gap: 10px;
-
-      .country-code {
-        width: 80px;
-      }
+      padding-bottom: 30px;
     }
 
     input,
@@ -176,6 +168,7 @@
   margin-top: 30px;
   .checkbox-item {
     padding: 20px;
+    float: right;
 
     .btn-submit {
       background: #e4002b;
@@ -340,6 +333,7 @@
     }
 
     .form-group {
+      margin: 20px;
       &.phone-group {
         flex-direction: column;
         gap: 10px;
