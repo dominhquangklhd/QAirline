@@ -1,14 +1,10 @@
-.header-common {
-  
-}
+.header-common {}
 
 .notExistFlight {
-    display: flex;
-    flex-direction: column;
-
-    h2 {
+    .content {
         display: flex;
-        align-items: center;
+        flex-direction: column;
         justify-content: center;
+        align-items: center;
     }
 }
