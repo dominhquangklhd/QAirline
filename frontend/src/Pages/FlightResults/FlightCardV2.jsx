@@ -1,15 +1,13 @@
 import PropTypes from "prop-types";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
-function FlightCardV2({ flight }) {
-  const navigate = useNavigate();
+
+function FlightCardV2({ flight, onSelect, isSelected }) {
   const {
     scheduled_departure,
     scheduled_arrival,
     base_price,
-    origin_airport_id,
-    destination_airport_id,
+
     flight_number,
   } = flight;
   const calculateDuration = (departure, arrival) => {
@@ -19,11 +17,16 @@ function FlightCardV2({ flight }) {
     return `${hours} hours and ${minutes} minutes`;
   };
 
-  const handleSelectFlight = () => {
-    navigate("/BookingUserInfo");
+  const handleSelectClass = (fareType) => {
+    onSelect({
+      ...flight,
+      fareType,
+      price: fareType === "economy" ? base_price : base_price * 1.5,
+    });
   };
+
   return (
-    <div className="flight-card2">
+    <div className={`flight-card2 ${isSelected ? "selected" : ""}`}>
       <div className="flight-info2">
         <div className="details2">
           <img src="./assets/logo.png" alt="" className="logoCard" />
@@ -54,12 +57,32 @@ function FlightCardV2({ flight }) {
         <div className="box-eco2">
           <h2>Economy</h2>
           <h4>{base_price?.toLocaleString("vi-VN")} VND</h4>
-          <button onClick={handleSelectFlight}>Chọn</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectClass("economy");
+            }}
+            className={
+              isSelected && flight.fareType === "economy" ? "selected" : ""
+            }
+          >
+            Chọn
+          </button>
         </div>
         <div className="box-busi2">
           <h2>Business</h2>
           <h4>{(base_price * 1.5)?.toLocaleString("vi-VN")} VND</h4>
-          <button onClick={handleSelectFlight}>Chọn</button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleSelectClass("business");
+            }}
+            className={
+              isSelected && flight.fareType === "business" ? "selected" : ""
+            }
+          >
+            Chọn
+          </button>
         </div>
       </div>
     </div>
@@ -80,6 +103,8 @@ FlightCardV2.propTypes = {
     aircraft: PropTypes.string,
     availableSeats: PropTypes.number,
   }).isRequired,
+  onSelect: PropTypes.func.isRequired,
+  isSelected: PropTypes.bool,
 };
 
 export default FlightCardV2;

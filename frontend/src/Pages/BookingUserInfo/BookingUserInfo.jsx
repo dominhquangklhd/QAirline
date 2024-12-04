@@ -1,9 +1,56 @@
 // BookingUserInfo.jsx
 import { useState } from "react";
 import "./BookingUserInfo.scss";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import axios from "../../Apis/axios";
 export default function BookingUserInfo() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [selectedGender, setSelectedGender] = useState("Nam");
+  const { outbound, return: returnFlight, totalAmount } = location.state || {};
+  const [formData, setFormData] = useState({
+    gender: "Nam",
+    firstName: "",
+    lastName: "",
+    birthDate: "",
+    country: "Việt Nam",
+    phone: "",
+    email: "",
+    idType: "",
+    idNumber: "",
+    idCountry: "Việt Nam",
+    idExpiry: "",
+    address: "",
+  });
+  const handleSubmit = async () => {
+    const bookingData = {
+      flight_id: outbound.id,
+      total_amount: totalAmount,
+      guest_info: {
+        full_name: `${formData.firstName} ${formData.lastName}`,
+        email: formData.email,
+        phone: formData.phone,
+        gender: formData.gender,
+        birth_date: formData.birthDate,
+        id_type: formData.idType,
+        id_number: formData.idNumber,
+        address: formData.address,
+      },
+      status: "pending",
+    };
+
+    if (returnFlight) {
+      bookingData.return_flight_id = returnFlight.id;
+    }
+    try {
+      const response = await axios.post("/bookings/createBooking", bookingData);
+      // navigate("/booking-confirmation");
+      console.log("Booking successful:", response);
+    } catch (error) {
+      console.error("Booking failed:", error);
+      alert("Đặt vé thất bại. Vui lòng thử lại.");
+    }
+  };
 
   return (
     <div className="booking-container">
@@ -63,45 +110,74 @@ export default function BookingUserInfo() {
 
           <div className="form-grid">
             <div className="form-group">
-              <input type="text" placeholder="Họ*" />
+              <input
+                type="text"
+                placeholder="Họ*"
+                value={formData.firstName}
+                onChange={(e) =>
+                  setFormData({ ...formData, firstName: e.target.value })
+                }
+              />
             </div>
             <div className="form-group">
-              <input type="text" placeholder="Tên đệm & tên*" />
+              <input
+                type="text"
+                placeholder="Tên đệm & tên*"
+                value={formData.lastName}
+                onChange={(e) =>
+                  setFormData({ ...formData, lastName: e.target.value })
+                }
+              />
             </div>
             <div className="form-group">
-              <input type="date" placeholder="Ngày sinh*(DD/MM/YYYY)" />
+              <input
+                type="date"
+                placeholder="Ngày sinh*"
+                value={formData.birthDate}
+                onChange={(e) =>
+                  setFormData({ ...formData, birthDate: e.target.value })
+                }
+              />
             </div>
             <div className="form-group">
               <input
                 type="text"
                 placeholder="Quốc gia*"
-                defaultValue="Việt Nam"
+                value={formData.country}
+                onChange={(e) =>
+                  setFormData({ ...formData, country: e.target.value })
+                }
               />
-            </div>
-            <div className="form-group phone-group">
-              <select className="country-code">
-                <option value="+84">+84</option>
-              </select>
-              <input type="tel" placeholder="Số điện thoại*" />
-            </div>
-            <div className="form-group">
-              <input type="email" placeholder="Email*" />
-            </div>
-            <div className="form-group">
-              <input type="text" placeholder="Loại giấy tờ tùy thân" />
-            </div>
-            <div className="form-group">
-              <input type="text" placeholder="Số" />
             </div>
             <div className="form-group">
               <input
-                type="text"
-                placeholder="Quốc gia cấp"
-                defaultValue="Việt Nam"
+                type="tel"
+                placeholder="Phone number*"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
               />
             </div>
             <div className="form-group">
-              <input type="date" placeholder="Ngày hết hạn(DD/MM/YYYY)" />
+              <input
+                type="email"
+                placeholder="Email*"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+            </div>
+            <div className="form-group full-width">
+              <input
+                type="text"
+                placeholder="CCCĐ/CMND/Hộ chiếu*"
+                value={formData.idNumber}
+                onChange={(e) =>
+                  setFormData({ ...formData, idNumber: e.target.value })
+                }
+              />
             </div>
           </div>
 
@@ -109,17 +185,11 @@ export default function BookingUserInfo() {
             <input type="text" placeholder="Nơi ở hiện tại" />
           </div>
 
-          <div className="notification-section">
-            <div className="notification-options">
-              <label className="checkbox-item">
-                <span>Nhận thông tin hành trình qua email</span>
-              </label>
-            </div>
-          </div>
-
           <div className="terms-section">
             <label className="checkbox-item">
-              <button className="btn-submit"> Hoàn tất</button>
+              <button className="btn-submit" onClick={handleSubmit}>
+                Hoàn tất
+              </button>
             </label>
           </div>
         </div>

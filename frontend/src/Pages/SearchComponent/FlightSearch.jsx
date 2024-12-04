@@ -76,25 +76,52 @@ const FlightSearch = forwardRef((props, ref) => {
       return;
     }
 
-    const searchParams = {
-      origin: originCode,
-      destination: destinationCode,
-      date: departureDate,
-      returnDate: tripType === "round-trip" ? returnDate : null,
-      passengers,
-      cityFrom: from.replace(/\s+\([^)]+\)/, ""),
-      cityTo: to.replace(/\s+\([^)]+\)/, ""),
-      discountCode: discountCode || undefined,
-    };
-
     try {
-      const response = await axios.get("/flights/search", {
-        params: searchParams,
+      let outboundFlight = null;
+      let returnFlight = null;
+
+      // Tìm chuyến bay đi
+      const outboundParams = {
+        origin: originCode,
+        destination: destinationCode,
+        date: departureDate,
+        passengers,
+        discountCode: discountCode || undefined,
+      };
+
+      const outboundResponse = await axios.get("/flights/search", {
+        params: outboundParams,
       });
+      outboundFlight = outboundResponse;
+
+      // Nếu là khứ hồi, tìm thêm chuyến bay về
+      if (tripType === "round-trip") {
+        const returnParams = {
+          origin: destinationCode, // Đảo ngược điểm đi/đến
+          destination: originCode,
+          date: returnDate,
+          passengers,
+          discountCode: discountCode || undefined,
+        };
+
+        const returnResponse = await axios.get("/flights/search", {
+          params: returnParams,
+        });
+        returnFlight = returnResponse;
+      }
+
+      // Điều hướng với kết quả tìm kiếm
       navigate("/FlightResults", {
         state: {
-          searchResults: response.data,
-          searchParams,
+          searchResults: {
+            outbound: outboundFlight,
+            return: returnFlight,
+          },
+          searchParams: {
+            ...outboundParams,
+            returnDate: tripType === "round-trip" ? returnDate : null,
+            isRoundTrip: tripType === "round-trip",
+          },
           error: null,
         },
       });
@@ -103,7 +130,15 @@ const FlightSearch = forwardRef((props, ref) => {
       navigate("/FlightResults", {
         state: {
           searchResults: null,
-          searchParams,
+          searchParams: {
+            origin: originCode,
+            destination: destinationCode,
+            date: departureDate,
+            returnDate: tripType === "round-trip" ? returnDate : null,
+            passengers,
+            isRoundTrip: tripType === "round-trip",
+            discountCode: discountCode || undefined,
+          },
           error:
             error.response?.status === 404
               ? "Không tìm thấy chuyến bay phù hợp."
