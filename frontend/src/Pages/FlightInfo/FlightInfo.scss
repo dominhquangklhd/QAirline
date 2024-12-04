@@ -9,7 +9,7 @@
 
     .title {
         padding-top: 1rem;
-        padding-bottom: 3rem;
+        padding-bottom: 1rem;
     }
 
     .content {
@@ -34,8 +34,7 @@
 
         .content-fill {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            justify-content: space-between;
           
             .input-area {
               position: relative;
@@ -54,7 +53,8 @@
               & input {
                 width: 100%;
                 padding: 10px;
-                padding-top: 20px; /* Đảm bảo có chỗ cho label */
+                padding-top: 20px;
+                padding-right: 6rem;
                 font-size: 16px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
