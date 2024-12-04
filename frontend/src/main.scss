@@ -248,17 +248,23 @@ h2 {
     }
 
     .atb {
-      padding-left: 1rem;
 
       span {
         color: var(--blackColor);
         font-size: 13px;
         cursor: pointer;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
 
         &:hover {
           color: var(--PrimaryColor);
           font-size: 700;
         }
+      }
+
+      .signUp {
+        height: 100%;
+        border-left: 1px solid var(--boderColor);
       }
     }
   }
