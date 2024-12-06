@@ -4,6 +4,9 @@ import { FaPlane } from "react-icons/fa";
 function FlightInfoResult() {
   return (
     <div className='flightInfoResult'>
+        <div className='cancelBut'>
+            <button>Huỷ vé</button>
+        </div>
         <div className="header">
             <div className='basicInfo'>
                 <div className="nameCus">

@@ -8,6 +8,8 @@ import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
 import SearchResults from "./Pages/SearchResult/SearchResults";
 import FlightInfo from "./Pages/FlightInfo/FlightInfo";
 import TicketSuccess from "./Pages/TicketSuccess/TicketSuccess";
+import CancelFlight from "./Pages/CancelFlight/CancelFlight";
+
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -34,6 +36,10 @@ export default function useRouteElement() {
     {
       path: "/TicketSuccess",
       element: <TicketSuccess />,
+    },
+    {
+      path: "/CancelFlight",
+      element: <CancelFlight />,
     },
   ]);
   return routeElement;

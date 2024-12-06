@@ -1,7 +1,7 @@
 import React from 'react'
 import "./FlightInfo.scss"
 import FlightInfoResult from './FlightInfoResult'
-import NoExistFlight from './NoExistFlight'
+import NotExistFlight from '../../CommonComponents/NotExistFlight'
 
 //Find & Show ticket info
 function FlightInfo() {
@@ -30,7 +30,7 @@ function FlightInfo() {
       </div>
 
       <FlightInfoResult/>
-      <NoExistFlight/>
+      <NotExistFlight/>
     </div>
   )
 }
