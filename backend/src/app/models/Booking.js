@@ -37,6 +37,9 @@ const bookingSchema = new Schema(
       full_name: { type: String },
       email: { type: String },
       phone: { type: String },
+      gender: { type: String },
+      id_number: { type: String },
+      address: { type: String },
     },
   },
   {

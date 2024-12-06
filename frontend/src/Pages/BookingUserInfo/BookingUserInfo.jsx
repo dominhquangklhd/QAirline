@@ -16,36 +16,59 @@ export default function BookingUserInfo() {
     country: "Việt Nam",
     phone: "",
     email: "",
-    idType: "",
     idNumber: "",
-    idCountry: "Việt Nam",
-    idExpiry: "",
     address: "",
   });
+
+  const formatFlightDateTime = (departureTime, arrivalTime) => {
+    const departure = new Date(departureTime);
+    const arrival = new Date(arrivalTime);
+
+    const formatDate = (date) => {
+      return date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+    };
+
+    const formatTime = (date) => {
+      return date.toLocaleTimeString("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+      });
+    };
+
+    return `${formatDate(departure)} | ${formatTime(departure)} - ${formatTime(
+      arrival
+    )}`;
+  };
+
   const handleSubmit = async () => {
     const bookingData = {
-      flight_id: outbound.id,
+      flight_id: outbound._id,
       total_amount: totalAmount,
       guest_info: {
         full_name: `${formData.firstName} ${formData.lastName}`,
         email: formData.email,
         phone: formData.phone,
         gender: formData.gender,
-        birth_date: formData.birthDate,
-        id_type: formData.idType,
         id_number: formData.idNumber,
         address: formData.address,
       },
       status: "pending",
     };
+    console.log("Booking data:", bookingData);
 
     if (returnFlight) {
       bookingData.return_flight_id = returnFlight.id;
     }
     try {
       const response = await axios.post("/bookings/createBooking", bookingData);
-      // navigate("/booking-confirmation");
+      navigate("/TicketSuccess", { state: response });
       console.log("Booking successful:", response);
+      alert("Đặt vé thành công!");
     } catch (error) {
       console.error("Booking failed:", error);
       alert("Đặt vé thất bại. Vui lòng thử lại.");
@@ -68,12 +91,12 @@ export default function BookingUserInfo() {
           </div>
         </div>
 
-        <div className="passenger-type">
+        {/* <div className="passenger-type">
           <div className="type-selector">
             <img src="/adult-icon.png" alt="Adult" />
             <span>Người lớn</span>
           </div>
-        </div>
+        </div> */}
 
         <div className="form-container">
           <div className="gender-group">
@@ -172,7 +195,7 @@ export default function BookingUserInfo() {
             <div className="form-group full-width">
               <input
                 type="text"
-                placeholder="CCCĐ/CMND/Hộ chiếu*"
+                placeholder="CCCD/CMND/Hộ chiếu*"
                 value={formData.idNumber}
                 onChange={(e) =>
                   setFormData({ ...formData, idNumber: e.target.value })
@@ -185,6 +208,9 @@ export default function BookingUserInfo() {
             <input type="text" placeholder="Nơi ở hiện tại" />
           </div>
 
+          <div className="payment">
+            <div>QR- Chọn phương thức thanh toán</div>
+          </div>
           <div className="terms-section">
             <label className="checkbox-item">
               <button className="btn-submit" onClick={handleSubmit}>
@@ -202,24 +228,41 @@ export default function BookingUserInfo() {
 
           <div className="flight-info">
             <h4>Chuyến đi</h4>
-            <div className="price">3.812.600 VND</div>
+            <div className="price">
+              {outbound.price.toLocaleString() + " VND"}
+            </div>
             <div className="route">
               <div className="route-info">
-                <span>Tp. Hồ Chí Minh (SGN)</span>
+                <span>
+                  {outbound.origin_airport_id.city +
+                    " (" +
+                    outbound.origin_airport_id.city +
+                    ")"}
+                </span>
                 <span className="arrow">→</span>
                 <br />
-                <span>Hà Nội (HAN)</span>
+                <span>
+                  {outbound.destination_airport_id.city +
+                    " (" +
+                    outbound.destination_airport_id.city +
+                    ")"}
+                </span>
               </div>
-              <div className="date-time">14/02/2024 | 05:20 - 07:30</div>
+              <div className="date-time">
+                {formatFlightDateTime(
+                  outbound.scheduled_arrival,
+                  outbound.scheduled_departure
+                )}
+              </div>
             </div>
             <div className="price-breakdown">
               <div className="price-item">
                 <span>Giá vé</span>
-                <span>3.229.200 VND</span>
+                <span>{outbound.price.toLocaleString() + " VND"}</span>
               </div>
               <div className="price-item">
                 <span>Thuế, phí</span>
-                <span>583.400 VND</span>
+                <span>{(outbound.price * 0.05).toLocaleString() + " VND"}</span>
               </div>
               <div className="price-item">
                 <span>Dịch vụ</span>
@@ -228,37 +271,72 @@ export default function BookingUserInfo() {
             </div>
           </div>
 
-          <div className="flight-info">
-            <h4>Chuyến về</h4>
-            <div className="price">3.834.200 VND</div>
-            <div className="route">
-              <div className="route-info">
-                <span>Hà Nội (HAN)</span>
-                <span className="arrow">→</span>
-                <span>Tp. Hồ Chí Minh (SGN)</span>
+          {returnFlight && (
+            <div className="flight-info">
+              <h4>Chuyến về</h4>
+              <div className="price">{returnFlight?.price}</div>
+              <div className="route">
+                <div className="route-info">
+                  <span>
+                    {" "}
+                    {returnFlight?.origin_airport_id.city +
+                      " (" +
+                      returnFlight?.origin_airport_id.city +
+                      ")"}
+                  </span>
+                  <span className="arrow">→</span>
+                  <span>
+                    {" "}
+                    {returnFlight?.destination_airport_id.city +
+                      " (" +
+                      returnFlight?.destination_airport_id.city +
+                      ")"}
+                  </span>
+                </div>
+                <div className="date-time">
+                  {" "}
+                  {formatFlightDateTime(
+                    returnFlight?.scheduled_arrival,
+                    returnFlight?.scheduled_departure
+                  )}
+                </div>
               </div>
-              <div className="date-time">15/02/2024 | 05:30 - 07:40</div>
+              <div className="price-breakdown">
+                <div className="price-item">
+                  <span>Giá vé</span>
+                  <span>{returnFlight?.price} VND</span>
+                </div>
+                <div className="price-item">
+                  <span>Thuế, phí</span>
+                  <span>
+                    {(returnFlight?.price * 0.05).toLocaleString + "VND"}
+                  </span>
+                </div>
+                <div className="price-item">
+                  <span>Dịch vụ</span>
+                  <span>0 VND</span>
+                </div>
+              </div>
             </div>
-            <div className="price-breakdown">
-              <div className="price-item">
-                <span>Giá vé</span>
-                <span>3.250.800 VND</span>
-              </div>
-              <div className="price-item">
-                <span>Thuế, phí</span>
-                <span>583.400 VND</span>
-              </div>
-              <div className="price-item">
-                <span>Dịch vụ</span>
-                <span>0 VND</span>
-              </div>
+          )}
+          {!returnFlight && (
+            <div className="total">
+              <span>Tổng tiền</span>
+              <span className="total-amount">
+                {outbound?.price + outbound?.price * 0.05}
+              </span>
             </div>
-          </div>
-
-          <div className="total">
-            <span>Tổng tiền</span>
-            <span className="total-amount">7.646.800 VND</span>
-          </div>
+          )}
+          {returnFlight && (
+            <div className="total">
+              <span>Tổng tiền</span>
+              <span className="total-amount">
+                {outbound?.price +
+                  returnFlight?.price +
+                  (outbound?.price + returnFlight?.price) * 0.05}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
