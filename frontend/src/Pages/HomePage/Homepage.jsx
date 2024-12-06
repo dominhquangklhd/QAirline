@@ -16,14 +16,9 @@ function HomePage() {
       smoothScrollTo(flightSearchRef);
     }
   };
-  const bg = {
-    backgroundImage: "url('/assets/bg2.jpg')",
-    backgroundSize: "contain", // Đảm bảo ảnh phủ kín container
-    // backgroundPosition: "", // Căn ảnh ở chính giữa
-    backgroundRepeat: "no-repeat", // Ngăn lặp lại hình ảnh
-  };
+
   return (
-    <div style={bg}>
+    <div>
       <Navbar onSearchClick={handleScrollToFlightSearch} />
       <Home />
       <FlightSearch ref={flightSearchRef} />
@@ -39,8 +34,7 @@ function HomePage() {
 const smoothScrollTo = (targetRef) => {
   const targetElement = targetRef.current;
   const startPosition = window.pageYOffset;
-  const targetPosition =
-    targetElement.getBoundingClientRect().top + window.pageYOffset;
+  const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
   const distance = targetPosition - startPosition;
   const duration = 1000; // thời gian cuộn (1 giây)
   let startTime = null;
@@ -64,5 +58,6 @@ const smoothScrollTo = (targetRef) => {
 
   requestAnimationFrame(scrollAnimation);
 };
+
 
 export default HomePage;
