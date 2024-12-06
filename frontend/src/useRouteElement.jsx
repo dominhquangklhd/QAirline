@@ -9,6 +9,9 @@ import SearchResults from "./Pages/SearchResult/SearchResults";
 import FlightInfo from "./Pages/FlightInfo/FlightInfo";
 import TicketSuccess from "./Pages/TicketSuccess/TicketSuccess";
 import CancelFlight from "./Pages/CancelFlight/CancelFlight";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+import RegisterPage from "./Pages/RegisterPage/RegisterPage";
+import ForgotPW from "./Pages/RegisterPage/ForgotPW";
 
 export default function useRouteElement() {
   const routeElement = useRoutes([
@@ -40,6 +43,18 @@ export default function useRouteElement() {
     {
       path: "/CancelFlight",
       element: <CancelFlight />,
+    },
+    {
+      path: "/LoginPage",
+      element: <LoginPage />,
+    },
+    {
+      path: "/RegisterPage",
+      element: <RegisterPage />,
+    },
+    {
+      path: "/ForgotPW",
+      element: <ForgotPW />,
     },
   ]);
   return routeElement;

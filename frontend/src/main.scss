@@ -127,7 +127,6 @@ h2 {
 .navBar {
   position: absolute;
   left: 0;
-  flex-direction: column;
   width: 100%;
   background-image: url(/frontend/public/assets/bg.jpg);
 
@@ -317,7 +316,7 @@ h2 {
     border-radius: 25px; /* Làm tròn góc nếu cần */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Đường viền mờ xám */
     transition: transform 0.5s ease, box-shadow 0.5s ease;
-    z-index: 1000;
+    z-index: 500;
 
     &:hover {
       cursor: pointer;

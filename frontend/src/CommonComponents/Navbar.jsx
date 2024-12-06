@@ -2,8 +2,10 @@ import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from 'prop-types'; 
 import { useNavigate } from "react-router-dom";
+import LoginPage from "../Pages/LoginPage/LoginPage";
 
-const Navbar = ({ onSearchClick  }) => {
+
+const Navbar = ({ onSearchClick }) => {
   let login = false;
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ const Navbar = ({ onSearchClick  }) => {
         </div>
 
         <div className="atb flex">
-          {!login ? <span>Đăng nhập</span> : <span>Đăng xuất</span>}
+          {!login ? <span onClick={() => navigateTo("/LoginPage")}>Đăng nhập</span> : <span>Đăng xuất</span>}
           <span className="signUp">Đăng ký</span>
         </div>
       </div>
