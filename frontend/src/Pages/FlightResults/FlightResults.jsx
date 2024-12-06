@@ -8,7 +8,7 @@ const FlightResults = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { searchResults, searchParams } = location.state || {};
-
+  console.log("searchResults", searchResults);
   // State để lưu chuyến bay được chọn
   const [selectedOutbound, setSelectedOutbound] = useState(null);
   const [selectedReturn, setSelectedReturn] = useState(null);

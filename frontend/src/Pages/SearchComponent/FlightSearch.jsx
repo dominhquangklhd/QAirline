@@ -92,6 +92,7 @@ const FlightSearch = forwardRef((props, ref) => {
       const outboundResponse = await axios.get("/flights/search", {
         params: outboundParams,
       });
+      console.log("outboundResponse", outboundResponse);
       outboundFlight = outboundResponse;
 
       // Nếu là khứ hồi, tìm thêm chuyến bay về
@@ -196,10 +197,10 @@ const FlightSearch = forwardRef((props, ref) => {
                 autoComplete="off"
               />
               <button
-              id="swap-button"
-              type="button"
-              onClick={handleSwapLocations}
-              className="swap-button"
+                id="swap-button"
+                type="button"
+                onClick={handleSwapLocations}
+                className="swap-button"
               >
                 ⇄
               </button>
@@ -307,13 +308,10 @@ const FlightSearch = forwardRef((props, ref) => {
         </div>
 
         <div className="row3">
-          <div className="row3-1">
-          </div>
+          <div className="row3-1"></div>
           <div className="row3-2">
             <div className="input-r3-btn">
-              <button type="submit">
-                Tìm chuyến bay
-              </button>
+              <button type="submit">Tìm chuyến bay</button>
             </div>
           </div>
         </div>

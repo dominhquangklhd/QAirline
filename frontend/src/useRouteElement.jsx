@@ -7,6 +7,7 @@ import Homepage from "./Pages/HomePage/HomePage";
 import BookingUserInfo from "./Pages/BookingUserInfo/BookingUserInfo";
 import SearchResults from "./Pages/SearchResult/SearchResults";
 import FlightInfo from "./Pages/FlightInfo/FlightInfo";
+import TicketSuccess from "./Pages/TicketSuccess/TicketSuccess";
 import CancelFlight from "./Pages/CancelFlight/CancelFlight";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
@@ -34,6 +35,10 @@ export default function useRouteElement() {
     {
       path: "/FlightInfo",
       element: <FlightInfo />,
+    },
+    {
+      path: "/TicketSuccess",
+      element: <TicketSuccess />,
     },
     {
       path: "/CancelFlight",
