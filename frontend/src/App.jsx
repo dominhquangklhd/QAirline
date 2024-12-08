@@ -1,17 +1,40 @@
 import "./App.css";
+import { useRef } from 'react';
+import { useNavigate } from "react-router-dom";
 import useRouteElement from "./useRouteElement";
-import Header from "./CommonComponents/Header";
+import Navbar from "./CommonComponents/Navbar";
 import Footer from "./CommonComponents/Footer";
-// import Home from "./Pages/HomePage/Home";
-import HomePage from "./Pages/HomePage/Homepage";
+import HomePage from "./Pages/HomePage/HomePage";
+import { smoothScrollTo } from "./CommonFunctions/SmoothScroll";
+import LoginPage from "./Pages/LoginPage/LoginPage";
+
 function App() {
   const routeElement = useRouteElement();
+  const navigate = useNavigate();
+  const isHomePage = routeElement.props.children.type === HomePage;
+  const isLoginPage = routeElement.props.children.type === LoginPage;
+
+  const flightSearchRef = useRef(null);
+  const handleScrollToFlightSearch = () => {
+    if (flightSearchRef.current) {
+      smoothScrollTo(flightSearchRef);
+    }
+  };
+
+  const handleNavbarSearchClick = () => {
+    if (isHomePage) {
+      handleScrollToFlightSearch();
+    } else {
+      // Điều hướng đến HomePage và cuộn xuống
+      navigate("/", { state: { scrollToFlightSearch: true } });
+    }
+  };
+
   return (
     <div>
-      {routeElement.props.children.type === HomePage ? null : <Header />}
-      {/* {console.log(routeElement)} */}
-      {routeElement}
-      <Footer />
+        <Navbar onSearchClick={handleNavbarSearchClick} />
+        {isHomePage ? <HomePage flightSearchRef={flightSearchRef} /> : routeElement}
+        <Footer />
     </div>
   );
 }

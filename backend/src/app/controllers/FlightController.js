@@ -30,6 +30,25 @@ class FlightController {
       res.status(500).json({ message: error.message });
     }
   }
+  async getAllAirports(req, res) {
+    try {
+      console.log("Fetching airports from database...");
+
+      const airports = await Airport.find().lean();
+
+      console.log("Found airports:", airports.length);
+      if (!airports.length) {
+        return res.status(404).json({
+          message: "Không tìm thấy sân bay nào trong database",
+        });
+      }
+
+      res.json(airports);
+    } catch (error) {
+      console.error("Error fetching airports:", error);
+      res.status(500).json({ message: error.message });
+    }
+  }
 
   async searchFlights(req, res) {
     try {
@@ -42,30 +61,22 @@ class FlightController {
         });
       }
 
-      // Tìm ObjectId của sân bay xuất phát và đến dựa trên airportCode
-      const originAirport = await Airport.findOne({ airport_code: origin });
-      if (!originAirport) {
-        return res.status(404).json({
-          message: "Không tìm thấy sân bay xuất phát " + originAirport,
-        });
-      }
-      const originAirportId = originAirport._id;
+      // Xây dựng query tìm kiếm với populate conditions
+      let query = {};
 
-      const destinationAirport = await Airport.findOne({
-        airport_code: destination,
-      });
-      if (!destinationAirport) {
-        return res.status(404).json({
-          message: "Không tìm thấy sân bay đến",
-        });
-      }
-      const destinationAirportId = destinationAirport._id;
-
-      // Xây dựng query tìm kiếm
-      const query = {
-        origin_airport_id: originAirportId,
-        destination_airport_id: destinationAirportId,
-      };
+      // Thêm điều kiện tìm kiếm cho populate
+      const populateOptions = [
+        {
+          path: "origin_airport_id",
+          match: { airport_code: origin },
+          select: "airport_code airport_name city",
+        },
+        {
+          path: "destination_airport_id",
+          match: { airport_code: destination },
+          select: "airport_code airport_name city",
+        },
+      ];
 
       // Kiểm tra ngày đi (date) và tạo phạm vi ngày tìm kiếm
       if (date) {
@@ -74,35 +85,30 @@ class FlightController {
         const nextDay = new Date(searchDate);
         nextDay.setDate(nextDay.getDate() + 1);
 
-        query.scheduledDeparture = {
-          $gte: searchDate, // Chuyến bay phải có giờ khởi hành lớn hơn hoặc bằng ngày tìm kiếm
-          $lt: nextDay, // Và nhỏ hơn ngày tiếp theo
+        query.scheduled_departure = {
+          $gte: searchDate,
+          $lt: nextDay,
         };
       }
 
-      // Tìm chuyến bay với điều kiện truy vấn
+      // Tìm tất cả chuyến bay và populate thông tin sân bay
       const flights = await Flight.find(query)
-        .populate({
-          path: "origin_airport_id",
-          select: "airport_code airport_name city", // Lấy các trường cần thiết từ Airport
-        })
-        .populate({
-          path: "destination_airport_id",
-          select: "airport_code airport_name city", // Lấy các trường cần thiết từ Airport
-        })
+        .populate(populateOptions[0])
+        .populate(populateOptions[1])
         .lean();
 
-      if (!flights.length) {
+      // Lọc kết quả sau khi populate để chỉ lấy các chuyến bay phù hợp
+      const filteredFlights = flights.filter(
+        (flight) => flight.origin_airport_id && flight.destination_airport_id
+      );
+
+      if (!filteredFlights.length) {
         return res.status(404).json({
-          message:
-            "Không tìm thấy chuyến bay nào phù hợp với tiêu chí tìm kiếm " +
-            query.origin_airport_id +
-            " -> " +
-            query.destination_airport_id,
+          message: `Không tìm thấy chuyến bay nào phù hợp với tiêu chí tìm kiếm ${origin} -> ${destination}`,
         });
       }
 
-      res.json(flights);
+      res.json(filteredFlights);
     } catch (error) {
       console.error("Error searching flights:", error);
       res.status(500).json({ message: error.message });

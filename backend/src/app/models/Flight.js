@@ -44,6 +44,12 @@ const flightSchema = new Schema({
     required: true,
     min: 0,
   },
+  available_seats : {
+    type: Number,
+    required: true,
+    min: 0,
+  }
+  
 });
 // Indexes for flight search
 // flightSchema.index({ flightNumber: 1 });
