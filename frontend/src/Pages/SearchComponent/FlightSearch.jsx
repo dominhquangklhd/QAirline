@@ -23,6 +23,8 @@ const FlightSearch = forwardRef((props, ref) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
+        console.log('atFetchCities');
+        
         const response = await axios.get("/flights/airports"); // Endpoint API
         // console.log(response);
         const formattedData = response.map((airport) => ({
