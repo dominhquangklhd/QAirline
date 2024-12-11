@@ -64,6 +64,7 @@ function AddAircraft({ onAddAircraft }) {
                 <button className="addButton" onClick={handleAddAircraft}>
                     Thêm tàu bay
                 </button>
+                {/* <button className='cancelButton' onClick={}>Huỷ</button> */}
             </div>
         </div>
     );

@@ -1,0 +1,120 @@
+.flightInfo {
+    padding-top: 9rem;
+
+    .searchBarContainer {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .searchInput {
+        flex: 1;
+        /* Chiếm toàn bộ không gian trống còn lại */
+        padding: 8px 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        /* Đường viền */
+        border-radius: 4px;
+        /* Bo góc */
+    }
+
+    .searchInput:focus {
+        outline: none;
+        /* Loại bỏ viền mặc định */
+        border-color: #007bff;
+        /* Đổi màu viền khi focus */
+        box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+        /* Hiệu ứng focus */
+    }
+
+    .addButton {
+        padding: 8px 16px;
+        font-size: 16px;
+        font-weight: bold;
+        color: white;
+        background-color: #E6B441;
+        /* Màu xanh cho nút */
+        border: none;
+        /* Loại bỏ viền */
+        border-radius: 4px;
+        /* Bo góc */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .addButton:hover {
+        background-color: #cfa23a;
+        // background-color: #0056b3; /* Màu tối hơn khi hover */
+    }
+
+    .findButton {
+        background-color: #007bff;
+    }
+
+    .findButton:hover {
+        background-color: #0056b3;
+    }
+}
+
+.flightResult {
+    padding-top: 2rem;
+    padding-bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .content {
+
+        .editButton {
+            cursor: pointer;
+        }
+
+        ul li {
+            padding: 5px;
+        }
+
+        ul li span {
+            font-weight: 550;
+        }
+    }
+}
+
+.addFlightForm {
+    width: 100%;
+
+    .addContent {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+
+        input {
+            width: 300px;
+        }
+    }
+}
+
+.flightTable {
+    width: 100%;
+    overflow-x: auto;
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        padding: 8px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f4f4f4;
+    }
+}

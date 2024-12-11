@@ -3,7 +3,9 @@ import "./HomeAdmin.scss"
 
 function HomeAdmin() {
   return (
-    <div className='homeAdmin'>HomeAdmin</div>
+    <div className='homeAdmin'>
+      
+    </div>
   )
 }
 
