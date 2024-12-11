@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 import Home from "./Home";
@@ -11,8 +11,9 @@ import Travelers from "./Travelers";
 import Subscribers from "./Subscribers";
 import Post from "./Post";
 import { smoothScrollTo } from "../../CommonFunctions/SmoothScroll";
+import HotFlights from "./HotFlights";
 
-function HomePage({ flightSearchRef }) {
+function HomePage({ flightSearchRef, hotFlightClick, flightData }) {
   const location = useLocation();
 
   useEffect(() => {
@@ -24,8 +25,9 @@ function HomePage({ flightSearchRef }) {
   return (
     <div>
       <Home />
-      <FlightSearch ref={flightSearchRef} />
+      <FlightSearch ref={flightSearchRef} flightData={flightData}/>
       <Post />
+      <HotFlights hotFlightClick={hotFlightClick}/>
       <Support />
       {/* <Info />
       <Lounge /> */}
@@ -39,6 +41,8 @@ HomePage.propTypes = {
   flightSearchRef: PropTypes.shape({
     current: PropTypes.any, // `current` thường là DOM element hoặc null
   }),
+  hotFlightClick: PropTypes.func.isRequired,
+  flightData: PropTypes.any,
 };
 
 export default HomePage;

@@ -16,7 +16,8 @@ function App() {
   const routeAdmin = useRouteAdmin();
   const navigate = useNavigate();
   const isHomePage = routeElement?.props?.children.type === HomePage;
-  var isAdminPage = useState(true);
+  const [isAdminPage, setIsAdminPage] = useState(false);
+  const [flightData, setFlightData] = useState(null);
 
   const flightSearchRef = useRef(null);
   const handleScrollToFlightSearch = () => {
@@ -34,6 +35,11 @@ function App() {
     }
   };
 
+  const handleHotFlightClick = (flightData) => {
+    handleScrollToFlightSearch();
+    setFlightData(flightData);
+  }
+
   return (
     <div>
       {isAdminPage
@@ -44,7 +50,7 @@ function App() {
         :
         <>
           <Navbar onSearchClick={handleNavbarSearchClick} />
-          {isHomePage ? <HomePage flightSearchRef={flightSearchRef} /> : routeElement}
+          {isHomePage ? <HomePage flightSearchRef={flightSearchRef} hotFlightClick={handleHotFlightClick} flightData={flightData}/> : routeElement}
           <Footer />
         </>
       }
