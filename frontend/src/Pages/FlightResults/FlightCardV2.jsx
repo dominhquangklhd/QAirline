@@ -29,7 +29,7 @@ function FlightCardV2({ flight, onSelect, isSelected }) {
     <div className={`flight-card2 ${isSelected ? "selected" : ""}`}>
       <div className="flight-info2">
         <div className="details2">
-          <img src="./assets/logo.png" alt="" className="logoCard" />
+          <img src="./assets/Qlogo.png" alt="" className="logoCard" />
           <div className="text">
             <p>
               <strong className="name">{flight_number} - </strong>
