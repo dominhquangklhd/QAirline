@@ -1,15 +1,15 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import Home from './Home';
-import FlightSearch from '../SearchComponent/FlightSearch';
-import Support from './Support';
-import Info from './Info';
-import Lounge from './Lounge';
-import Travelers from './Travelers';
-import Subscribers from './Subscribers';
-
+import Home from "./Home";
+import FlightSearch from "../SearchComponent/FlightSearch";
+import Support from "./Support";
+import Info from "./Info";
+import Lounge from "./Lounge";
+import Travelers from "./Travelers";
+import Subscribers from "./Subscribers";
+import Post from "./Post";
 import { smoothScrollTo } from "../../CommonFunctions/SmoothScroll";
 
 function HomePage({ flightSearchRef }) {
@@ -25,9 +25,10 @@ function HomePage({ flightSearchRef }) {
     <div>
       <Home />
       <FlightSearch ref={flightSearchRef} />
+      <Post />
       <Support />
-      <Info />
-      <Lounge />
+      {/* <Info />
+      <Lounge /> */}
       <Travelers />
       <Subscribers />
     </div>
