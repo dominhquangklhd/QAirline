@@ -1,14 +1,49 @@
-import React, { useState } from 'react';
-import './LoginPage.scss';
-import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
+import "./LoginPage.scss";
+import { useNavigate } from "react-router-dom";
+import axios from "../../Apis/axios";
+import { useAuth } from "../../Context/AuthProvider";
 function LoginPage() {
+  const { login } = useAuth();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
-  const navigateTo = ( endpoint ) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("/auth/login", formData);
+      console.log(response);
+      login(response);
+
+      // Reset form và error
+      setError("");
+      setFormData({ email: "", password: "" });
+
+      // Chuyển hướng sau khi đăng nhập thành công
+
+      navigate("/");
+    } catch (error) {
+      setError(error.response?.data?.message || "Đã có lỗi xảy ra");
+    }
+  };
+
+  const navigateTo = (endpoint) => {
     navigate(endpoint);
-  }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -18,40 +53,55 @@ function LoginPage() {
     <div className="login flightInfo">
       <div className="content login-content">
         <h2>Đăng nhập</h2>
-        <div className="content-fill col">
-          <div className="input-area">
-            <input type="text" placeholder=" " />
-            <label htmlFor="">Email/Số điện thoại</label>
+        {error && <div className="error-message">{error}</div>}
+        <form onSubmit={handleLogin}>
+          <div className="content-fill col">
+            <div className="input-area">
+              <input
+                autoFocus
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
+                placeholder=" "
+              />
+              <label>Tên đăng nhập</label>
+            </div>
+
+            <div className="input-area">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleInputChange}
+                placeholder=" "
+                className="input-pw"
+              />
+              <label>Mật khẩu</label>
+              <img
+                src={
+                  showPassword
+                    ? "./assets/eye-open.png"
+                    : "./assets/eye-close.png"
+                }
+                alt="Toggle Password Visibility"
+                className="eye"
+                onClick={togglePasswordVisibility}
+              />
+            </div>
           </div>
 
-          <div className="input-area">
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder=" "
-              className="input-pw"
-            />
-            <label htmlFor="">Mật khẩu</label>
-            <img
-              src={
-                showPassword
-                  ? './assets/eye-open.png'
-                  : './assets/eye-close.png'
-              }
-              alt="Toggle Password Visibility"
-              className="eye"
-              onClick={togglePasswordVisibility}
-            />
+          <div className="forgot-pw">
+            <span className="su" onClick={() => navigateTo("/RegisterPage")}>
+              Đăng ký
+            </span>
+            <span onClick={() => navigateTo("/ForgotPW")}>Quên mật khẩu</span>
           </div>
-        </div>
 
-        <div className="forgot-pw">
-          <span className='su' onClick={() => navigateTo("/RegisterPage")}>Đăng ký</span>
-          <span onClick={() => navigateTo("/ForgotPW")}>Quên mật khẩu</span>
-        </div>
-        
-        <div className='findingBut'>
-          <button>Đăng nhập</button>
-        </div>
+          <div className="findingBut">
+            <button type="submit">Đăng nhập</button>
+          </div>
+        </form>
       </div>
     </div>
   );

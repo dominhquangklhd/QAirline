@@ -5,7 +5,7 @@ const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
-
+    
     // Log collections
 
     // const AirPorts = mongoose.connection.collection("AirPorts");

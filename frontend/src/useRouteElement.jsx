@@ -12,7 +12,8 @@ import CancelFlight from "./Pages/CancelFlight/CancelFlight";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import ForgotPW from "./Pages/RegisterPage/ForgotPW";
-
+import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin";
+import AircraftInfo from "./AdminPages/AircraftInfo/AircraftInfo";
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -55,6 +56,14 @@ export default function useRouteElement() {
     {
       path: "/ForgotPW",
       element: <ForgotPW />,
+    },
+    {
+      path: "/AircraftInfo",
+      element: <AircraftInfo />,
+    },
+    {
+      path: "/HomeAdmin",
+      element: <HomeAdmin />,
     },
   ]);
   return routeElement;
