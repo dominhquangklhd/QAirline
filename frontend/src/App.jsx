@@ -29,6 +29,11 @@ function App() {
     }
   };
 
+  const handleHotFlightClick = (flightData) => {
+    handleScrollToFlightSearch();
+    setFlightData(flightData);
+  }
+
   return (
     
     <div>
