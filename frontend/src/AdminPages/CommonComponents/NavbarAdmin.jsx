@@ -20,7 +20,7 @@ const NavbarAdmin = () => {
 
         <ul className="items flex">
           <li className="listItem" onClick={() => navigateTo("/")}>Trang chủ</li>
-          <li className="listItem" onClick={() => navigateTo("/")}>Đăng thông tin</li>
+          <li className="listItem" onClick={() => navigateTo("/Posts")}>Đăng thông tin</li>
           <li className="listItem" onClick={() => navigateTo("/AircraftInfo")}>Tàu bay</li>
           <li className="listItem" onClick={() => navigateTo("/FlightInfo")}>Chuyến bay</li>
           <li className="listItem" onClick={() => navigateTo("/")}>Vé</li>

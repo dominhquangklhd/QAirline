@@ -2,6 +2,7 @@ import { useRoutes } from "react-router-dom";
 import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin"
 import AircraftInfo from "./AdminPages/AircraftInfo/AircraftInfo";
 import FlightInfo from "./AdminPages/FlightInfo/FlightInfo";
+import Posts from "./AdminPages/Posts/Posts";
 
 export default function useRouteElement() {
     const routeAdmin = useRoutes([
@@ -16,6 +17,10 @@ export default function useRouteElement() {
         {
             path: "/FlightInfo",
             element: <FlightInfo />,
+        },
+        {
+            path: "/Posts",
+            element: <Posts />,
         },
     ]);
     return routeAdmin;
