@@ -1,9 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./LoginPage.scss";
 import { useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { useAuth } from "../../Context/AuthProvider";
+import { toast } from "react-toastify";
 function LoginPage() {
+  const input1Ref = useRef(null);
+  const input2Ref = useRef(null);
+  useEffect(() => {
+    input1Ref.current.focus();
+
+    const timer = setTimeout(() => {
+      input2Ref.current.focus();
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, []);
   const { login } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
@@ -27,8 +39,15 @@ function LoginPage() {
     try {
       const response = await axios.post("/auth/login", formData);
       console.log(response);
-      login(response);
 
+      if (!response.token) {
+        setError("Mật khẩu không trùng khớp");
+        return;
+      }
+      if (response) {
+        toast.success("Đăng nhập thành công!");
+      }
+      login(response);
       // Reset form và error
       setError("");
       setFormData({ email: "", password: "" });
@@ -58,7 +77,7 @@ function LoginPage() {
           <div className="content-fill col">
             <div className="input-area">
               <input
-                autoFocus
+                ref={input1Ref}
                 type="text"
                 name="email"
                 value={formData.email}
@@ -70,6 +89,7 @@ function LoginPage() {
 
             <div className="input-area">
               <input
+                ref={input2Ref}
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
@@ -99,7 +119,7 @@ function LoginPage() {
           </div>
 
           <div className="findingBut">
-            <button type="submit">Đăng nhập</button>
+            <button>Đăng nhập</button>
           </div>
         </form>
       </div>

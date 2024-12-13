@@ -41,7 +41,7 @@ HomePage.propTypes = {
   flightSearchRef: PropTypes.shape({
     current: PropTypes.any, // `current` thường là DOM element hoặc null
   }),
-  hotFlightClick: PropTypes.func.isRequired,
+  hotFlightClick: PropTypes.func,
   flightData: PropTypes.any,
 };
 

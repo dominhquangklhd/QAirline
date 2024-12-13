@@ -15,22 +15,23 @@ class AuthController {
           .status(400)
           .json({ message: "Email hoặc username đã tồn tại" });
       }
-
+      console.log("chưa có user nào trùng");
       // Create new user
       const user = new User({
         email,
         password: await bcrypt.hash(password, 10),
         role: "user",
       });
-
+      console.log("đã tạo user");
       await user.save();
-
+      console.log("đã lưu user");
       // Generate token
       const token = jwt.sign(
         { id: user._id, role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: "24h" }
       );
+      console.log("đã tạo token");
 
       res.status(201).json({
         accessToken: token,

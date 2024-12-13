@@ -6,12 +6,16 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const parseUsername = function (s) {
+    // Tạo username mặc định, ví dụ từ email
+    return s ? s.split("@")[0] : null;
+  };
   useEffect(() => {
     // Lấy dữ liệu từ Local Storage khi ứng dụng khởi chạy
     const storedUser = JSON.parse(localStorage.getItem("profile"));
     if (storedUser) {
       setIsLoggedIn(true);
-      setUsername(storedUser);
+      setUsername(parseUsername(storedUser));
     }
   }, []);
   const login = (userData) => {
