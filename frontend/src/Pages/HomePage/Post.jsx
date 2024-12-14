@@ -1,10 +1,12 @@
 // LatestNews.jsx
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import CardPost from "./Card_post";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Post.scss";
+import { useNavigate } from "react-router-dom";
+import PostDetails from "./PostDetails";
 
 const Post = () => {
   const sliderRef = useRef(null);
@@ -15,55 +17,64 @@ const Post = () => {
       id: 1,
       title: "Hello",
       subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
+      cover_url: "assets/plane.jpg",
+      content: "This is the content of this blog.",
     },
     {
       id: 2,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
       id: 3,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 4,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 5,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 6,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 7,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 8,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     {
-      id: 3,
+      id: 9,
       title: "Hello",
       subtitle: "blog.subtitle",
       cover_url: "SRC.blog_cover/blog.cover_url",
+      content: "This is the content of this blog.",
     },
     // ... more posts
   ];
@@ -116,9 +127,33 @@ const Post = () => {
   const handleNext = () => sliderRef.current?.slickNext();
   const handlePrev = () => sliderRef.current?.slickPrev();
 
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleShowDetails = (post) => {
+    setSelectedPost(post);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedPost(null);
+  };
+
   return (
     <div className="latest-news">
       <div className="latest-news__container">
+        {isModalOpen && (
+          <div className="modal-overlay" onClick={handleCloseModal}>
+            <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+              <button className="modal-close" onClick={handleCloseModal}>
+                ×
+              </button>
+              <PostDetails post={selectedPost} />
+            </div>
+          </div>
+        )}
+
         <div className="latest-news__header">
           <h1 className="latest-news__title">
             <span>Latest News</span>
@@ -151,6 +186,7 @@ const Post = () => {
                 title={post.title}
                 subtitle={post.subtitle}
                 cover_url={post.cover_url}
+                onClick={() => handleShowDetails(post)} // Chuyển bài viết vào hàm
               />
             ))}
           </Slider>
