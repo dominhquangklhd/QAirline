@@ -220,7 +220,9 @@ class BookingController {
 
   // Get booking by reference (for both guests and registered users)
   async getBookingByReference(req, res) {
+    console.log("Query parameters:", req.query);
     const { bookingId, email } = req.query;
+    console.log("Extracted values:", { bookingId, email });
     try {
       const query = {};
       if (bookingId) {
@@ -236,7 +238,10 @@ class BookingController {
       }
 
       // Tìm kiếm booking
-      const booking = await Booking.findOne(query).populate("flight_id");
+      const booking = await Booking.findOne(query).populate({
+        path: "flight_id",
+        populate: ["origin_airport_id", "destination_airport_id"],
+      });
 
       if (!booking) {
         return res.status(404).json({ message: "Booking not found" });

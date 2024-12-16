@@ -49,6 +49,7 @@ class FlightController {
       res.status(500).json({ message: error.message });
     }
   }
+  
 
   async searchFlights(req, res) {
     try {

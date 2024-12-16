@@ -1,12 +1,13 @@
-import { useState, useRef, forwardRef, useEffect } from "react";
+import { useState, useRef, forwardRef, useImperativeHandle, useEffect } from "react";
 import "./FlightSearch.scss";
 import { FaPlane } from "react-icons/fa";
 import axios from "../../Apis/axios";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
-const FlightSearch = forwardRef((props, ref) => {
+const FlightSearch = forwardRef((flightData, ref) => {
   const navigate = useNavigate();
-  const [tripType, setTripType] = useState("round-trip");
+  const [tripType, setTripType] = useState("one-way");
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
   const [departureDate, setDepartureDate] = useState("");
@@ -19,6 +20,24 @@ const FlightSearch = forwardRef((props, ref) => {
   const [searchResults, setSearchResults] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (flightData.flightData) {
+      console.log(flightData.flightData.city_from);
+      
+      setTripType("one-way");
+      handleCitySelect(
+        "from",
+        `${flightData.flightData.city_from} (${flightData.flightData.airport_from_code})`
+      );
+      handleCitySelect(
+        "to",
+        `${flightData.flightData.city_to} (${flightData.flightData.airport_to_code})`
+      )
+      
+      setDepartureDate(flightData.flightData.date_departure);
+    }
+  }, [flightData.flightData]);
 
   useEffect(() => {
     const fetchCities = async () => {
@@ -323,5 +342,9 @@ const FlightSearch = forwardRef((props, ref) => {
 });
 
 FlightSearch.displayName = "FlightSearch";
+
+FlightSearch.propTypes = {
+  scrollSource: PropTypes.func.isRequired,
+}
 
 export default FlightSearch;
