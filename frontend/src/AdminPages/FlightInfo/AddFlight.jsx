@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import './FlightInfo.scss';
 
 function AddFlight({ onAddFlight }) {
     const [newFlight, setNewFlight] = useState({
@@ -38,60 +39,69 @@ function AddFlight({ onAddFlight }) {
         <div className="addFlightForm">
             <div className="addContent">
                 <h3>Thêm Chuyến Bay</h3>
-                <input
-                    type="text"
-                    placeholder="Mã chuyến bay"
-                    value={newFlight.id}
-                    onChange={(e) => setNewFlight({ ...newFlight, id: e.target.value })}
-                />
-                <input
+                <div className="form-columns">
+                {/* First Column */}
+                <div className="column">
+                    <input
                     type="text"
                     placeholder="Xuất phát từ"
                     value={newFlight.origin_airport_id}
                     onChange={(e) => setNewFlight({ ...newFlight, origin_airport_id: e.target.value })}
-                />
-                <input
+                    />
+                    <input
                     type="text"
                     placeholder="Điểm đến"
                     value={newFlight.destination_airport_id}
                     onChange={(e) => setNewFlight({ ...newFlight, destination_airport_id: e.target.value })}
-                />
-                <input
+                    />
+                    <input
                     type="date"
                     placeholder="Thời gian cất cánh dự kiến"
                     value={newFlight.scheduled_departure}
                     onChange={(e) => setNewFlight({ ...newFlight, scheduled_departure: e.target.value })}
-                />
-                <input
+                    />
+                    <input
                     type="date"
                     placeholder="Thời gian hạ cánh dự kiến"
                     value={newFlight.scheduled_arrival}
                     onChange={(e) => setNewFlight({ ...newFlight, scheduled_arrival: e.target.value })}
-                />
-                <input
+                    />
+                </div>
+                {/* Second Column */}
+                <div className="column">
+                    <input
+                    type="text"
+                    placeholder="Mã chuyến bay"
+                    value={newFlight.id}
+                    onChange={(e) => setNewFlight({ ...newFlight, id: e.target.value })}
+                    />
+                    <input
                     type="text"
                     placeholder="Trạng thái"
                     value={newFlight.status}
                     onChange={(e) => setNewFlight({ ...newFlight, status: e.target.value })}
-                />
-                <input
+                    />
+                    <input
                     type="text"
                     placeholder="Giá vé"
                     value={newFlight.base_price}
                     onChange={(e) => setNewFlight({ ...newFlight, base_price: e.target.value })}
-                />
-                <input
+                    />
+                    <input
                     type="number"
                     placeholder="Số ghế khả dụng"
                     value={newFlight.available_seats}
                     onChange={(e) => setNewFlight({ ...newFlight, available_seats: e.target.value })}
-                />
+                    />
+                </div>
+                </div>
                 <button className="addButton" onClick={handleAddFlight}>
-                    Thêm chuyến bay
+                Thêm chuyến bay
                 </button>
-                {/* <button className='cancelButton' onClick={}>Huỷ</button> */}
+                <button className='cancelButton'>Huỷ</button>
             </div>
         </div>
+
     );
 }
 

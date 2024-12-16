@@ -31,40 +31,46 @@ function AddAircraft({ onAddAircraft }) {
         <div className="addAircraftForm">
             <div className="addContent">
                 <h3>Thêm Tàu Bay</h3>
-                <input
-                    type="text"
-                    placeholder="Mã tàu bay"
-                    value={newAircraft.id}
-                    onChange={(e) => setNewAircraft({ ...newAircraft, id: e.target.value })}
-                />
-                <input
-                    type="text"
-                    placeholder="Nhà sản xuất"
-                    value={newAircraft.manufacturer}
-                    onChange={(e) => setNewAircraft({ ...newAircraft, manufacturer: e.target.value })}
-                />
-                <input
-                    type="text"
-                    placeholder="Mô hình"
-                    value={newAircraft.model}
-                    onChange={(e) => setNewAircraft({ ...newAircraft, model: e.target.value })}
-                />
-                <input
-                    type="number"
-                    placeholder="Tổng số ghế ngồi"
-                    value={newAircraft.total_seats}
-                    onChange={(e) => setNewAircraft({ ...newAircraft, total_seats: e.target.value })}
-                />
-                <input
-                    type="date"
-                    placeholder="Ngày sản xuất"
-                    value={newAircraft.manufacture_date}
-                    onChange={(e) => setNewAircraft({ ...newAircraft, manufacture_date: e.target.value })}
-                />
-                <button className="addButton" onClick={handleAddAircraft}>
-                    Thêm tàu bay
-                </button>
-                {/* <button className='cancelButton' onClick={}>Huỷ</button> */}
+                <div className="form-columns">
+                    <div className="column">
+                        <input
+                            type="text"
+                            placeholder="Mã tàu bay"
+                            value={newAircraft.id}
+                            onChange={(e) => setNewAircraft({ ...newAircraft, id: e.target.value })}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Nhà sản xuất"
+                            value={newAircraft.manufacturer}
+                            onChange={(e) => setNewAircraft({ ...newAircraft, manufacturer: e.target.value })}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Mô hình"
+                            value={newAircraft.model}
+                            onChange={(e) => setNewAircraft({ ...newAircraft, model: e.target.value })}
+                        />
+                    </div>
+                    <div className="column">
+                        <input
+                            type="number"
+                            placeholder="Tổng số ghế ngồi"
+                            value={newAircraft.total_seats}
+                            onChange={(e) => setNewAircraft({ ...newAircraft, total_seats: e.target.value })}
+                        />
+                        <input
+                            type="date"
+                            placeholder="Ngày sản xuất"
+                            value={newAircraft.manufacture_date}
+                            onChange={(e) => setNewAircraft({ ...newAircraft, manufacture_date: e.target.value })}
+                        />
+                        <button className="addButton" onClick={handleAddAircraft}>
+                            Thêm tàu bay
+                        </button>
+                        {/* <button className='cancelButton' onClick={}>Huỷ</button> */}
+                    </div>
+                </div>
             </div>
         </div>
     );

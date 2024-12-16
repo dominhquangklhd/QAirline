@@ -9,6 +9,16 @@ function Posts() {
     const sliderRef = useRef(null);
     const [selectedPost, setSelectedPost] = useState(null);
     const [editingPost, setEditingPost] = useState(null);
+    const [isAddingPost, setIsAddingPost] = useState(false);
+    const [error, setError] = useState("");
+    const [newPost, setNewPost] = useState({
+        id: "",
+        title: "",
+        subtitle: "",
+        content: "",
+        cover_url: "",
+    });
+
 
     const [posts, setPosts] = useState([
         {
@@ -75,13 +85,7 @@ function Posts() {
           content: "Detailed content for the post goes here. You can add more properties from the selected post if needed.",
         },
     ]);
-    const [newPost, setNewPost] = useState({
-        id: posts.length + 1,
-        title: "",
-        subtitle: "",
-        cover_url: "",
-        content: ""
-    });
+
     const settings = {
         dots: posts.length > 5, // Only show dots if more than 5 posts
         speed: 500,
@@ -121,28 +125,25 @@ function Posts() {
             },
         ],
     };
-
-    const handleAddPost = () => {
-        if (newPost.title && newPost.content) {
-            setPosts([...posts, { ...newPost, id: posts.length + 1 }]);
-            setNewPost({
-                id: posts.length + 2,
-                title: "",
-                subtitle: "",
-                cover_url: "",
-                content: ""
-            });
-        } else {
-            alert("Title and Content are required!");
-        }
-    };
-    
     
       // Only show navigation buttons if there are more than 5 posts
     const showNavigation = posts.length > 5;
     // const showNavigation = true;
     const handleNext = () => sliderRef.current?.slickNext();
     const handlePrev = () => sliderRef.current?.slickPrev();
+
+    const handleAddPost = (e) => {
+        e.preventDefault();
+        if (!newPost.title.trim() || !newPost.content.trim()) {
+            setError("Title and content are required!");
+            return;
+        }
+        setPosts([...posts, { ...newPost, id: posts.length + 1 }]); // Add new post
+        setIsAddingPost(false); // Close modal
+        setNewPost({ id: "", title: "", subtitle: "", content: "", cover_url: "" }); // Reset form
+        setError(""); // Clear error
+    };
+    
 
     const handlePostClick = (post) => {
         setSelectedPost(post); // Set the clicked post as selected
@@ -160,23 +161,23 @@ function Posts() {
         setSelectedPost(editingPost);
       };
     
-      const handleDelete = (postId) => {
-        setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
-        setSelectedPost(null);
-        //Delete logic them vao day ...
-      };
+    const handleDelete = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post.id !== postId));
+    setSelectedPost(null);
+    //Delete logic them vao day ...
+    };
     
 
     return (
         <div className="posts">
-            {/* <button className="add-post-button" onClick={() => setShowAddPostForm(true)}>
+            <button className="add-post-button" onClick={() => setIsAddingPost(true)}>
                 Add New Post
-            </button> */}
+            </button>
             <div className="latest-news">
                 <div className="latest-news__container">
                     <div className="latest-news__header">
                         <h1 className="latest-news__title">
-                            <span>Latest News</span>
+                            <span>Latest Posts</span>
                         </h1>
                     </div>
 
@@ -227,6 +228,43 @@ function Posts() {
                         </div>
                     </div>
                 )}
+                {isAddingPost && (
+                    <div className="modal-overlay">
+                        <div className="modal">
+                            <h3>Add New Post</h3>
+                            <form onSubmit={handleAddPost}>
+                                {error && <p className="error-message">{error}</p>}
+                                <input
+                                    type="text"
+                                    value={newPost.title}
+                                    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
+                                    placeholder="Enter Title"
+                                />
+                                <input
+                                    type="text"
+                                    value={newPost.subtitle}
+                                    onChange={(e) => setNewPost({ ...newPost, subtitle: e.target.value })}
+                                    placeholder="Enter Subtitle"
+                                />
+                                <textarea
+                                    value={newPost.content}
+                                    onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
+                                    placeholder="Enter Content"
+                                ></textarea>
+                                <input
+                                    type="text"
+                                    value={newPost.cover_url}
+                                    onChange={(e) => setNewPost({ ...newPost, cover_url: e.target.value })}
+                                    placeholder="Enter Cover URL"
+                                />
+                                <button type="submit">Add</button>
+                                <button onClick={() => setIsAddingPost(false)}>Cancel</button>
+                            </form>
+                        </div>
+                    </div>
+                )}
+
+
                 {editingPost && (
                     <div className="modal-overlay">
                         <div className="modal">
