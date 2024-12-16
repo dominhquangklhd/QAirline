@@ -4,24 +4,6 @@ const Schema = mongoose.Schema;
 
 const bookingSchema = new Schema(
   {
-    customer_info: {
-      name: {
-        type: String,
-        required: true,
-      },
-      email: {
-        type: String,
-        required: true,
-      },
-      phone: {
-        type: String,
-        required: true,
-      },
-      identity_number: {
-        type: String,
-        required: true,
-      },
-    },
     flight_id: {
       type: Schema.Types.ObjectId,
       ref: "Flights",
@@ -44,6 +26,20 @@ const bookingSchema = new Schema(
     cancellation_deadline: {
       type: Date,
       required: true,
+    },
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    }, // Optional for registered users
+    guest_info: {
+      // For non-registered users
+      full_name: { type: String },
+      email: { type: String },
+      phone: { type: String },
+      gender: { type: String },
+      id_number: { type: String },
+      address: { type: String },
     },
   },
   {

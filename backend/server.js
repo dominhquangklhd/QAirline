@@ -10,22 +10,26 @@ const {
   errorHandler,
 } = require("./src/app/middleware/authMiddleware");
 
+const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 const authRoutes = require("./src/routes/authRoutes");
 const flightRoutes = require("./src/routes/flightRoutes");
 const bookingRoutes = require("./src/routes/bookingRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
 const connectDB = require("./src/config/db");
-const app = express();
 
 // Global Middleware
 app.use(helmet()); // Bảo mật HTTP headers
 app.use(morgan("dev")); // Logging
-app.use(
-  cors({
-    origin: process.env.CLIENT_URL,
-    credentials: true,
-  })
-);
+
 app.use(express.json({ limit: "10kb" })); // Giới hạn kích thước body
 app.use(apiLimiter); // Rate limiting
 
