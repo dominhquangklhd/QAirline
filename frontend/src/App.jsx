@@ -16,6 +16,7 @@ import { smoothScrollTo } from "./CommonFunctions/SmoothScroll";
 function App() {
   const routeElement = useRouteElement();
   const navigate = useNavigate();
+  const [flightData, setFlightData] = useState(null);
   const isHomePage = routeElement?.props?.children.type === HomePage;
   const flightSearchRef = useRef(null);
   const handleScrollToFlightSearch = () => {
@@ -42,7 +43,7 @@ function App() {
     <div>
       <Navbar onSearchClick={handleNavbarSearchClick} />
       {isHomePage ? (
-        <HomePage flightSearchRef={flightSearchRef} />
+        <HomePage flightSearchRef={flightSearchRef} hotFlightClick={handleHotFlightClick} flightData={flightData}/>
       ) : (
         routeElement
       )}
