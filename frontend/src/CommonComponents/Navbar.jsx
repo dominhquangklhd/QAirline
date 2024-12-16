@@ -1,7 +1,7 @@
 import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useAuth } from "../Context/AuthProvider";
 const Navbar = ({ onSearchClick }) => {
@@ -29,10 +29,11 @@ const Navbar = ({ onSearchClick }) => {
   return (
     <div className="navBar flex">
       <div className="navBarOne flex">
-        <div className="logoDiv">
-          <img src="./assets/Qlogo.png" alt="Logo" />
-        </div>
-
+        <Link to={"/"}>
+          <div className="logoDiv">
+            <img src="./assets/Qlogo-nobg.png" alt="Logo" />
+          </div>
+        </Link>
         <ul className="items flex">
           <li className="itemButton">
             <button onClick={onSearchClick}>Đặt vé ngay</button>
