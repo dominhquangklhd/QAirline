@@ -9,7 +9,7 @@ const Status = {
     ADD: 'add',
 };
 
-function FlightInfo() {
+function FlightsInfo() {
     const [flightList, setFlightList] = useState([
         { id: "VN-A888", origin_airport_id: "HAN", destination_airport_id: "SGN", scheduled_departure: "2024-12-15", scheduled_arrival:"2024-12-15", status: "scheduled", base_price: "3,000,000 đ", available_seats: "12"},
         { id: "VN-A862", origin_airport_id: "SGN", destination_airport_id: "DAD", scheduled_departure: "2024-12-17", scheduled_arrival:"2024-12-18", status: "delayed", base_price: "3,000,000 đ", available_seats: "4"}
@@ -113,4 +113,4 @@ function FlightInfo() {
     );
 }
 
-export default FlightInfo;
+export default FlightsInfo;

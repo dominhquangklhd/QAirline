@@ -14,6 +14,9 @@ import RegisterPage from "./Pages/RegisterPage/RegisterPage";
 import ForgotPW from "./Pages/RegisterPage/ForgotPW";
 import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin";
 import AircraftInfo from "./AdminPages/AircraftInfo/AircraftInfo";
+import Posts from "./AdminPages/Posts/Posts";
+import FlightsInfo from "./AdminPages/FlightsInfo/FlightsInfo";
+import TicketsInfo from "./AdminPages/TicketInfo/TicketsInfo";
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -64,6 +67,18 @@ export default function useRouteElement() {
     {
       path: "/HomeAdmin",
       element: <HomeAdmin />,
+    },
+    {
+      path: "/FlightsInfo",
+      element: <FlightsInfo/>
+    },
+    {
+      path: "/Posts",
+      element: <Posts/>
+    },
+    {
+      path: "/TicketsInfo",
+      element: <TicketsInfo/>,
     },
   ]);
   return routeElement;

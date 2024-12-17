@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import './Posts.scss';
-import CardPost from "../../Pages/HomePage/Card_Post";
+import CardPost from "../../Pages/HomePage/Card_post";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
