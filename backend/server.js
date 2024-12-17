@@ -30,7 +30,7 @@ const connectDB = require("./src/config/db");
 app.use(helmet()); // Bảo mật HTTP headers
 app.use(morgan("dev")); // Logging
 
-app.use(express.json({ limit: "10kb" })); // Giới hạn kích thước body
+app.use(express.json()); // Giới hạn kích thước body
 app.use(apiLimiter); // Rate limiting
 
 // Database

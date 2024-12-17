@@ -4,8 +4,10 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   username: {
     type: String,
-    required: true,
-    unique: true,
+    default: function () {
+      // Tạo username mặc định, ví dụ từ email
+      return this.email ? this.email.split("@")[0] : null;
+    },
   },
   email: {
     type: String,
@@ -18,15 +20,12 @@ const userSchema = new Schema({
   },
   full_name: {
     type: String,
-    required: true,
   },
   phone: {
     type: String,
-    required: true,
   },
   date_of_birth: {
     type: Date,
-    required: true,
   },
   role: {
     type: String,

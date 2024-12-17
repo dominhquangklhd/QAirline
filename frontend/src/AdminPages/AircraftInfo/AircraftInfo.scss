@@ -100,22 +100,16 @@
 
     .searchInput {
         flex: 1;
-        /* Chiếm toàn bộ không gian trống còn lại */
         padding: 8px 12px;
         font-size: 16px;
         border: 1px solid #ccc;
-        /* Đường viền */
         border-radius: 4px;
-        /* Bo góc */
     }
 
     .searchInput:focus {
         outline: none;
-        /* Loại bỏ viền mặc định */
         border-color: #007bff;
-        /* Đổi màu viền khi focus */
         box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-        /* Hiệu ứng focus */
     }
 
     .addButton {
@@ -124,18 +118,14 @@
         font-weight: bold;
         color: white;
         background-color: #E6B441;
-        /* Màu xanh cho nút */
         border: none;
-        /* Loại bỏ viền */
         border-radius: 4px;
-        /* Bo góc */
         cursor: pointer;
         transition: background-color 0.3s ease;
     }
 
     .addButton:hover {
         background-color: #cfa23a;
-        // background-color: #0056b3; /* Màu tối hơn khi hover */
     }
 
     .findButton {

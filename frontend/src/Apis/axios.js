@@ -38,15 +38,15 @@ axiosInstance.interceptors.response.use(
     if (error.response) {
       // Lỗi từ server (status code không phải 2xx)
       switch (error.response.status) {
-        case 401:
-          // Xử lý lỗi unauthorized
-          localStorage.removeItem("token");
-          window.location.href = "/login";
-          break;
-        case 404:
-          // Xử lý lỗi not found
-          console.error("Resource not found");
-          break;
+        // case 401:
+        //   // Xử lý lỗi unauthorized
+        //   localStorage.removeItem("token");
+        //   // window.location.href = "/login";
+        //   break;
+        // case 404:
+        //   // Xử lý lỗi not found
+        //   console.error("Resource not found");
+        //   break;
         default:
           console.error("Server error:", error.response.data);
       }
