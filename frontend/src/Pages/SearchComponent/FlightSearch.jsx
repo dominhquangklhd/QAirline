@@ -296,7 +296,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               <button
                 id="swap-button"
                 type="button"
-                onClick={() => console.log("Swap locations")}
+                onClick={() => handleSwapLocations()}
                 className="swap-button"
               >
                 ⇄
@@ -398,17 +398,17 @@ const FlightSearch = forwardRef((flightData, ref) => {
                   <div className="dropdown-item">
                     <span>Người lớn</span>
                     <div className="counter">
-                      <button onClick={() => handlePassengerChange("adults", "decrement")}>-</button>
+                      <button type="button" onClick={() => handlePassengerChange("adults", "decrement")}>-</button>
                       <span>{adults}</span>
-                      <button onClick={() => handlePassengerChange("adults", "increment")}>+</button>
+                      <button type="button" onClick={() => handlePassengerChange("adults", "increment")}>+</button>
                     </div>
                   </div>
                   <div className="dropdown-item">
                     <span>Trẻ em</span>
                     <div className="counter">
-                      <button onClick={() => handlePassengerChange("children", "decrement")}>-</button>
+                      <button type="button" onClick={() => handlePassengerChange("children", "decrement")}>-</button>
                       <span>{children}</span>
-                      <button onClick={() => handlePassengerChange("children", "increment")}>+</button>
+                      <button type="button" onClick={() => handlePassengerChange("children", "increment")}>+</button>
                     </div>
                   </div>
                 </div>
