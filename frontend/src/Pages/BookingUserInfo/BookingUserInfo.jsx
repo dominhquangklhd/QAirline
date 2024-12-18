@@ -328,7 +328,7 @@ export default function BookingUserInfo() {
                 <span>
                   {outbound.origin_airport_id.city +
                     " (" +
-                    outbound.origin_airport_id.city +
+                    outbound.origin_airport_id.airport_name +
                     ")"}
                 </span>
                 <span className="arrow">→</span>
@@ -336,7 +336,7 @@ export default function BookingUserInfo() {
                 <span>
                   {outbound.destination_airport_id.city +
                     " (" +
-                    outbound.destination_airport_id.city +
+                    outbound.destination_airport_id.airport_name +
                     ")"}
                 </span>
               </div>
@@ -366,14 +366,14 @@ export default function BookingUserInfo() {
           {returnFlight && (
             <div className="flight-info">
               <h4>Chuyến về</h4>
-              <div className="price">{returnFlight?.price}</div>
+              <div className="price">{returnFlight?.price.toLocaleString() + " VND"}</div>
               <div className="route">
                 <div className="route-info">
                   <span>
                     {" "}
                     {returnFlight?.origin_airport_id.city +
                       " (" +
-                      returnFlight?.origin_airport_id.city +
+                      returnFlight?.origin_airport_id.airport_name +
                       ")"}
                   </span>
                   <span className="arrow">→</span>
@@ -381,7 +381,7 @@ export default function BookingUserInfo() {
                     {" "}
                     {returnFlight?.destination_airport_id.city +
                       " (" +
-                      returnFlight?.destination_airport_id.city +
+                      returnFlight?.destination_airport_id.airport_name +
                       ")"}
                   </span>
                 </div>
@@ -401,7 +401,7 @@ export default function BookingUserInfo() {
                 <div className="price-item">
                   <span>Thuế, phí</span>
                   <span>
-                    {(returnFlight?.price * 0.05).toLocaleString + "VND"}
+                    {(returnFlight?.price * 0.05).toLocaleString() + "VND"}
                   </span>
                 </div>
                 <div className="price-item">
