@@ -306,7 +306,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               <button
                 id="swap-button"
                 type="button"
-                onClick={() => console.log("Swap locations")}
+                onClick={() => handleSwapLocations()}
                 className="swap-button"
               >
                 ⇄
