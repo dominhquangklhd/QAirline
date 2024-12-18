@@ -93,7 +93,7 @@ const FlightResults = () => {
                   <FlightCardV2
                     flight={flight}
                     onSelect={(selectedFlight) =>
-                      handleFlightSelection(selectedFlight, "")
+                      handleFlightSelection(selectedFlight, "return")
                     }
                     isSelected={selectedOutbound?.id === flight.id}
                   />
