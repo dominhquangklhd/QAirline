@@ -1,4 +1,10 @@
-import { useState, useRef, forwardRef, useImperativeHandle, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import "./FlightSearch.scss";
 import { FaPlane } from "react-icons/fa";
 import axios from "../../Apis/axios";
@@ -33,7 +39,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
       handleCitySelect(
         "to",
         `${flightData.flightData.city_to} (${flightData.flightData.airport_to_code})`
-      )
+      );
 
       setDepartureDate(flightData.flightData.date_departure);
     }
@@ -42,7 +48,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        console.log('atFetchCities');
+        console.log("atFetchCities");
 
         const response = await axios.get("/flights/airports"); // Endpoint API
         // console.log(response);
@@ -221,11 +227,15 @@ const FlightSearch = forwardRef((flightData, ref) => {
   const handlePassengerChange = (type, operation) => {
     if (type === "adults") {
       setAdults((prev) =>
-        operation === "increment" ? Math.min(prev + 1, 9) : Math.max(prev - 1, 1)
+        operation === "increment"
+          ? Math.min(prev + 1, 9)
+          : Math.max(prev - 1, 1)
       );
     } else if (type === "children") {
       setChildren((prev) =>
-        operation === "increment" ? Math.min(prev + 1, 9) : Math.max(prev - 1, 0)
+        operation === "increment"
+          ? Math.min(prev + 1, 9)
+          : Math.max(prev - 1, 0)
       );
     }
   };
@@ -308,7 +318,10 @@ const FlightSearch = forwardRef((flightData, ref) => {
                       key={city.airportCode}
                       className="dropdown-item"
                       onMouseDown={() =>
-                        handleCitySelect("from", `${city.city} (${city.airportCode})`)
+                        handleCitySelect(
+                          "from",
+                          `${city.city} (${city.airportCode})`
+                        )
                       }
                     >
                       <strong>{city.city}</strong> - {city.airportName}
@@ -398,17 +411,41 @@ const FlightSearch = forwardRef((flightData, ref) => {
                   <div className="dropdown-item">
                     <span>Người lớn</span>
                     <div className="counter">
-                      <button type="button" onClick={() => handlePassengerChange("adults", "decrement")}>-</button>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("adults", "decrement")
+                        }
+                      >
+                        -
+                      </button>
                       <span>{adults}</span>
-                      <button type="button" onClick={() => handlePassengerChange("adults", "increment")}>+</button>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("adults", "increment")
+                        }
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                   <div className="dropdown-item">
                     <span>Trẻ em</span>
                     <div className="counter">
-                      <button type="button" onClick={() => handlePassengerChange("children", "decrement")}>-</button>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("children", "decrement")
+                        }
+                      >
+                        -
+                      </button>
                       <span>{children}</span>
-                      <button type="button" onClick={() => handlePassengerChange("children", "increment")}>+</button>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("children", "increment")
+                        }
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -444,6 +481,6 @@ FlightSearch.displayName = "FlightSearch";
 
 FlightSearch.propTypes = {
   scrollSource: PropTypes.func.isRequired,
-}
+};
 
 export default FlightSearch;
