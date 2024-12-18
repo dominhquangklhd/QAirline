@@ -102,6 +102,7 @@ FlightCardV2.propTypes = {
     flight_number: PropTypes.string,
     aircraft: PropTypes.string,
     availableSeats: PropTypes.number,
+    fareType: PropTypes.string,
   }).isRequired,
   onSelect: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,

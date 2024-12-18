@@ -990,17 +990,23 @@ h2 {
 
     .gridOne {
       gap: 1rem;
+      display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
       margin: auto;
 
       .logoDiv {
-        .logo {
-          width: 20%;
-        }
+        display: flex;
+        border-radius: 50%;
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
       }
 
       .socialIcon {
         margin-top: 1rem;
+        margin-bottom: 1rem;
         gap: 1rem;
 
         .icon {
