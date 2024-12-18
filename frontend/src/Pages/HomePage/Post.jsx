@@ -156,7 +156,7 @@ const Post = () => {
 
         <div className="latest-news__header">
           <h1 className="latest-news__title">
-            <span>Latest News</span>
+            <span>Tin tức</span>
           </h1>
         </div>
 
@@ -166,15 +166,13 @@ const Post = () => {
               <button
                 onClick={handlePrev}
                 className="latest-news__nav-button latest-news__nav-button--prev"
-              >
-                Prev
-              </button>
+                aria-label="Previous"
+              ></button>
               <button
                 onClick={handleNext}
                 className="latest-news__nav-button latest-news__nav-button--next"
-              >
-                Next
-              </button>
+                aria-label="Next"
+              ></button>
             </>
           )}
 

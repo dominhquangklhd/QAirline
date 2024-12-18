@@ -28,11 +28,11 @@ function HomePage({ flightSearchRef, hotFlightClick, flightData }) {
       <FlightSearch ref={flightSearchRef} flightData={flightData} />
       <Post />
       <HotFlights hotFlightClick={hotFlightClick} />
-      <Support />
+      {/* <Support /> */}
       {/* <Info />
       <Lounge /> */}
-      <Travelers />
-      <Subscribers />
+      {/* <Travelers />
+      <Subscribers /> */}
     </div>
   );
 }
