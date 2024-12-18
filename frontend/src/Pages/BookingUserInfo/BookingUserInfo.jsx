@@ -262,7 +262,9 @@ export default function BookingUserInfo() {
               </div>
               <div className="price-item">
                 <span>Thuế, phí</span>
-                <span>{(outbound?.price * 0.05).toLocaleString() + " VND"}</span>
+                <span>
+                  {(outbound?.price * 0.05).toLocaleString() + " VND"}
+                </span>
               </div>
               <div className="price-item">
                 <span>Dịch vụ</span>
@@ -309,7 +311,8 @@ export default function BookingUserInfo() {
                 <div className="price-item">
                   <span>Thuế, phí</span>
                   <span>
-                    {(returnFlight?.price * 0.05).toLocaleString + "VND"}
+                    {console.log(returnFlight?.price)}
+                    {(returnFlight?.price * 0.05).toLocaleString() + " VND "}
                   </span>
                 </div>
                 <div className="price-item">
