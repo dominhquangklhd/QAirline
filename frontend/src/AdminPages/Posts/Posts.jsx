@@ -168,40 +168,41 @@ function Posts() {
     }
   };
 
-  //   // Your existing settings and slider logic remains the same
-  //   const settings = {
-  //     dots: posts.length > 1,
-  //     speed: 500,
-  //     infinite: posts.length > 1,
-  //     slidesToShow: 5,
-  //     slidesToScroll: 1,
-  //     responsive: [
-  //       {
-  //         breakpoint: 1024,
-  //         settings: {
-  //           slidesToShow: Math.min(2, posts.length),
-  //           slidesToScroll: 1,
-  //           infinite: posts.length > 2,
-  //           dots: posts.length > 2,
-  //           autoplay: posts.length > 2,
-  //         },
-  //       },
-  //       {
-  //         breakpoint: 600,
-  //         settings: {
-  //           slidesToShow: 1,
-  //           slidesToScroll: 1,
-  //           infinite: posts.length > 1,
-  //           dots: posts.length > 1,
-  //           autoplay: posts.length > 1,
-  //         },
-  //       },
-  //     ],
-  //   };
+    // // Your existing settings and slider logic remains the same
+    // const settings = {
+    //   dots: posts.length > 1,
+    //   speed: 500,
+    //   infinite: posts.length > 1,
+    //   slidesToShow: 5,
+    //   slidesToScroll: 1,
+    //   responsive: [
+    //     {
+    //       breakpoint: 1024,
+    //       settings: {
+    //         slidesToShow: Math.min(2, posts.length),
+    //         slidesToScroll: 1,
+    //         infinite: posts.length > 2,
+    //         dots: posts.length > 2,
+    //         autoplay: posts.length > 2,
+    //       },
+    //     },
+    //     {
+    //       breakpoint: 600,
+    //       settings: {
+    //         slidesToShow: 1,
+    //         slidesToScroll: 1,
+    //         infinite: posts.length > 1,
+    //         dots: posts.length > 1,
+    //         autoplay: posts.length > 1,
+    //       },
+    //     },
+    //   ],
+    // };
   const getSliderSettings = () => ({
     dots: posts?.length > 5,
     speed: 500,
-    infinite: posts?.length > 5,
+    infinite: true,
+    variableWidth: true,
     slidesToShow: Math.min(5, posts?.length || 1),
     slidesToScroll: 1,
     responsive: [

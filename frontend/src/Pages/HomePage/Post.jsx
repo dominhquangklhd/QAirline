@@ -31,7 +31,8 @@ const Post = () => {
 
   const settings = {
     dots: posts.length > 5, // Only show dots if more than 5 posts
-    infinite: posts.length > 5, // Only make it infinite if more than 5 posts
+    infinite: true,
+    variableWidth: true,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
