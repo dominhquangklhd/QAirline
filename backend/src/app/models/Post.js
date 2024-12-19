@@ -2,34 +2,25 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const postSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: true,
-    },
-    content: {
-      type: String,
-      required: true,
-    },
-    category: {
-      type: Schema.Types.ObjectId,
-      ref: "PostCategory",
-    },
-    author: {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-    publishedAt: Date,
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+const postSchema = new Schema({
+  title: {
+    type: String,
+    required: true,
   },
-  {
-    timestamps: true,
-  }
-);
+  subtitle: {
+    type: String,
+  },
+  content: {
+    type: String,
+    required: true,
+  },
+  imageBase64: {
+    type: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
 module.exports = mongoose.model("Post", postSchema, "posts");

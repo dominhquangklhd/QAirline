@@ -3,6 +3,8 @@ import { useState } from "react";
 import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
+import { ClipLoader } from "react-spinners";
+
 export default function BookingUserInfo() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -45,6 +47,8 @@ export default function BookingUserInfo() {
     )}`;
   };
 
+  const [loading, setLoading] = useState(false); // Trạng thái loading
+  const [error, setError] = useState(null);
   const handleSubmit = async () => {
     const bookingData = {
       flight_id: outbound._id,
@@ -64,15 +68,35 @@ export default function BookingUserInfo() {
     if (returnFlight) {
       bookingData.return_flight_id = returnFlight.id;
     }
+
+    setLoading(true); // Bắt đầu loading
+
     try {
       const response = await axios.post("/bookings/createBooking", bookingData);
-      navigate("/TicketSuccess", { state: response });
+      setError(null); // Reset lỗi nếu có
       console.log("Booking successful:", response);
-      alert("Đặt vé thành công!");
+
+      // Đợi 2 giây trước khi chuyển hướng để người dùng thấy hiệu ứng loading
+      setTimeout(() => {
+        navigate("/TicketSuccess", { state: response });
+      }, 2000);
     } catch (error) {
       console.error("Booking failed:", error);
-      alert("Đặt vé thất bại. Vui lòng thử lại.");
+      setError("Booking failed. Please try again.");
+      setLoading(false); // Kết thúc loading khi có lỗi
     }
+  };
+
+  const [selectedOption, setSelectedOption] = useState("VNPay"); // VNPay mặc định được chọn
+
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
+
+  const qrImages = {
+    VNPay: "assets/payments/qr-vnpay.png",
+    MoMo: "assets/payments/qr-momo.png",
+    Banking: "assets/payments/qr-banking.png",
   };
 
   return (
@@ -209,13 +233,81 @@ export default function BookingUserInfo() {
           </div>
 
           <div className="payment">
-            <div>QR- Chọn phương thức thanh toán</div>
+            <div className="payment-header">Chọn phương thức thanh toán</div>
+            <div className="payment-options">
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="VNPay"
+                  checked={selectedOption === "VNPay"}
+                  onChange={handleOptionChange}
+                />
+                <img src="assets/payments/vnpay.png" alt="VNPay" className="payment-image" />
+                <span className="payment-title">VNPay</span>
+              </label>
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="MoMo"
+                  checked={selectedOption === "MoMo"}
+                  onChange={handleOptionChange}
+                />
+                <img src="assets/payments/momo.png" alt="MoMo" className="payment-image" />
+                <span className="payment-title">MoMo</span>
+              </label>
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Banking"
+                  checked={selectedOption === "Banking"}
+                  onChange={handleOptionChange}
+                />
+                <img src="assets/payments/banking.webp" alt="Banking" className="payment-image" />
+                <span className="payment-title">Banking</span>
+              </label>
+              <label className="payment-option">
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Thanh toán tại quầy"
+                  checked={selectedOption === "Thanh toán tại quầy"}
+                  onChange={handleOptionChange}
+                />
+                <img src="assets/payments/counter.jpg" alt="Thanh toán tại quầy" className="payment-image" />
+                <span className="payment-title">Thanh toán tại quầy</span>
+              </label>
+            </div>
+            <div className="payment-selected">
+              <p>Bạn đã chọn: {selectedOption}</p>
+            </div>
+            {selectedOption !== "Thanh toán tại quầy" && (
+              <div className="payment-qr">
+                <h3>Mã QR của bạn</h3>
+                <img
+                  src={qrImages[selectedOption]}
+                  alt={`QR Code for ${selectedOption}`}
+                  className="qr-image"
+                />
+              </div>
+            )}
           </div>
           <div className="terms-section">
             <label className="checkbox-item">
               <button className="btn-submit" onClick={handleSubmit}>
                 Hoàn tất
               </button>
+              {loading && (
+                <div className="loading-overlay">
+                  <div className="loading-spinner">
+                    <ClipLoader color="#00f" size={50} />
+                  </div>
+                </div>
+              )}
+
+              {error && <div className="error-message">{error}</div>}
             </label>
           </div>
         </div>
@@ -236,7 +328,7 @@ export default function BookingUserInfo() {
                 <span>
                   {outbound.origin_airport_id.city +
                     " (" +
-                    outbound.origin_airport_id.city +
+                    outbound.origin_airport_id.airport_name +
                     ")"}
                 </span>
                 <span className="arrow">→</span>
@@ -244,7 +336,7 @@ export default function BookingUserInfo() {
                 <span>
                   {outbound.destination_airport_id.city +
                     " (" +
-                    outbound.destination_airport_id.city +
+                    outbound.destination_airport_id.airport_name +
                     ")"}
                 </span>
               </div>
@@ -262,7 +354,9 @@ export default function BookingUserInfo() {
               </div>
               <div className="price-item">
                 <span>Thuế, phí</span>
-                <span>{(outbound?.price * 0.05).toLocaleString() + " VND"}</span>
+                <span>
+                  {(outbound?.price * 0.05).toLocaleString() + " VND"}
+                </span>
               </div>
               <div className="price-item">
                 <span>Dịch vụ</span>
@@ -274,14 +368,14 @@ export default function BookingUserInfo() {
           {returnFlight && (
             <div className="flight-info">
               <h4>Chuyến về</h4>
-              <div className="price">{returnFlight?.price}</div>
+              <div className="price">{returnFlight?.price.toLocaleString() + " VND"}</div>
               <div className="route">
                 <div className="route-info">
                   <span>
                     {" "}
                     {returnFlight?.origin_airport_id.city +
                       " (" +
-                      returnFlight?.origin_airport_id.city +
+                      returnFlight?.origin_airport_id.airport_name +
                       ")"}
                   </span>
                   <span className="arrow">→</span>
@@ -289,7 +383,7 @@ export default function BookingUserInfo() {
                     {" "}
                     {returnFlight?.destination_airport_id.city +
                       " (" +
-                      returnFlight?.destination_airport_id.city +
+                      returnFlight?.destination_airport_id.airport_name +
                       ")"}
                   </span>
                 </div>
@@ -309,7 +403,7 @@ export default function BookingUserInfo() {
                 <div className="price-item">
                   <span>Thuế, phí</span>
                   <span>
-                    {(returnFlight?.price * 0.05).toLocaleString + "VND"}
+                    {(returnFlight?.price * 0.05).toLocaleString() + "VND"}
                   </span>
                 </div>
                 <div className="price-item">

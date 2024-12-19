@@ -7,19 +7,25 @@ const Booking = require("../models/Booking");
 class AdminController {
   // Admin: Create airline information post
   async createPost(req, res) {
-    const { title, content, type } = req.body;
     try {
+      const { title, subtitle, content, imageBase64 } = req.body;
+
+      if (!imageBase64.startsWith("data:image")) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid image format",
+        });
+      }
       const post = new Post({
         title,
+        subtitle,
         content,
-        type,
-        author: req.user.id,
-        createdAt: new Date(),
+        imageBase64,
       });
       await post.save();
       res.status(201).json(post);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message + "cant create post" });
     }
   }
 

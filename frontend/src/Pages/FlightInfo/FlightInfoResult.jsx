@@ -28,9 +28,9 @@ function FlightInfoResult({
   }
   return (
     <div className="flightInfoResult">
-      <div className="cancelBut">
+      {/* <div className="cancelBut">
         <button>Huỷ vé</button>
-      </div>
+      </div> */}
       <div className="header">
         <div className="basicInfo">
           <div className="nameCus">
@@ -69,7 +69,7 @@ function FlightInfoResult({
             </div>
             <div>
               <p>Tình trạng chỗ:</p>
-              <p>{status}</p>
+              <strong>{status}</strong>
             </div>
           </div>
           <div className="rightBody">
