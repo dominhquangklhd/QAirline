@@ -255,13 +255,11 @@ function Posts() {
                   onClick={handlePrev}
                   className="latest-news__nav-button latest-news__nav-button--prev"
                 >
-                  Prev
                 </button>
                 <button
                   onClick={handleNext}
                   className="latest-news__nav-button latest-news__nav-button--next"
                 >
-                  Next
                 </button>
               </>
             )}
@@ -269,7 +267,7 @@ function Posts() {
             <Slider
               ref={sliderRef}
               {...getSliderSettings()}
-              className="latest-news__slider"
+              className="latest-news__slider latest-news__slider-admin"
             >
               {posts?.map((post) => (
                 <div key={post._id} onClick={() => handlePostClick(post)}>
