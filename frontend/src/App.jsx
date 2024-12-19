@@ -5,19 +5,19 @@ import useRouteElement from "./useRouteElement";
 import Navbar from "./CommonComponents/Navbar";
 import Footer from "./CommonComponents/Footer";
 import HomePage from "./Pages/HomePage/HomePage";
+import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import { smoothScrollTo } from "./CommonFunctions/SmoothScroll";
 
-// import NavbarAdmin from "./AdminPages/CommonComponents/NavbarAdmin";
-
 function App() {
   const routeElement = useRouteElement();
   const navigate = useNavigate();
   const [flightData, setFlightData] = useState(null);
   const isHomePage = routeElement?.props?.children.type === HomePage;
+  const isAdminPage = window.location.pathname.startsWith("/HomeAdmin") || window.location.pathname.startsWith("/AircraftInfo") || window.location.pathname.startsWith("/FlightsInfo") || window.location.pathname.startsWith("/Posts") || window.location.pathname.startsWith("/TicketsInfo");
   const flightSearchRef = useRef(null);
   const handleScrollToFlightSearch = () => {
     if (flightSearchRef.current) {
@@ -41,13 +41,21 @@ function App() {
 
   return (
     <div>
-      <Navbar onSearchClick={handleNavbarSearchClick} />
-      {isHomePage ? (
-        <HomePage flightSearchRef={flightSearchRef} hotFlightClick={handleHotFlightClick} flightData={flightData}/>
+      {isAdminPage ? (
+        <HomeAdmin>
+          {routeElement}
+        </HomeAdmin>
       ) : (
-        routeElement
+        <>
+          <Navbar onSearchClick={handleNavbarSearchClick} />
+          {isHomePage ? (
+            <HomePage flightSearchRef={flightSearchRef} hotFlightClick={handleHotFlightClick} flightData={flightData} />
+          ) : (
+            routeElement
+          )}
+          <Footer />
+        </>
       )}
-      <Footer />
       <ToastContainer
         position="top-right"
         autoClose={3000}
