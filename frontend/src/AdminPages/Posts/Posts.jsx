@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react";
-import './Posts.scss';
+import '../../Pages/HomePage/Post.scss';
 import CardPost from "../../Pages/HomePage/Card_post";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -188,13 +188,11 @@ function Posts() {
                                     onClick={handlePrev}
                                     className="latest-news__nav-button latest-news__nav-button--prev"
                                 >
-                                Prev
                                 </button>
                                 <button
                                     onClick={handleNext}
                                     className="latest-news__nav-button latest-news__nav-button--next"
                                 >
-                                Next
                                 </button>
                             </>
                         )}

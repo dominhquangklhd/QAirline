@@ -107,6 +107,7 @@
         .slick-track {
           display: flex;
           align-items: stretch;
+          gap: 2rem;
         }
       }
     }
@@ -114,7 +115,6 @@
     .news-card {
       width: 100%;
       min-width: 280px; // Minimum card width
-      padding: 0.5rem;
       transition: transform 0.3s ease;
       display: flex;
       flex-direction: column;
@@ -122,7 +122,7 @@
       cursor: pointer;
     
       @media (min-width: 1024px) {
-        margin: 0 0.5rem; // Thêm margin horizontal cho màn hình lớn
+        //margin: 0 0.5rem; // Thêm margin horizontal cho màn hình lớn
       }
     
       @media (max-width: 1200px) {
