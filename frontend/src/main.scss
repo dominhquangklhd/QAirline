@@ -155,7 +155,7 @@ h2 {
   }
 
   .navBarOne {
-    background: var(--whiteColor);
+    background-color: var(--SecondaryColor);
 
     .logoDiv {
       display: flex;
@@ -988,6 +988,8 @@ h2 {
 
 .footer {
   background-color: var(--SecondaryColor);
+  position: absolute;
+  left: 0;
 
   .sectionContainer {
     gap: 2.5rem;
