@@ -1,5 +1,5 @@
 import React, {useState, useRef} from "react";
-import '../../Pages/HomePage/Post.scss';
+import './Posts.scss';
 import CardPost from "../../Pages/HomePage/Card_post";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -197,7 +197,7 @@ function Posts() {
                             </>
                         )}
 
-                        <Slider ref={sliderRef} {...settings} className="latest-news__slider">
+                        <Slider ref={sliderRef} {...settings} className="latest-news__slider latest-news__slider-admin">
                             {posts.map((post) => (
                                 <div key={post._id} onClick={() => handlePostClick(post)}>
                                     <CardPost
