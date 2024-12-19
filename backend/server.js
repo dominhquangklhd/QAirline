@@ -19,7 +19,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "100mb" })); // Giới hạn kích thước payload URL-encoded
 
 const authRoutes = require("./src/routes/authRoutes");
 const flightRoutes = require("./src/routes/flightRoutes");
@@ -31,7 +31,7 @@ const connectDB = require("./src/config/db");
 app.use(helmet()); // Bảo mật HTTP headers
 app.use(morgan("dev")); // Logging
 
-app.use(express.json()); // Giới hạn kích thước body
+app.use(express.json({ limit: "100mb" }));
 app.use(apiLimiter); // Rate limiting
 
 // Database

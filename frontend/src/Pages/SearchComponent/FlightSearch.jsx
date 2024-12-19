@@ -412,6 +412,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
                     <span>Người lớn</span>
                     <div className="counter">
                       <button
+                        type="button"
                         onClick={() =>
                           handlePassengerChange("adults", "decrement")
                         }
@@ -420,6 +421,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
                       </button>
                       <span>{adults}</span>
                       <button
+                        type="button"
                         onClick={() =>
                           handlePassengerChange("adults", "increment")
                         }
@@ -432,6 +434,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
                     <span>Trẻ em</span>
                     <div className="counter">
                       <button
+                        type="button"
                         onClick={() =>
                           handlePassengerChange("children", "decrement")
                         }
@@ -440,6 +443,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
                       </button>
                       <span>{children}</span>
                       <button
+                        type="button"
                         onClick={() =>
                           handlePassengerChange("children", "increment")
                         }

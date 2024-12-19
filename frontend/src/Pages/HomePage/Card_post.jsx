@@ -3,7 +3,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Post.scss";
 
-const CardPost = ({ _id, title, subtitle, cover_url, onClick  }) => {
+const CardPost = ({ title, subtitle, cover_url, onClick }) => {
   return (
     <div className="news-card" onClick={onClick}>
       <img src={cover_url} alt={title} className="news-card__image" />
@@ -15,7 +15,7 @@ const CardPost = ({ _id, title, subtitle, cover_url, onClick  }) => {
   );
 };
 CardPost.propTypes = {
-  _id: PropTypes.string.isRequired,
+  // PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string.isRequired,
   cover_url: PropTypes.string.isRequired,

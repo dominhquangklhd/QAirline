@@ -5,12 +5,20 @@ const Aircraft = require("../models/Aircraft");
 const Booking = require("../models/Booking");
 
 class AdminController {
+  async getPosts(req, res) {
+    try {
+      const posts = await Post.find().sort({ createdAt: -1 });
+      res.json(posts);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
   // Admin: Create airline information post
   async createPost(req, res) {
     try {
-      const { title, subtitle, content, imageBase64 } = req.body;
+      const { title, subtitle, content, cover_url } = req.body;
 
-      if (!imageBase64.startsWith("data:image")) {
+      if (!cover_url.startsWith("data:image")) {
         return res.status(400).json({
           success: false,
           error: "Invalid image format",
@@ -20,7 +28,7 @@ class AdminController {
         title,
         subtitle,
         content,
-        imageBase64,
+        cover_url,
       });
       await post.save();
       res.status(201).json(post);
@@ -29,6 +37,50 @@ class AdminController {
     }
   }
 
+  async updatePost(req, res) {
+    try {
+      const { id } = req.params;
+      const { title, subtitle, content, cover_url } = req.body;
+
+      if (cover_url && !cover_url.startsWith("data:image")) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid image format",
+        });
+      }
+
+      const post = await Post.findByIdAndUpdate(
+        id,
+        { title, subtitle, content, cover_url },
+        { new: true }
+      );
+
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      res.json(post);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  // Delete post
+  async deletePost(req, res) {
+    try {
+      const { id } = req.params;
+      const post = await Post.findByIdAndDelete(id);
+
+      if (!post) {
+        return res.status(404).json({ message: "Post not found" });
+      }
+
+      res.json({ message: "Post deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+  
   // Admin: Create aircraft
   async createAircraft(req, res) {
     const { aircraftCode, manufacturer, model, totalSeats, seatMap } = req.body;

@@ -1,5 +1,5 @@
 // LatestNews.jsx
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Slider from "react-slick";
 import CardPost from "./Card_post";
 import "slick-carousel/slick/slick.css";
@@ -7,77 +7,27 @@ import "slick-carousel/slick/slick-theme.css";
 import "./Post.scss";
 import { useNavigate } from "react-router-dom";
 import PostDetails from "./PostDetails";
-
+import axios from "../../Apis/axios";
 const Post = () => {
   const sliderRef = useRef(null);
+  const [posts, setPosts] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get("/admin/posts"); // Thay URL API thực tế của bạn
+        setPosts(response); // Giả sử API trả về danh sách bài viết trong `response.data`
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
+    fetchPosts();
+  }, []);
   // Let's assume we have an array of posts to make it clearer
-  const posts = [
-    {
-      id: 1,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "assets/plane.jpg",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 2,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 3,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 4,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 5,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 6,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 7,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 8,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    {
-      id: 9,
-      title: "Hello",
-      subtitle: "blog.subtitle",
-      cover_url: "SRC.blog_cover/blog.cover_url",
-      content: "This is the content of this blog.",
-    },
-    // ... more posts
-  ];
 
   const settings = {
     dots: posts.length > 5, // Only show dots if more than 5 posts

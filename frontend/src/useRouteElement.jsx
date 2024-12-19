@@ -70,15 +70,15 @@ export default function useRouteElement() {
     },
     {
       path: "/FlightsInfo",
-      element: <FlightsInfo/>
+      element: <FlightsInfo />,
     },
     {
       path: "/Posts",
-      element: <Posts/>
+      element: <Posts />,
     },
     {
       path: "/TicketsInfo",
-      element: <TicketsInfo/>,
+      element: <TicketsInfo />,
     },
   ]);
   return routeElement;
