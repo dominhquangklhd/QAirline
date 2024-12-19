@@ -93,7 +93,7 @@ const Navbar = ({ onSearchClick }) => {
                   />
                 </svg>
                 Xin chào,
-                {username}
+                {" " + username}
               </span>
               {showPopover && (
                 <div className="popover">
@@ -101,6 +101,7 @@ const Navbar = ({ onSearchClick }) => {
                     <li onClick={() => navigateTo("/profile")}>
                       Thông tin cá nhân
                     </li>
+                    <li onClick={() => navigateTo("/HomeAdmin")}>Quản trị viên</li>
                     <li onClick={handleLogout}>Đăng xuất</li>
                   </ul>
                 </div>
