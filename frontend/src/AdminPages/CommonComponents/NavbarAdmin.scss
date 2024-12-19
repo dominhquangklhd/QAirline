@@ -1,8 +1,41 @@
+:root {
+  --app-bg: #f2f3f3;
+  --sidebar: #f3f6fd;
+  --app-content-secondary-color: #e9effe;
+  --app-content-main-color: #1f1c2e;
+  --action-color: #2869ff;
+  --action-color-hover: #6291fd;
+  --sidebar-link: #1f1c2e;
+  --sidebar-hover-link: rgba(195, 207, 244, 0.5);
+  --sidebar-active-link: rgba(195, 207, 244, 1);
+  --sidebar-main-color: #1f1c2e;
+  --filter-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+$font-small: 14px;
+$font-medium: 16px;
+$font-large: 24px;
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  overflow: scroll;
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--app-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .sidebar {
     flex-basis: 200px;
     max-width: 200px;
     flex-shrink: 0;
-    background-color: var(--sidebar);
+    background-color: var(--app-content-secondary-color);
     display: flex;
     flex-direction: column;
     
@@ -28,7 +61,7 @@
           padding: 10px 16px;
           color: var(--sidebar-link);
           text-decoration: none;
-          // font-size: $font-small;
+          font-size: $font-small;
           line-height: 24px;
         }
         

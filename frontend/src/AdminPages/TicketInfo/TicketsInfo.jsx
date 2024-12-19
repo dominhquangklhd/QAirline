@@ -11,7 +11,7 @@ function TicketsInfo() {
         airline: "",
         id: "",
         aircraft: "",
-        availableSeats: "",
+        seat: "",
     });
     const [tickets, setTickets] = useState([
         {   
@@ -23,7 +23,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554431",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -34,7 +34,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554432",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -45,7 +45,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554433",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -56,7 +56,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554434",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -67,7 +67,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554435",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -78,7 +78,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554436",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -89,7 +89,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554437",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -100,7 +100,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554438",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -111,7 +111,7 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554439",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
         {   
             scheduled_departure: "2024-12-15",
@@ -122,13 +122,12 @@ function TicketsInfo() {
             airline: "QAirline",
             id: "554440",
             aircraft: "Boeing",
-            availableSeats: "46",
+            seat: "F7",
         },
     ]);
     const [tempTicketData, setTempTicketData] = useState({});
 
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedTicket, setSelectedTicket] = useState(null);
     const [editingTicket, setEditingTicket] = useState(null);
     const [isAddingTicket, setIsAddingTicket] = useState(false);
     const [error, setError] = useState("");
@@ -150,11 +149,6 @@ function TicketsInfo() {
         }
     };
 
-    const handleTicketClick = (ticket) => {
-        setSelectedTicket(ticket);
-    };
-
-
     const handleAddTicket = (e) => {
         e.preventDefault();
     
@@ -165,7 +159,7 @@ function TicketsInfo() {
             "airline",
             "id",
             "aircraft",
-            "availableSeats",
+            "seat",
         ];
         for (const field of requiredFields) {
             if (!newTicket[field].trim()) {
@@ -186,9 +180,9 @@ function TicketsInfo() {
             airline: "",
             id: "",
             aircraft: "",
-            availableSeats: "",
+            seat: "",
         });
-        setError("Please fill all the properties!!!");
+        setError("");
     };
     
 
@@ -216,6 +210,7 @@ function TicketsInfo() {
     const handleCancel = () => {
         setEditingTicket(null);
         setTempTicketData({});
+        setError("");
     };
 
     const handleDelete = (ticketId) => {
@@ -267,7 +262,7 @@ function TicketsInfo() {
                         <div class="ticket-cell model">Model<button class="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
-                        <div class="ticket-cell seats">Available Seats<button class="sort-button">
+                        <div class="ticket-cell seats-col-name">Seat<button class="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
                         <div class="ticket-cell price">Price<button class="sort-button">
@@ -285,25 +280,47 @@ function TicketsInfo() {
                                     onChange={(e) => setNewTicket({ ...newTicket, id: e.target.value })}
                                 />
                             </div>
-                            <div className="ticket-cell departure-col-name">
-                                <input
-                                    type="text"
-                                    placeholder="Departure"
-                                    value={newTicket.scheduled_departure}
-                                    onChange={(e) =>
-                                        setNewTicket({ ...newTicket, scheduled_departure: e.target.value })
-                                    }
-                                />
+                            <div className="ticket-cell departure">
+                                <div className="ticket-cell departure-airport">
+                                    <input
+                                        type="text"
+                                        placeholder="From"
+                                        value={newTicket.origin_airport_id}
+                                        onChange={(e) =>
+                                            setNewTicket({ ...newTicket, origin_airport_id: e.target.value })
+                                        }
+                                    />
+                                </div>
+                                <div className="ticket-cell scheduled-departure">
+                                    <input
+                                        type="date"
+                                        value={newTicket.scheduled_departure}
+                                        onChange={(e) =>
+                                            setNewTicket({ ...newTicket, scheduled_departure: e.target.value })
+                                        }
+                                    />
+                                </div>
                             </div>
-                            <div className="ticket-cell arrival-col-name">
-                                <input
-                                    type="text"
-                                    placeholder="Arrival"
-                                    value={newTicket.scheduled_arrival}
-                                    onChange={(e) =>
-                                        setNewTicket({ ...newTicket, scheduled_arrival: e.target.value })
-                                    }
-                                />
+                            <div className="ticket-cell arrival">
+                                <div className="ticket-cell arrival-airport">
+                                    <input
+                                        type="text"
+                                        placeholder="To"
+                                        value={newTicket.destination}
+                                        onChange={(e) =>
+                                            setNewTicket({ ...newTicket, destination: e.target.value })
+                                        }
+                                    />
+                                </div>
+                                <div className="ticket-cell scheduled-arrival">
+                                    <input
+                                        type="date"
+                                        value={newTicket.scheduled_arrival}
+                                        onChange={(e) =>
+                                            setNewTicket({ ...newTicket, scheduled_arrival: e.target.value })
+                                        }
+                                    />
+                                </div>
                             </div>
                             <div className="ticket-cell airline">
                                 <input
@@ -325,8 +342,8 @@ function TicketsInfo() {
                                 <input
                                     type="text"
                                     placeholder="Seats"
-                                    value={newTicket.availableSeats}
-                                    onChange={(e) => setNewTicket({ ...newTicket, availableSeats: e.target.value })}
+                                    value={newTicket.seat}
+                                    onChange={(e) => setNewTicket({ ...newTicket, seat: e.target.value })}
                                 />
                             </div>
                             <div className="ticket-cell price">
@@ -362,7 +379,7 @@ function TicketsInfo() {
                                             airline: "",
                                             id: "",
                                             aircraft: "",
-                                            availableSeats: "",
+                                            seat: "",
                                         });
                                     }}
                                 >
@@ -379,7 +396,7 @@ function TicketsInfo() {
                     filteredTickets.map((ticket) => (
                         <div key={ticket.id} className={`tickets-row ${
                             editingTicket === ticket.id ? "editing-row" : ""
-                          }`} onClick={() => handleTicketClick(ticket)}>
+                          }`}>
                             <button className="cell-more-button">
                                 <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -486,12 +503,12 @@ function TicketsInfo() {
                                 <span className="cell-label">Available Seats:</span>
                                     {editingTicket === ticket.id ? (
                                         <input
-                                        type="number"
-                                        value={tempTicketData.availableSeats || ""}
-                                        onChange={(e) => handleInputChange(e, "availableSeats")}
+                                        type="text"
+                                        value={tempTicketData.seat || ""}
+                                        onChange={(e) => handleInputChange(e, "seat")}
                                         />
                                     ) : (
-                                        ticket.availableSeats
+                                        ticket.seat
                                     )}
                             </div>
                             <div className="ticket-cell price">
