@@ -290,6 +290,22 @@ function Posts() {
           </div>
         </div>
       </div>
+
+      {selectedPost && (
+        <div className="expanded-post-section">
+          <h2>{selectedPost.title}</h2>
+          <p>{selectedPost.subtitle}</p>
+          <p>{selectedPost.content}</p>
+          <img src={selectedPost.cover_url} alt={selectedPost.title} />
+          <div className="buttons">
+            <button onClick={() => handlePostClick(selectedPost)}>Edit</button>
+            <button onClick={() => handleDelete(selectedPost._id)}>
+              Delete
+            </button>
+            <button onClick={() => setSelectedPost(null)}>Close</button>
+          </div>
+        </div>
+      )}
       {/* Rest of your JSX remains the same, but update the file input in modals */}
       {isAddingPost && (
         <div className="modal-overlay">
