@@ -80,17 +80,23 @@ class AdminController {
       res.status(500).json({ message: error.message });
     }
   }
-  
+
   // Admin: Create aircraft
   async createAircraft(req, res) {
-    const { aircraftCode, manufacturer, model, totalSeats, seatMap } = req.body;
+    const {
+      aircraft_code,
+      manufacturer,
+      model,
+      total_seats,
+      manufacture_date,
+    } = req.body;
     try {
       const aircraft = new Aircraft({
-        aircraftCode,
+        aircraft_code,
         manufacturer,
         model,
-        totalSeats,
-        seatMap,
+        total_seats,
+        manufacture_date,
       });
       await aircraft.save();
       res.status(201).json(aircraft);
@@ -142,6 +148,84 @@ class AdminController {
       res.json(flight);
     } catch (error) {
       res.status(500).json({ message: error.message });
+    }
+  }
+
+  async getAllAircraft(req, res) {
+    try {
+      const aircraft = await Aircraft.find().sort({ aircraftCode: 1 });
+      res.json(aircraft);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  }
+
+  // Admin: Update aircraft
+  async updateAircraft(req, res) {
+    try {
+      const { id } = req.params;
+      const {
+        aircraft_code,
+        manufacturer,
+        model,
+        total_seats,
+        manufacture_date,
+      } = req.body;
+
+      const aircraft = await Aircraft.findByIdAndUpdate(
+        id,
+        {
+          aircraft_code,
+          manufacturer,
+          model,
+          total_seats,
+          manufacture_date,
+        },
+        { new: true }
+      );
+
+      if (!aircraft) {
+        return res.status(404).json({ message: "Aircraft not found" });
+      }
+
+      res.json(aircraft);
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+        error: "Error updating aircraft information",
+      });
+    }
+  }
+
+  // Admin: Delete aircraft
+  async deleteAircraft(req, res) {
+    try {
+      const { id } = req.params;
+
+      console.log(req.params);
+      // Kiểm tra xem tàu bay có đang được sử dụng trong chuyến bay nào không
+      // const hasFlights = await Aircraft.exists({ aircraft: _id });
+      // if (hasFlights) {
+      //   return res.status(400).json({
+      //     message: "Cannot delete aircraft that is associated with flights",
+      //   });
+      // }
+
+      const aircraft = await Aircraft.findByIdAndDelete(id);
+
+      if (!aircraft) {
+        return res.status(404).json({ message: "Aircraft not found" });
+      }
+
+      res.json({
+        message: "Aircraft deleted successfully",
+        deleted_aircraft: aircraft,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: error.message,
+        error: "Error deleting aircraft",
+      });
     }
   }
 
