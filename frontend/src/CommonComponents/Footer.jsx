@@ -1,89 +1,89 @@
 import { AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
-import {TiSocialFacebook} from 'react-icons/ti'
+import { TiSocialFacebook } from 'react-icons/ti'
 
 const Footer = () => {
   return (
     <div className='footer'>
 
-        <div className="sectionContainer container grid">
-          <div className="gridOne">
-            <div className="logoDiv">
-              <img src="./assets/logo.png" alt="" className='logo' />
-            </div>
-            <p>Your mind should be stronger than your feelings, fly!</p>
-            <div className="socialIcon flex">
-              <TiSocialFacebook className='icon'/>
-              <AiOutlineTwitter className='icon'/>
-              <AiFillYoutube className='icon'/>
-            </div>
+      <div className="sectionContainer container grid">
+        <div className="gridOne">
+          <div className="logoDiv">
+            <img src="assets/Qlogo-nobg.png" alt="" className='logoFooter' />
           </div>
-
-          <div className="footerLinks">
-              <span className="linkTitle">Infomation</span>
-              <li>
-                <a href="">Home</a>
-              </li>
-              <li>
-                <a href="">Explore</a>
-              </li>
-              <li>
-                <a href="">Flight Status</a>
-              </li>
-              <li>
-                <a href="">Travel</a>
-              </li>
-              <li>
-                <a href="">Check-In</a>
-              </li>
-              <li>
-                <a href="">Manage your booking</a>
-              </li>
-          </div>
-
-          <div className="footerLinks">
-            <span className="linkTitle">Quick Guide</span>
-            <li>
-              <a href="">FAQ</a>
-            </li>
-            <li>
-              <a href="">How to</a>
-            </li>
-            <li>
-              <a href="">Features</a>
-            </li>
-            <li>
-              <a href="">Baggage</a>
-            </li>
-            <li>
-              <a href="">Route Map</a>
-            </li>
-            <li>
-              <a href="">Our communities</a>
-            </li>
-          </div>
-
-          <div className="footerLinks">
-            <span className="linkTitle">Information</span>
-            <li>
-              <a href="">Chauffuer</a>
-            </li>
-            <li>
-              <a href="">Our partners</a>
-            </li>
-            <li>
-              <a href="">Destination</a>
-            </li>
-            <li>
-              <a href="">Careers</a>
-            </li>
-            <li>
-              <a href="">Transportation</a>
-            </li>
-            <li>
-              <a href="">Programe</a>
-            </li>
+          <p>Tâm trí của bạn phải mạnh mẽ hơn cảm xúc, bay đi!</p>
+          <div className="socialIcon flex">
+            <TiSocialFacebook className='icon' />
+            <AiOutlineTwitter className='icon' />
+            <AiFillYoutube className='icon' />
           </div>
         </div>
+
+        <div className="footerLinks">
+          <span className="linkTitle">Thông tin</span>
+          <li>
+            <a href="">Trang chủ</a>
+          </li>
+          <li>
+            <a href="">Khám phá</a>
+          </li>
+          <li>
+            <a href="">Tình trạng chuyến bay</a>
+          </li>
+          <li>
+            <a href="">Du lịch</a>
+          </li>
+          <li>
+            <a href="">Làm thủ tục</a>
+          </li>
+          <li>
+            <a href="">Quản lý đặt vé</a>
+          </li>
+        </div>
+
+        <div className="footerLinks">
+          <span className="linkTitle">Hướng dẫn nhanh</span>
+          <li>
+            <a href="">Câu hỏi thường gặp (FAQ)</a>
+          </li>
+          <li>
+            <a href="">Hướng dẫn sử dụng</a>
+          </li>
+          <li>
+            <a href="">Tính năng</a>
+          </li>
+          <li>
+            <a href="">Hành lý</a>
+          </li>
+          <li>
+            <a href="">Bản đồ tuyến đường</a>
+          </li>
+          <li>
+            <a href="">Cộng đồng của chúng tôi</a>
+          </li>
+        </div>
+
+        <div className="footerLinks">
+          <span className="linkTitle">Thông tin khác</span>
+          <li>
+            <a href="">Tài xế</a>
+          </li>
+          <li>
+            <a href="">Đối tác của chúng tôi</a>
+          </li>
+          <li>
+            <a href="">Điểm đến</a>
+          </li>
+          <li>
+            <a href="">Cơ hội nghề nghiệp</a>
+          </li>
+          <li>
+            <a href="">Vận chuyển</a>
+          </li>
+          <li>
+            <a href="">Chương trình</a>
+          </li>
+        </div>
+      </div>
 
     </div>
   )

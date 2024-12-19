@@ -13,17 +13,17 @@ const Home = () => {
         <h1 data-aos='fade-up' data-aos-duration='2500'>QAirline xin kính chào quý khách!</h1>
       </div>
 
-      <div className="homeImages flex">
-        <div className="videoDiv">
-          <video
-            src="/assets/sky.mp4"
-            autoPlay
-            muted
-            loop
-            className="video"
-          ></video>
-        </div>
+      <div className="videoDiv">
+        <video
+          src="/assets/sky.mp4"
+          autoPlay
+          muted
+          loop
+          className="video"
+        ></video>
+      </div>
 
+      <div className="homeImages flex">
         <img src="assets/plane-nobg.png" alt="" className="plane" />
       </div>
       <img src="assets/support.jpg" alt="" className="supportImg" />

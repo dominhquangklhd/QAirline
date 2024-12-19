@@ -1,4 +1,10 @@
-import { useState, useRef, forwardRef, useImperativeHandle, useEffect } from "react";
+import {
+  useState,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+  useEffect,
+} from "react";
 import "./FlightSearch.scss";
 import { FaPlane } from "react-icons/fa";
 import axios from "../../Apis/axios";
@@ -24,7 +30,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
   useEffect(() => {
     if (flightData.flightData) {
       console.log(flightData.flightData.city_from);
-      
+
       setTripType("one-way");
       handleCitySelect(
         "from",
@@ -33,8 +39,8 @@ const FlightSearch = forwardRef((flightData, ref) => {
       handleCitySelect(
         "to",
         `${flightData.flightData.city_to} (${flightData.flightData.airport_to_code})`
-      )
-      
+      );
+
       setDepartureDate(flightData.flightData.date_departure);
     }
   }, [flightData.flightData]);
@@ -42,8 +48,8 @@ const FlightSearch = forwardRef((flightData, ref) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        console.log('atFetchCities');
-        
+        console.log("atFetchCities");
+
         const response = await axios.get("/flights/airports"); // Endpoint API
         // console.log(response);
         const formattedData = response.map((airport) => ({
@@ -172,6 +178,82 @@ const FlightSearch = forwardRef((flightData, ref) => {
     }
   };
 
+  const [filteredCities, setFilteredCities] = useState(cities);
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setFrom(value);
+
+    if (value === "") {
+      setFilteredCities(cities);
+    } else {
+      const filtered = cities.filter(
+        (city) =>
+          city.city.toLowerCase().includes(value.toLowerCase()) ||
+          city.airportCode.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCities(filtered);
+    }
+
+    setShowFromDropdown(true);
+  };
+
+  const [filteredCitiesTo, setFilteredCitiesTo] = useState(cities);
+  const handleInputChangeTo = (e) => {
+    const value = e.target.value;
+    setTo(value);
+
+    if (value === "") {
+      setFilteredCitiesTo(cities);
+    } else {
+      const filtered = cities.filter(
+        (city) =>
+          city.city.toLowerCase().includes(value.toLowerCase()) ||
+          city.airportCode.toLowerCase().includes(value.toLowerCase())
+      );
+      setFilteredCitiesTo(filtered);
+    }
+
+    setShowToDropdown(true); // Hiện dropdown khi nhập
+  };
+
+  const [adults, setAdults] = useState(1); // Số người lớn
+  const [children, setChildren] = useState(0); // Số trẻ em
+  const [showPassengerDropdown, setShowPassengerDropdown] = useState(false); // Hiện/ẩn dropdown
+
+  // Tính tổng số hành khách
+  const totalPassengers = adults + children;
+
+  // Hàm xử lý thay đổi số lượng hành khách
+  const handlePassengerChange = (type, operation) => {
+    if (type === "adults") {
+      setAdults((prev) =>
+        operation === "increment"
+          ? Math.min(prev + 1, 9)
+          : Math.max(prev - 1, 1)
+      );
+    } else if (type === "children") {
+      setChildren((prev) =>
+        operation === "increment"
+          ? Math.min(prev + 1, 9)
+          : Math.max(prev - 1, 0)
+      );
+    }
+  };
+
+  const dropdownRef = useRef(null);
+  const handleClickOutside = (event) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      setShowPassengerDropdown(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div ref={ref} className="container-flight-search">
       <div className="header">
@@ -213,25 +295,29 @@ const FlightSearch = forwardRef((flightData, ref) => {
                 id="from"
                 value={from}
                 placeholder="Chọn địa điểm"
-                onFocus={() => setShowFromDropdown(true)}
-                onChange={(e) => setFrom(e.target.value)}
+                onFocus={() => {
+                  setShowFromDropdown(true);
+                  if (from === "") setFilteredCities(cities);
+                }}
+                onBlur={() => setTimeout(() => setShowFromDropdown(false))}
+                onChange={handleInputChange}
                 autoComplete="off"
               />
               <button
                 id="swap-button"
                 type="button"
-                onClick={handleSwapLocations}
+                onClick={() => handleSwapLocations()}
                 className="swap-button"
               >
                 ⇄
               </button>
-              {showFromDropdown && (
+              {showFromDropdown && filteredCities.length > 0 && (
                 <div className="dropdown">
-                  {cities.map((city) => (
+                  {filteredCities.map((city) => (
                     <div
                       key={city.airportCode}
                       className="dropdown-item"
-                      onClick={() =>
+                      onMouseDown={() =>
                         handleCitySelect(
                           "from",
                           `${city.city} (${city.airportCode})`
@@ -244,6 +330,9 @@ const FlightSearch = forwardRef((flightData, ref) => {
                   ))}
                 </div>
               )}
+              {showFromDropdown && filteredCities.length === 0 && (
+                <div className="dropdown">Không có kết quả phù hợp</div>
+              )}
             </div>
             <div className="input-r2">
               <label htmlFor="to">TỚI</label>
@@ -252,17 +341,21 @@ const FlightSearch = forwardRef((flightData, ref) => {
                 id="to"
                 value={to}
                 placeholder="Chọn địa điểm"
-                onFocus={() => setShowToDropdown(true)}
-                onChange={(e) => setTo(e.target.value)}
+                onFocus={() => {
+                  setShowToDropdown(true);
+                  if (to === "") setFilteredCitiesTo(cities);
+                }}
+                onBlur={() => setTimeout(() => setShowToDropdown(false))}
+                onChange={handleInputChangeTo}
                 autoComplete="off"
               />
-              {showToDropdown && (
+              {showToDropdown && filteredCitiesTo.length > 0 && (
                 <div className="dropdown">
-                  {cities.map((city) => (
+                  {filteredCitiesTo.map((city) => (
                     <div
                       key={city.airportCode}
                       className="dropdown-item"
-                      onClick={() =>
+                      onMouseDown={() =>
                         handleCitySelect(
                           "to",
                           `${city.city} (${city.airportCode})`
@@ -274,6 +367,9 @@ const FlightSearch = forwardRef((flightData, ref) => {
                     </div>
                   ))}
                 </div>
+              )}
+              {showToDropdown && filteredCitiesTo.length === 0 && (
+                <div className="dropdown">Không có kết quả phù hợp</div>
               )}
             </div>
             <div className="input-r2">
@@ -301,19 +397,59 @@ const FlightSearch = forwardRef((flightData, ref) => {
                 required={tripType === "round-trip"}
               />
             </div>
-            <div className="input-r2 passengers">
+            <div ref={dropdownRef} className="input-r2 passengers">
               <label htmlFor="passengers">HÀNH KHÁCH</label>
               <input
-                type="number"
+                type="text"
                 id="passengers"
-                value={passengers}
-                min="1"
-                max="9"
-                onChange={(e) =>
-                  setPassengers(Math.max(1, parseInt(e.target.value) || 1))
-                }
-                required
+                value={`${totalPassengers} hành khách`}
+                readOnly
+                onFocus={() => setShowPassengerDropdown(true)}
               />
+              {showPassengerDropdown && (
+                <div className="dropdown passenger-dropdown">
+                  <div className="dropdown-item">
+                    <span>Người lớn</span>
+                    <div className="counter">
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("adults", "decrement")
+                        }
+                      >
+                        -
+                      </button>
+                      <span>{adults}</span>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("adults", "increment")
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <div className="dropdown-item">
+                    <span>Trẻ em</span>
+                    <div className="counter">
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("children", "decrement")
+                        }
+                      >
+                        -
+                      </button>
+                      <span>{children}</span>
+                      <button
+                        onClick={() =>
+                          handlePassengerChange("children", "increment")
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="row2-2">
@@ -345,6 +481,6 @@ FlightSearch.displayName = "FlightSearch";
 
 FlightSearch.propTypes = {
   scrollSource: PropTypes.func.isRequired,
-}
+};
 
 export default FlightSearch;
