@@ -248,87 +248,103 @@ function Posts() {
             </h1>
           </div>
 
-                    <div className="latest-news__slider-container">
-                        {showNavigation && (
-                            <>
-                                <button
-                                    onClick={handlePrev}
-                                    className="latest-news__nav-button latest-news__nav-button--prev"
-                                >
-                                </button>
-                                <button
-                                    onClick={handleNext}
-                                    className="latest-news__nav-button latest-news__nav-button--next"
-                                >
-                                </button>
-                            </>
-                        )}
+          <div className="latest-news__slider-container">
+            {showNavigation && (
+              <>
+                <button
+                  onClick={handlePrev}
+                  className="latest-news__nav-button latest-news__nav-button--prev"
+                ></button>
+                <button
+                  onClick={handleNext}
+                  className="latest-news__nav-button latest-news__nav-button--next"
+                ></button>
+              </>
+            )}
 
-                        <Slider ref={sliderRef} {...settings} className="latest-news__slider latest-news__slider-admin">
-                            {posts.map((post) => (
-                                <div key={post._id} onClick={() => handlePostClick(post)}>
-                                    <CardPost
-                                    _id={post.id}
-                                    title={post.title}
-                                    subtitle={post.subtitle}
-                                    cover_url={post.cover_url}
-                                    className={selectedPost === post._id ? 'news-card news-card--active' : 'news-card'}
-                                    />
-                                </div>
-                            ))}
-                        </Slider>
-                    </div>
+            <Slider
+              ref={sliderRef}
+              {...settings}
+              className="latest-news__slider latest-news__slider-admin"
+            >
+              {posts.map((post) => (
+                <div key={post._id} onClick={() => handlePostClick(post)}>
+                  <CardPost
+                    _id={post.id}
+                    title={post.title}
+                    subtitle={post.subtitle}
+                    cover_url={post.cover_url}
+                    className={
+                      selectedPost === post._id
+                        ? "news-card news-card--active"
+                        : "news-card"
+                    }
+                  />
                 </div>
-                {/* Expanded content rendered below the slider */}
-                {selectedPost && (
-                    <div className="expanded-post-section">
-                        <h2>{selectedPost.title}</h2>
-                        <p>{selectedPost.subtitle}</p>
-                        <p>{selectedPost.content}</p>
-                        <img src={selectedPost.cover_url} alt={selectedPost.title} />
-                        <div className="buttons">
-                            <button onClick={() => handleEdit(selectedPost)}>Edit</button>
-                            <button onClick={() => handleDelete(selectedPost._id)}>Delete</button>
-                            <button onClick={() => setSelectedPost(null)}>Close</button>
-                        </div>
-                    </div>
-                )}
-                {isAddingPost && (
-                    <div className="modal-overlay">
-                        <div className="modal">
-                            <h3>Add New Post</h3>
-                            <form onSubmit={handleAddPost}>
-                                {error && <p className="error-message">{error}</p>}
-                                <input
-                                    type="text"
-                                    value={newPost.title}
-                                    onChange={(e) => setNewPost({ ...newPost, title: e.target.value })}
-                                    placeholder="Enter Title"
-                                />
-                                <input
-                                    type="text"
-                                    value={newPost.subtitle}
-                                    onChange={(e) => setNewPost({ ...newPost, subtitle: e.target.value })}
-                                    placeholder="Enter Subtitle"
-                                />
-                                <textarea
-                                    value={newPost.content}
-                                    onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
-                                    placeholder="Enter Content"
-                                ></textarea>
-                                <input
-                                    type="text"
-                                    value={newPost.cover_url}
-                                    onChange={(e) => setNewPost({ ...newPost, cover_url: e.target.value })}
-                                    placeholder="Enter Cover URL"
-                                />
-                                <button type="submit">Add</button>
-                                <button onClick={() => setIsAddingPost(false)}>Cancel</button>
-                            </form>
-                        </div>
-                    </div>
-                )}
-
+              ))}
+            </Slider>
+          </div>
+        </div>
+        {/* Expanded content rendered below the slider */}
+        {selectedPost && (
+          <div className="expanded-post-section">
+            <h2>{selectedPost.title}</h2>
+            <p>{selectedPost.subtitle}</p>
+            <p>{selectedPost.content}</p>
+            <img src={selectedPost.cover_url} alt={selectedPost.title} />
+            <div className="buttons">
+              <button onClick={() => handleEdit(selectedPost)}>Edit</button>
+              <button onClick={() => handleDelete(selectedPost._id)}>
+                Delete
+              </button>
+              <button onClick={() => setSelectedPost(null)}>Close</button>
+            </div>
+          </div>
+        )}
+        {isAddingPost && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h3>Add New Post</h3>
+              <form onSubmit={handleAddPost}>
+                {error && <p className="error-message">{error}</p>}
+                <input
+                  type="text"
+                  value={newPost.title}
+                  onChange={(e) =>
+                    setNewPost({ ...newPost, title: e.target.value })
+                  }
+                  placeholder="Enter Title"
+                />
+                <input
+                  type="text"
+                  value={newPost.subtitle}
+                  onChange={(e) =>
+                    setNewPost({ ...newPost, subtitle: e.target.value })
+                  }
+                  placeholder="Enter Subtitle"
+                />
+                <textarea
+                  value={newPost.content}
+                  onChange={(e) =>
+                    setNewPost({ ...newPost, content: e.target.value })
+                  }
+                  placeholder="Enter Content"
+                ></textarea>
+                <input
+                  type="text"
+                  value={newPost.cover_url}
+                  onChange={(e) =>
+                    setNewPost({ ...newPost, cover_url: e.target.value })
+                  }
+                  placeholder="Enter Cover URL"
+                />
+                <button type="submit">Add</button>
+                <button onClick={() => setIsAddingPost(false)}>Cancel</button>
+              </form>
+            </div>
+          </div>
+        )}
+      </div>
       {/* Update the edit modal similarly */}
       {editingPost && (
         <div className="modal-overlay">
