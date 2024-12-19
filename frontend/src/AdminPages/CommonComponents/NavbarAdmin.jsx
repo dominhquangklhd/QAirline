@@ -13,13 +13,13 @@ const NavbarAdmin = () => {
   const navigateTo = (endpoint) => {
     setActiveTab(endpoint);
     navigate(endpoint);
-  }
+  };
 
   return (
-    <div class="sidebar">
-      <div class="sidebar-header">
-        <div class="app-icon">
-        <img src="./assets/Qlogo.png" alt="" />
+    <div className="sidebar">
+      <div className="sidebar-header">
+        <div className="app-icon">
+          <img src="./assets/Qlogo.png" alt="" />
         </div>
       </div>
       <ul class="sidebar-list">
@@ -65,4 +65,3 @@ const NavbarAdmin = () => {
 };
 
 export default NavbarAdmin;
-

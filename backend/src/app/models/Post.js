@@ -14,7 +14,7 @@ const postSchema = new Schema({
     type: String,
     required: true,
   },
-  imageBase64: {
+  cover_url: {
     type: String,
   },
   createdAt: {

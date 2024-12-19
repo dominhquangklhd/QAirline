@@ -97,6 +97,12 @@ const apiLimiter = rateLimit({
 // Xử lý lỗi
 const errorHandler = (err, req, res, next) => {
   console.error(err.stack);
+  console.error({
+    message: err.message,
+    stack: err.stack,
+    status: err.status || 500, // Nếu có status từ lỗi custom
+    additionalInfo: err.additionalInfo, // Các thông tin lỗi thêm (nếu có)
+  });
   res.status(500).json({
     message: "Có lỗi xảy ra",
     error: process.env.NODE_ENV === "development" ? err.message : undefined,
