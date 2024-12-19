@@ -82,9 +82,9 @@ function Posts() {
       });
 
       // Log response thành công
-      console.log("Server response:", response.data);
+      console.log("Server response:", response);
 
-      setPosts([...posts, response.data]);
+      setPosts([...posts, response]);
       setIsAddingPost(false);
       setNewPost({
         title: "",
@@ -131,17 +131,15 @@ function Posts() {
     try {
       setLoading(true);
       const response = await axios.put(
-        `/api/admin/posts/${editingPost._id}`,
+        `/admin/posts/${editingPost._id}`,
         editingPost
       );
 
       setPosts(
-        posts?.map((post) =>
-          post._id === editingPost._id ? response.data : post
-        )
+        posts?.map((post) => (post._id === editingPost._id ? response : post))
       );
       setEditingPost(null);
-      setSelectedPost(response.data);
+      setSelectedPost(response);
     } catch (error) {
       console.error("Error updating post:", error);
       setError(error.response?.data?.message || "Failed to update post");
@@ -150,54 +148,28 @@ function Posts() {
     }
   };
 
-  const handlePostClick = (post) => {
-    setSelectedPost(post); // Set the clicked post as selected
+  const handleShowDetails = (post) => {
+    setSelectedPost(post);
+    // setIsModalOpen(true);
   };
 
+  const handleEdit = (post) => {
+    setEditingPost(post);
+  };
   const handleDelete = async (postId) => {
     try {
       setLoading(true);
-      await axios.delete(`/api/admin/posts/${postId}`);
+      await axios.delete(`/admin/posts/${postId}`);
       setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
       setSelectedPost(null);
     } catch (error) {
       console.error("Error deleting post:", error);
-      setError(error.response?.data?.message || "Failed to delete post");
+      //   setError(error.response?.data?.message || "Failed to delete post");
     } finally {
       setLoading(false);
     }
   };
 
-    // // Your existing settings and slider logic remains the same
-    // const settings = {
-    //   dots: posts.length > 1,
-    //   speed: 500,
-    //   infinite: posts.length > 1,
-    //   slidesToShow: 5,
-    //   slidesToScroll: 1,
-    //   responsive: [
-    //     {
-    //       breakpoint: 1024,
-    //       settings: {
-    //         slidesToShow: Math.min(2, posts.length),
-    //         slidesToScroll: 1,
-    //         infinite: posts.length > 2,
-    //         dots: posts.length > 2,
-    //         autoplay: posts.length > 2,
-    //       },
-    //     },
-    //     {
-    //       breakpoint: 600,
-    //       settings: {
-    //         slidesToShow: 1,
-    //         slidesToScroll: 1,
-    //         infinite: posts.length > 1,
-    //         dots: posts.length > 1,
-    //         autoplay: posts.length > 1,
-    //       },
-    //     },
-    //   ],
-    // };
   const getSliderSettings = () => ({
     dots: posts?.length > 5,
     speed: 500,
@@ -255,13 +227,11 @@ function Posts() {
                 <button
                   onClick={handlePrev}
                   className="latest-news__nav-button latest-news__nav-button--prev"
-                >
-                </button>
+                ></button>
                 <button
                   onClick={handleNext}
                   className="latest-news__nav-button latest-news__nav-button--next"
-                >
-                </button>
+                ></button>
               </>
             )}
 
@@ -271,7 +241,7 @@ function Posts() {
               className="latest-news__slider latest-news__slider-admin"
             >
               {posts?.map((post) => (
-                <div key={post._id} onClick={() => handlePostClick(post)}>
+                <div key={post._id} onClick={() => handleShowDetails(post)}>
                   <CardPost
                     // _id={post._id}
                     title={post.title}
@@ -297,7 +267,7 @@ function Posts() {
           <p>{selectedPost.content}</p>
           <img src={selectedPost.cover_url} alt={selectedPost.title} />
           <div className="buttons">
-            <button onClick={() => handlePostClick(selectedPost)}>Edit</button>
+            <button onClick={() => handleEdit(selectedPost)}>Edit</button>
             <button onClick={() => handleDelete(selectedPost._id)}>
               Delete
             </button>
