@@ -173,7 +173,8 @@ function Posts() {
   const getSliderSettings = () => ({
     dots: posts?.length > 5,
     speed: 500,
-    infinite: posts?.length > 5,
+    infinite: true,
+    variableWidth: true,
     slidesToShow: Math.min(5, posts?.length || 1),
     slidesToScroll: 1,
     responsive: [
