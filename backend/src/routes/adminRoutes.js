@@ -3,10 +3,11 @@ const router = require("express").Router();
 const AdminController = require("../app/controllers/AdminController");
 const { verifyToken, isAdmin } = require("../app/middleware/authMiddleware");
 
-// router.use(verifyToken);
-// router.use(isAdmin);
-
 router.get("/posts", AdminController.getPosts);
+
+router.use(verifyToken);
+router.use(isAdmin);
+
 router.post("/posts", AdminController.createPost);
 router.put("/posts/:id", AdminController.updatePost);
 router.delete("/posts/:id", AdminController.deletePost);

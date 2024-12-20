@@ -16,9 +16,10 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Lấy token từ localStorage (nếu có authentication)
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
+      // config.headers.role = localStorage.getItem("role");
     }
     return config;
   },

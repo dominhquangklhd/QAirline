@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import "./NavbarAdmin.scss";
-
+import { Link } from "react-router-dom";
 const NavbarAdmin = () => {
   let login = false;
   const navigate = useNavigate();
@@ -14,7 +14,9 @@ const NavbarAdmin = () => {
     <div className="sidebar">
       <div className="sidebar-header">
         <div className="app-icon">
-          <img src="./assets/Qlogo.png" alt="" />
+          <Link to="/">
+            <img src="./assets/Qlogo.png" alt="" />
+          </Link>
         </div>
       </div>
       <ul className="sidebar-list">

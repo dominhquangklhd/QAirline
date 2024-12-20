@@ -48,7 +48,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
   useEffect(() => {
     const fetchCities = async () => {
       try {
-        console.log("atFetchCities");
+        // console.log("atFetchCities");
 
         const response = await axios.get("/flights/airports"); // Endpoint API
         // console.log(response);
@@ -384,7 +384,9 @@ const FlightSearch = forwardRef((flightData, ref) => {
               />
             </div>
             <div
-              className={`input-r2 no-bor ${tripType === "one-way" ? "hidden" : ""}`}
+              className={`input-r2 no-bor ${
+                tripType === "one-way" ? "hidden" : ""
+              }`}
             >
               <label htmlFor="return-date">NGÀY VỀ</label>
               <input
