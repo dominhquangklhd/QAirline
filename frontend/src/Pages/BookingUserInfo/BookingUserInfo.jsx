@@ -4,6 +4,7 @@ import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { ClipLoader } from "react-spinners";
+import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 export default function BookingUserInfo() {
   const navigate = useNavigate();
@@ -112,6 +113,12 @@ export default function BookingUserInfo() {
     Banking: "assets/payments/qr-banking.png",
   };
 
+  const scrollToTop = () => {
+    setTimeout(() => {
+      smoothScrollToTop();
+    }, 100); // Đặt thời gian trì hoãn (500ms)
+  };
+
   return (
     <div className="booking-container">
       <div className="booking-user-info">
@@ -218,10 +225,13 @@ export default function BookingUserInfo() {
           </div>
 
           <div className="form-actions">
-            <button onClick={handleSubmit} disabled={loading}>
+            {error && <p className="error-message">{error}</p>}
+            <button onClick={() => {
+              handleSubmit();
+              if (!error) scrollToTop();
+              }} disabled={loading}>
               {loading ? <ClipLoader size={20} /> : "Hoàn tất"}
             </button>
-            {error && <p className="error-message">{error}</p>}
           </div>
         </section>
       </div>
