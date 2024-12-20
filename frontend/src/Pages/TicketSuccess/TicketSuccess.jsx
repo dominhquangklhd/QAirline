@@ -1,17 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Check, Copy, Home } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import "./TicketSuccess.scss";
-
+import axios from "../../Apis/axios";
 const TicketSuccess = () => {
   const [copied, setCopied] = useState(false);
   // Example ticket code
   const location = useLocation();
-  const { bookingCodelist, emailList } = location.state || {};
+  const { bookingCodelist, emailList, name } = location.state || {};
 
   console.log("booking", bookingCodelist);
   // const ticketCode = bookingCodelist.map((item) => item._id);
   // let ticketCode = 1;
+  console.log("emailList", emailList);
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(
@@ -24,6 +25,40 @@ const TicketSuccess = () => {
     }
   };
 
+  const sendEmail = async (ticketCode, customerName, email) => {
+    try {
+      const response = await axios.post("/send-email", {
+        ticketCode,
+        customerName,
+        email,
+      });
+
+      if (response.status === 200) {
+        // Kiểm tra nếu response status là 200
+        console.log("Email sent successfully!");
+      } else {
+        console.log("Failed to send email");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+    }
+  };
+
+  console.log(emailList.map((email) => email));
+
+  useEffect(() => {
+    const sendEmails = async () => {
+      if (emailList) {
+        // Sử dụng vòng lặp for để đảm bảo gửi email đồng bộ
+        for (let i = 0; i < emailList.length; i++) {
+          const email = emailList[i];
+          await sendEmail(bookingCodelist, name ? name : "Customer", email);
+        }
+      }
+    };
+
+    sendEmails();
+  }, []);
   return (
     <div className="ticket-success">
       <div className="ticket-success__container">

@@ -25,6 +25,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const flightRoutes = require("./src/routes/flightRoutes");
 const bookingRoutes = require("./src/routes/bookingRoutes");
 const adminRoutes = require("./src/routes/adminRoutes");
+const emailRoutes = require("./src/routes/emailRoute");
 const connectDB = require("./src/config/db");
 
 // Global Middleware
@@ -42,7 +43,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/flights", flightRoutes);
 app.use("/api/bookings", bookingRoutes);
 app.use("/api/admin", adminRoutes);
-
+app.use("/api/send-email", emailRoutes);
 // Error Handlers
 app.use(errorHandler);
 app.use((req, res) => {

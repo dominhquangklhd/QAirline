@@ -4,7 +4,7 @@ import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { ClipLoader } from "react-spinners";
-import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
+// import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 export default function BookingUserInfo() {
   const navigate = useNavigate();
@@ -63,6 +63,7 @@ export default function BookingUserInfo() {
     setLoading(true);
     let bookingCodelist = [];
     let emailList = [];
+    let name = "";
     try {
       for (const formData of formDataList) {
         // Create booking for outbound flight
@@ -90,7 +91,7 @@ export default function BookingUserInfo() {
         console.log("Outbound booking created:", response);
         bookingCodelist.push(response._id);
         emailList.push(formData.email);
-
+        name = `${formData.firstName} ${formData.lastName}`;
         // Create booking for return flight (if available)
         if (returnFlight) {
           const returnBookingData = {
@@ -120,7 +121,9 @@ export default function BookingUserInfo() {
       }
 
       setError(null);
-      navigate("/TicketSuccess", { state: { bookingCodelist, emailList } });
+      navigate("/TicketSuccess", {
+        state: { bookingCodelist, emailList, name },
+      });
     } catch (err) {
       console.error("Booking failed:", err);
       setError("Booking failed. Please try again.");
@@ -129,11 +132,11 @@ export default function BookingUserInfo() {
     }
   };
 
-  useEffect(() => {
-    if (!loading && !error) {
-      scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
-    }
-  }, [loading, error]); // Theo dõi sự thay đổi của loading và error
+  // useEffect(() => {
+  //   if (!loading && !error) {
+  //     scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
+  //   }
+  // }, [loading, error]); // Theo dõi sự thay đổi của loading và error
 
   const [selectedOption, setSelectedOption] = useState("VNPay");
 
@@ -143,11 +146,11 @@ export default function BookingUserInfo() {
     Banking: "assets/payments/qr-banking.png",
   };
 
-  const scrollToTop = () => {
-    setTimeout(() => {
-      smoothScrollToTop();
-    }, 100); // Đặt thời gian trì hoãn (500ms)
-  };
+  // const scrollToTop = () => {
+  //   setTimeout(() => {
+  //     smoothScrollToTop();
+  //   }, 100); // Đặt thời gian trì hoãn (500ms)
+  // };
 
   return (
     <div className="booking-container">
@@ -167,16 +170,16 @@ export default function BookingUserInfo() {
         <section className="form-container">
           {formDataList.map((formData, index) => (
             <div key={index} className="form-grid">
-              <div className="header">
-                Hành khách {index + 1}
-              </div>
+              <div className="header">Hành khách {index + 1}</div>
 
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Họ*"
                   value={formData.firstName}
-                  onChange={(e) => handleInputChange(index, "firstName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "firstName", e.target.value)
+                  }
                 />
               </div>
 
@@ -185,7 +188,9 @@ export default function BookingUserInfo() {
                   type="text"
                   placeholder="Tên đệm & tên*"
                   value={formData.lastName}
-                  onChange={(e) => handleInputChange(index, "lastName", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "lastName", e.target.value)
+                  }
                 />
               </div>
 
@@ -193,7 +198,9 @@ export default function BookingUserInfo() {
                 <input
                   type="date"
                   value={formData.birthDate}
-                  onChange={(e) => handleInputChange(index, "birthDate", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "birthDate", e.target.value)
+                  }
                 />
               </div>
 
@@ -202,7 +209,9 @@ export default function BookingUserInfo() {
                   type="tel"
                   placeholder="Số điện thoại*"
                   value={formData.phone}
-                  onChange={(e) => handleInputChange(index, "phone", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "phone", e.target.value)
+                  }
                 />
               </div>
 
@@ -211,7 +220,9 @@ export default function BookingUserInfo() {
                   type="email"
                   placeholder="Email*"
                   value={formData.email}
-                  onChange={(e) => handleInputChange(index, "email", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "email", e.target.value)
+                  }
                 />
               </div>
 
@@ -220,7 +231,9 @@ export default function BookingUserInfo() {
                   type="text"
                   placeholder="CCCD/CMND/Hộ chiếu*"
                   value={formData.idNumber}
-                  onChange={(e) => handleInputChange(index, "idNumber", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "idNumber", e.target.value)
+                  }
                 />
               </div>
 
@@ -229,7 +242,9 @@ export default function BookingUserInfo() {
                   type="text"
                   placeholder="Nơi ở hiện tại"
                   value={formData.address}
-                  onChange={(e) => handleInputChange(index, "address", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(index, "address", e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -256,9 +271,12 @@ export default function BookingUserInfo() {
 
           <div className="form-actions">
             {error && <p className="error-message">{error}</p>}
-            <button onClick={async () => {
-              await handleSubmit();
-            }} disabled={loading}>
+            <button
+              onClick={async () => {
+                await handleSubmit();
+              }}
+              disabled={loading}
+            >
               {loading ? <ClipLoader size={20} /> : "Hoàn tất"}
             </button>
           </div>
