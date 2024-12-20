@@ -128,7 +128,7 @@ function CancelFlight() {
             <input
               type="text"
               name="bookingId"
-              value={formData.bookingId}
+              value={formData?.bookingId}
               onChange={handleInputChange}
               placeholder=" "
             />
@@ -138,7 +138,7 @@ function CancelFlight() {
             <input
               type="email"
               name="email"
-              value={formData.email}
+              value={formData?.email}
               onChange={handleInputChange}
               placeholder=" "
             />
@@ -148,7 +148,7 @@ function CancelFlight() {
             <input
               type="tel"
               name="phone"
-              value={formData.phone}
+              value={formData?.phone}
               onChange={handleInputChange}
               placeholder=" "
             />
@@ -173,7 +173,7 @@ function CancelFlight() {
 
       {showOTP && (
         <ConfirmOTP
-          email={formData.email}
+          email={formData?.email}
           onConfirm={handleOTPConfirm}
           onClose={() => setShowOTP(false)}
           //   onResendOTP={handleResendOTP}

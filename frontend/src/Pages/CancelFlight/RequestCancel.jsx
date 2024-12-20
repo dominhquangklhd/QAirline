@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 
 function RequestCancel({ bookingDetails, onConfirm, onClose }) {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
@@ -10,11 +11,11 @@ function RequestCancel({ bookingDetails, onConfirm, onClose }) {
       return;
     }
     onConfirm({
-      bookingId: bookingDetails._id,
-      guestInfo: bookingDetails.guest_info,
+      bookingId: bookingDetails?._id,
+      guestInfo: bookingDetails?.guest_info,
     });
   };
-
+  console.log(bookingDetails);
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("vi-VN");
@@ -27,7 +28,7 @@ function RequestCancel({ bookingDetails, onConfirm, onClose }) {
       </div>
       <div className="content">
         <div className="code">
-          <p className="blue">Mã đặt chỗ: {bookingDetails._id}</p>
+          <p className="blue">Mã đặt chỗ: {bookingDetails?._id}</p>
         </div>
         <div className="customer box">
           <input
@@ -37,11 +38,15 @@ function RequestCancel({ bookingDetails, onConfirm, onClose }) {
           />
           <div className="left">
             <p>Hành khách</p>
-            <p className="blue">{bookingDetails.guest_info.full_name}</p>
+            <p className="blue">
+              {bookingDetails?.guest_info?.full_name
+                ? bookingDetails?.guest_info.full_name
+                : bookingDetails.userId}
+            </p>
           </div>
           <div className="right">
             <p>Ngày đặt</p>
-            <p className="blue">{formatDate(bookingDetails.booking_date)}</p>
+            <p className="blue">{formatDate(bookingDetails?.booking_date)}</p>
           </div>
         </div>
         <div className="journey box">
@@ -53,11 +58,12 @@ function RequestCancel({ bookingDetails, onConfirm, onClose }) {
           <div>
             <p className="blue">Thông tin đặt chỗ</p>
             <p>
-              Số tiền: {bookingDetails.total_amount.toLocaleString("vi-VN")} VND
+              Số tiền: {bookingDetails?.total_amount.toLocaleString("vi-VN")}{" "}
+              VND
             </p>
-            <p>Hạn huỷ: {formatDate(bookingDetails.cancellation_deadline)}</p>
-            <p>Email: {bookingDetails.guest_info.email}</p>
-            <p>SĐT: {bookingDetails.guest_info.phone}</p>
+            <p>Hạn huỷ: {formatDate(bookingDetails?.cancellation_deadline)}</p>
+            <p>Email: {bookingDetails?.guest_info?.email}</p>
+            <p>SĐT: {bookingDetails?.guest_info?.phone}</p>
           </div>
         </div>
         <div className="acpt box">
@@ -75,5 +81,22 @@ function RequestCancel({ bookingDetails, onConfirm, onClose }) {
     </div>
   );
 }
+RequestCancel.propTypes = {
+  bookingDetails: PropTypes.shape({
+    _id: PropTypes.string,
+    guest_info: PropTypes.shape({
+      full_name: PropTypes.string,
+      email: PropTypes.string,
+      phone: PropTypes.string,
+    }),
+
+    userId: PropTypes.string,
+    booking_date: PropTypes.string,
+    total_amount: PropTypes.number,
+    cancellation_deadline: PropTypes.string,
+  }),
+  onConfirm: PropTypes.func.isRequired,
+  onClose: PropTypes.func,
+};
 
 export default RequestCancel;
