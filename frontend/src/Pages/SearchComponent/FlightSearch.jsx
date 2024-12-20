@@ -10,6 +10,7 @@ import { FaPlane } from "react-icons/fa";
 import axios from "../../Apis/axios";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 const FlightSearch = forwardRef((flightData, ref) => {
   const navigate = useNavigate();
@@ -257,6 +258,12 @@ const FlightSearch = forwardRef((flightData, ref) => {
     };
   }, []);
 
+  const scrollToTop = () => {
+    setTimeout(() => {
+      smoothScrollToTop();
+    }, 100); // Đặt thời gian trì hoãn (500ms)
+  };
+
   return (
     <div ref={ref} className="container-flight-search">
       <div className="header">
@@ -461,7 +468,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               )}
             </div>
           </div>
-          <div className="row2-2">
+          {/* <div className="row2-2">
             <label htmlFor="discount-code">MÃ GIẢM GIÁ</label>
             <input
               type="text"
@@ -470,14 +477,14 @@ const FlightSearch = forwardRef((flightData, ref) => {
               onChange={(e) => setDiscountCode(e.target.value)}
               placeholder="Nhập mã giảm giá (nếu có)"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="row3">
           <div className="row3-1"></div>
           <div className="row3-2">
             <div className="input-r3-btn">
-              <button type="submit">Tìm chuyến bay</button>
+              <button type="submit" onClick={scrollToTop}>Tìm chuyến bay</button>
             </div>
           </div>
         </div>

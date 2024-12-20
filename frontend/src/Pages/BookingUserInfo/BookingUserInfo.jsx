@@ -1,9 +1,10 @@
 // BookingUserInfo.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { ClipLoader } from "react-spinners";
+import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 export default function BookingUserInfo() {
   const navigate = useNavigate();
@@ -128,12 +129,24 @@ export default function BookingUserInfo() {
     }
   };
 
+  useEffect(() => {
+    if (!loading && !error) {
+      scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
+    }
+  }, [loading, error]); // Theo dõi sự thay đổi của loading và error
+
   const [selectedOption, setSelectedOption] = useState("VNPay");
 
   const qrImages = {
     VNPay: "assets/payments/qr-vnpay.png",
     MoMo: "assets/payments/qr-momo.png",
     Banking: "assets/payments/qr-banking.png",
+  };
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      smoothScrollToTop();
+    }, 100); // Đặt thời gian trì hoãn (500ms)
   };
 
   return (
@@ -154,76 +167,69 @@ export default function BookingUserInfo() {
         <section className="form-container">
           {formDataList.map((formData, index) => (
             <div key={index} className="form-grid">
-              Hành khách {index + 1}
-              <br />
-              <br />
+              <div className="header">
+                Hành khách {index + 1}
+              </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Họ*"
                   value={formData.firstName}
-                  onChange={(e) =>
-                    handleInputChange(index, "firstName", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "firstName", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Tên đệm & tên*"
                   value={formData.lastName}
-                  onChange={(e) =>
-                    handleInputChange(index, "lastName", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "lastName", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="date"
                   value={formData.birthDate}
-                  onChange={(e) =>
-                    handleInputChange(index, "birthDate", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "birthDate", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="tel"
                   placeholder="Số điện thoại*"
                   value={formData.phone}
-                  onChange={(e) =>
-                    handleInputChange(index, "phone", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "phone", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="email"
                   placeholder="Email*"
                   value={formData.email}
-                  onChange={(e) =>
-                    handleInputChange(index, "email", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "email", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="CCCD/CMND/Hộ chiếu*"
                   value={formData.idNumber}
-                  onChange={(e) =>
-                    handleInputChange(index, "idNumber", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "idNumber", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Nơi ở hiện tại"
                   value={formData.address}
-                  onChange={(e) =>
-                    handleInputChange(index, "address", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "address", e.target.value)}
                 />
               </div>
             </div>
@@ -249,10 +255,12 @@ export default function BookingUserInfo() {
           </div>
 
           <div className="form-actions">
-            <button onClick={handleSubmit} disabled={loading}>
+            {error && <p className="error-message">{error}</p>}
+            <button onClick={async () => {
+              await handleSubmit();
+            }} disabled={loading}>
               {loading ? <ClipLoader size={20} /> : "Hoàn tất"}
             </button>
-            {error && <p className="error-message">{error}</p>}
           </div>
         </section>
       </div>

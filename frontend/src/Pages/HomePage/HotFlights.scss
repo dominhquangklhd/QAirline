@@ -21,8 +21,36 @@
 }
 
 .hot-flight-item:hover {
-    transform: scale(1.05); /* Hiệu ứng khi hover */
+    transform: scale(1.05);
     cursor: pointer;
+    animation: rainbowBorder 10s linear infinite;
+}
+
+@keyframes rainbowBorder {
+    0% {
+        border-color: var(--PrimaryColor);
+    }
+    14% {
+        border-color: var(--whiteColor);
+    }
+    28% {
+        border-color: var(--PrimaryColor);
+    }
+    42% {
+        border-color: var(--whiteColor);
+    }
+    57% {
+        border-color: var(--PrimaryColor);
+    }
+    71% {
+        border-color: var(--whiteColor);
+    }
+    85% {
+        border-color: var(--PrimaryColor);
+    }
+    100% {
+        border-color: var(--whiteColor);
+    }
 }
 
 .flight-image {

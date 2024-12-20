@@ -1,8 +1,11 @@
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import FlightCardV2 from "./FlightCardV2";
 import FlightInfoBar from "./FlightInfoBar";
 import "./FlightResults.scss";
+
+import { smoothScrollTo } from "../../CommonFunctions/SmoothScroll";
+import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 const FlightResults = () => {
   const navigate = useNavigate();
@@ -13,6 +16,19 @@ const FlightResults = () => {
   // State để lưu chuyến bay được chọn
   const [selectedOutbound, setSelectedOutbound] = useState(null);
   const [selectedReturn, setSelectedReturn] = useState(null);
+  const refReturn = useRef(null);
+
+  const handleScrollToReturnFlight = () => {
+    if (refReturn.current) {
+      smoothScrollTo(refReturn);
+    }
+  };
+
+  const scrollToTop = () => {
+    setTimeout(() => {
+      smoothScrollToTop();
+    }, 100); // Đặt thời gian trì hoãn (500ms)
+  };
 
   if (!searchResults) {
     return (
@@ -73,6 +89,7 @@ const FlightResults = () => {
             searchResults.outbound.map((flight, index) => (
               <div key={index}>
                 <FlightCardV2
+                  handleClickSelected={() => handleScrollToReturnFlight()}
                   flight={flight}
                   isSelected={selectedOutbound?.id === flight.id}
                   onSelect={(selectedFlight) =>
@@ -87,7 +104,7 @@ const FlightResults = () => {
       {/* Chuyến bay về (chỉ hiển thị nếu là vé khứ hồi) */}
       {searchParams.isRoundTrip && (
         <div className="flight-section">
-          <h2 className="section-title">
+          <h2 ref={refReturn} className="section-title">
             Chuyến bay về - {searchParams.returnDate}
           </h2>
           <div className="flights-list">
@@ -135,7 +152,10 @@ const FlightResults = () => {
         </div>
         <button
           className="confirm-button"
-          onClick={handleConfirmBooking}
+          onClick={() => {
+            handleConfirmBooking();
+            scrollToTop();
+          }}
           disabled={
             !selectedOutbound || (searchParams.isRoundTrip && !selectedReturn)
           }

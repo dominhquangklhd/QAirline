@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import { FaPlaneDeparture } from "react-icons/fa";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 
-function FlightCardV2({ flight, onSelect, isSelected }) {
+function FlightCardV2({ flight, onSelect, isSelected, handleClickSelected }) {
   const {
     scheduled_departure,
     scheduled_arrival,
@@ -61,6 +61,7 @@ function FlightCardV2({ flight, onSelect, isSelected }) {
             onClick={(e) => {
               e.stopPropagation();
               handleSelectClass("economy");
+              handleClickSelected();
             }}
             className={
               isSelected && flight.fareType === "economy" ? "selected" : ""
@@ -76,6 +77,7 @@ function FlightCardV2({ flight, onSelect, isSelected }) {
             onClick={(e) => {
               e.stopPropagation();
               handleSelectClass("business");
+              handleClickSelected();
             }}
             className={
               isSelected && flight.fareType === "business" ? "selected" : ""
@@ -106,6 +108,7 @@ FlightCardV2.propTypes = {
   }).isRequired,
   onSelect: PropTypes.func.isRequired,
   isSelected: PropTypes.bool,
+  handleClickSelected: PropTypes.func.isRequired,
 };
 
 export default FlightCardV2;
