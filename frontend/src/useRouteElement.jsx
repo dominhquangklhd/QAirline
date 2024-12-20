@@ -16,7 +16,7 @@ import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin";
 import AircraftInfo from "./AdminPages/AircraftInfo/AircraftInfo";
 import Posts from "./AdminPages/Posts/Posts";
 import FlightsInfo from "./AdminPages/FlightsInfo/FlightsInfo";
-import TicketsInfo from "./AdminPages/TicketInfo/TicketsInfo";
+import StatisticsDashboard from "./AdminPages/StatisticsDashboard.jsx";
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -77,8 +77,8 @@ export default function useRouteElement() {
       element: <Posts />,
     },
     {
-      path: "/TicketsInfo",
-      element: <TicketsInfo />,
+      path: "/statistic",
+      element: <StatisticsDashboard />,
     },
   ]);
   return routeElement;

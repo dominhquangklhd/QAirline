@@ -1,6 +1,6 @@
 // controllers/AdminController.js
 const Post = require("../models/Post");
-const Aircraft = require("../models/Aircraft");
+const Aircraft = require("../models/aircraft");
 const Flight = require("../models/flight");
 const Booking = require("../models/Booking");
 
@@ -241,15 +241,160 @@ class AdminController {
   // Admin: View booking statistics
   async getBookingStatistics(req, res) {
     try {
-      const stats = await Booking.aggregate([
+      // Get booking status statistics
+      const bookingStats = await Booking.aggregate([
         {
           $group: {
             _id: "$status",
             count: { $sum: 1 },
+            totalRevenue: { $sum: "$total_amount" },
           },
         },
       ]);
-      res.json(stats);
+
+      // Get aircraft revenue statistics
+      const aircraftStats = await Aircraft.aggregate([
+        {
+          $lookup: {
+            from: "Flights",
+            localField: "_id",
+            foreignField: "aircraft_id",
+            as: "flights",
+          },
+        },
+        {
+          $lookup: {
+            from: "Bookings",
+            localField: "flights._id",
+            foreignField: "flight_id",
+            as: "bookings",
+          },
+        },
+        {
+          $project: {
+            aircraft_code: 1,
+            manufacturer: 1,
+            model: 1,
+            total_seats: 1,
+            manufacture_date: 1,
+            total_revenue: 1,
+            total_flights: { $size: "$flights" },
+            total_bookings: { $size: "$bookings" },
+            active_bookings: {
+              $size: {
+                $filter: {
+                  input: "$bookings",
+                  as: "booking",
+                  cond: { $eq: ["$$booking.status", "confirmed"] },
+                },
+              },
+            },
+          },
+        },
+        {
+          $project: {
+            aircraft_code: 1,
+            manufacturer: 1,
+            model: 1,
+            total_seats: 1,
+            manufacture_date: 1,
+            total_revenue: 1,
+            total_flights: 1,
+            total_bookings: 1,
+            active_bookings: 1,
+            utilization_rate: {
+              $cond: {
+                if: {
+                  $and: [
+                    { $ne: ["$total_flights", 0] },
+                    { $ne: ["$total_seats", 0] },
+                    {
+                      $ne: [
+                        { $multiply: ["$total_flights", "$total_seats"] },
+                        0,
+                      ],
+                    },
+                  ],
+                },
+                then: {
+                  $multiply: [
+                    {
+                      $divide: [
+                        "$active_bookings",
+                        { $multiply: ["$total_flights", "$total_seats"] },
+                      ],
+                    },
+                    100,
+                  ],
+                },
+                else: 0,
+              },
+            },
+          },
+        },
+        {
+          $sort: { total_revenue: -1 },
+        },
+      ]);
+
+      // Get monthly revenue trend
+      const monthlyRevenue = await Booking.aggregate([
+        {
+          $match: {
+            status: "confirmed",
+            booking_date: {
+              $gte: new Date(
+                new Date().setFullYear(new Date().getFullYear() - 1)
+              ),
+            },
+          },
+        },
+        {
+          $group: {
+            _id: {
+              year: { $year: "$booking_date" },
+              month: { $month: "$booking_date" },
+            },
+            revenue: { $sum: "$total_amount" },
+            bookings: { $sum: 1 },
+          },
+        },
+        {
+          $sort: {
+            "_id.year": 1,
+            "_id.month": 1,
+          },
+        },
+      ]);
+
+      // Calculate summary statistics
+      const summary = {
+        total_aircraft: aircraftStats.length,
+        total_revenue: aircraftStats.reduce(
+          (sum, aircraft) => sum + (aircraft.total_revenue || 0),
+          0
+        ),
+        average_revenue_per_aircraft:
+          aircraftStats.length > 0
+            ? aircraftStats.reduce(
+                (sum, aircraft) => sum + (aircraft.total_revenue || 0),
+                0
+              ) / aircraftStats.length
+            : 0,
+        highest_revenue_aircraft:
+          aircraftStats.length > 0 ? aircraftStats[0] : null,
+        total_confirmed_bookings:
+          bookingStats.find((stat) => stat._id === "confirmed")?.count || 0,
+        total_cancelled_bookings:
+          bookingStats.find((stat) => stat._id === "cancelled")?.count || 0,
+      };
+
+      res.json({
+        summary,
+        booking_stats: bookingStats,
+        aircraft_stats: aircraftStats,
+        monthly_revenue: monthlyRevenue,
+      });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }

@@ -5,8 +5,8 @@ const { verifyToken, isAdmin } = require("../app/middleware/authMiddleware");
 
 router.get("/posts", AdminController.getPosts);
 
-router.use(verifyToken);
-router.use(isAdmin);
+// router.use(verifyToken);
+// router.use(isAdmin);
 
 router.post("/posts", AdminController.createPost);
 router.put("/posts/:id", AdminController.updatePost);

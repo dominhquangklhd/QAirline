@@ -11,7 +11,7 @@ const {
 } = require("../app/middleware/authMiddleware");
 
 // Public routes (không cần đăng nhập)
-router.post("/createBooking", apiLimiter, bookingController.createBooking); // Đặt vé cho khách vãng lai
+router.post("/createBooking", apiLimiter, bookingController.createBooking); // Đặt vé 
 router.get(
   "/searchBooking",
   apiLimiter,

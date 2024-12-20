@@ -90,11 +90,11 @@ const NavbarAdmin = () => {
             <span>Flight Info</span>
           </a>
         </li>
+
         <li
           className="sidebar-list-item"
-          onClick={() => navigateTo("/TicketsInfo")}
-        ></li>
-        <li className="sidebar-list-item">
+          onClick={() => navigateTo("/statistic")}
+        >
           <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"

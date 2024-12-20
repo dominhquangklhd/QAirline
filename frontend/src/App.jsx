@@ -6,7 +6,6 @@ import Navbar from "./CommonComponents/Navbar";
 import Footer from "./CommonComponents/Footer";
 import HomePage from "./Pages/HomePage/HomePage";
 import HomeAdmin from "./AdminPages/HomeAdmin/HomeAdmin";
-
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -17,7 +16,12 @@ function App() {
   const navigate = useNavigate();
   const [flightData, setFlightData] = useState(null);
   const isHomePage = routeElement?.props?.children.type === HomePage;
-  const isAdminPage = window.location.pathname.startsWith("/HomeAdmin") || window.location.pathname.startsWith("/AircraftInfo") || window.location.pathname.startsWith("/FlightsInfo") || window.location.pathname.startsWith("/Posts") || window.location.pathname.startsWith("/TicketsInfo");
+  const isAdminPage =
+    window.location.pathname.startsWith("/HomeAdmin") ||
+    window.location.pathname.startsWith("/AircraftInfo") ||
+    window.location.pathname.startsWith("/FlightsInfo") ||
+    window.location.pathname.startsWith("/Posts") ||
+    window.location.pathname.startsWith("/statistic");
   const flightSearchRef = useRef(null);
   const handleScrollToFlightSearch = () => {
     if (flightSearchRef.current) {
@@ -42,14 +46,16 @@ function App() {
   return (
     <div>
       {isAdminPage ? (
-        <HomeAdmin>
-          {routeElement}
-        </HomeAdmin>
+        <HomeAdmin>{routeElement}</HomeAdmin>
       ) : (
         <>
           <Navbar onSearchClick={handleNavbarSearchClick} />
           {isHomePage ? (
-            <HomePage flightSearchRef={flightSearchRef} hotFlightClick={handleHotFlightClick} flightData={flightData} />
+            <HomePage
+              flightSearchRef={flightSearchRef}
+              hotFlightClick={handleHotFlightClick}
+              flightData={flightData}
+            />
           ) : (
             routeElement
           )}

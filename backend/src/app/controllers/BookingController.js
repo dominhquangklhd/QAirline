@@ -1,6 +1,7 @@
 // const { default: mongoose } = require("mongoose");
 const Booking = require("../models/Booking");
 const Flight = require("../models/flight");
+const Aircraft = require("../models/aircraft");
 
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Types;
@@ -28,12 +29,6 @@ class BookingController {
         await session.abortTransaction();
         return res.status(400).json({ message: "No seats available" });
       }
-
-      // Validate ticket price
-      // if (total_amount !== flight.base_price) {
-      //   await session.abortTransaction();
-      //   return res.status(400).json({ message: "Incorrect ticket price" });
-      // }
 
       // Create booking object
       const bookingData = {
@@ -65,7 +60,26 @@ class BookingController {
       // Update flight's available seats
       flight.available_seats -= 1;
       await flight.save({ session });
+      // console.log("flight", flight.aircraft_id);
+      console.log("flight", flight);
 
+      const aircraft = await Aircraft.findById(flight.aircraft_id).session(
+        session
+      );
+      console.log("aircraft", aircraft);
+      if (!aircraft) {
+        await session.abortTransaction();
+        return res.status(404).json({ message: "Aircraft not found" });
+      }
+      // 6730c3fb0e737122d16a23fe
+      // 6730c3fb0e737122d16a23fe
+      // Initialize total_revenue if it doesn't exist
+      if (!aircraft.total_revenue) {
+        aircraft.total_revenue = 0;
+      }
+
+      aircraft.total_revenue += flight.base_price;
+      await aircraft.save({ session });
       // Commit transaction
       await session.commitTransaction();
 
@@ -114,6 +128,17 @@ class BookingController {
         return res.status(404).json({ message: "Flight not found" });
       }
 
+      const aircraft = await Aircraft.findById(flight.aircraft_id).session(
+        session
+      );
+
+      if (!aircraft) {
+        await session.abortTransaction();
+        return res.status(404).json({ message: "Aircraft not found" });
+      }
+
+      aircraft.total_revenue -= booking.total_amount;
+      await aircraft.save({ session });
       // Update booking status and flight seats
       booking.status = "cancelled";
       flight.available_seats += 1;

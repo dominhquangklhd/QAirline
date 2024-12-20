@@ -7,6 +7,11 @@ const flightSchema = new Schema({
     type: String,
     required: true,
   },
+  aircraft_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Aircraft",
+    required: true,
+  },
   origin_airport_id: {
     type: Schema.Types.ObjectId,
     ref: "Airport",
@@ -44,19 +49,11 @@ const flightSchema = new Schema({
     required: true,
     min: 0,
   },
-  available_seats : {
+  available_seats: {
     type: Number,
     required: true,
     min: 0,
-  }
-  
+  },
 });
-// Indexes for flight search
-// flightSchema.index({ flightNumber: 1 });
-// flightSchema.index({
-//   originAirportId: 1,
-//   destinationAirportId: 1,
-//   scheduledDeparture: 1,
-// });
 
 module.exports = mongoose.model("Flights", flightSchema, "Flights");

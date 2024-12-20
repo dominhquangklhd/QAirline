@@ -24,6 +24,9 @@ const aircraftSchema = new Schema({
     type: Date,
     required: true,
   },
+  total_revenue: {
+    type: Number,
+  },
 });
 
 module.exports = mongoose.model("Aircraft", aircraftSchema, "Aircrafts");
