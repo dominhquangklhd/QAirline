@@ -17,6 +17,7 @@ import AircraftInfo from "./AdminPages/AircraftInfo/AircraftInfo";
 import Posts from "./AdminPages/Posts/Posts";
 import FlightsInfo from "./AdminPages/FlightsInfo/FlightsInfo";
 import StatisticsDashboard from "./AdminPages/StatisticsDashboard.jsx";
+import MyBooking from "./Pages/Mybooking/MyBooking.jsx";
 export default function useRouteElement() {
   const routeElement = useRoutes([
     {
@@ -79,6 +80,10 @@ export default function useRouteElement() {
     {
       path: "/statistic",
       element: <StatisticsDashboard />,
+    },
+    {
+      path: "/MyBooking",
+      element: <MyBooking />,
     },
   ]);
   return routeElement;

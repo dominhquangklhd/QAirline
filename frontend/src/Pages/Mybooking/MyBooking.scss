@@ -1,0 +1,52 @@
+.my-booking-container {
+  padding-top: 150px;
+  max-width: 800px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.my-booking-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.my-booking-list {
+  list-style: none;
+  padding: 0;
+}
+
+.my-booking-card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #f9f9f9, #e6e6e6);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.my-booking-flight {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.my-booking-date,
+.my-booking-status,
+.my-booking-amount,
+.my-booking-deadline,
+.my-booking-origin,
+.my-booking-destination {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.my-booking-loading,
+.my-booking-error,
+.my-booking-empty {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 16px;
+}
