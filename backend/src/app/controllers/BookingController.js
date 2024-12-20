@@ -16,7 +16,7 @@ class BookingController {
     try {
       const { flight_id, guest_info } = req.body;
       const userId = req.user?.id; // From authentication middleware
-
+      console.log("User ID:", userId);
       // Find flight and check availability within transaction
       const flight = await Flight.findById(flight_id).session(session);
       if (!flight) {
@@ -232,17 +232,45 @@ class BookingController {
 
   // Get user's bookings (for registered users)
   async getUserBookings(req, res) {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    console.log("User ID:", req.user.id);
     const userId = req.user.id;
     try {
       const bookings = await Booking.find({ userId })
-        .populate("flight_id")
+        .populate({
+          path: "flight_id",
+          populate: [
+            { path: "origin_airport_id", model: "Airport" },
+            { path: "destination_airport_id", model: "Airport" },
+          ],
+        })
+        .populate("userId")
         .sort({ booking_date: -1 });
+      console.log("Found bookings:", bookings.length);
+
       res.json(bookings);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      console.error("Error fetching bookings:", error);
+      res.status(500).json({ message: "Internal server error" });
     }
   }
 
+  async getAllBookings(req, res) {
+    try {
+      const bookings = await Booking.find()
+        .populate("flight_id") // để lấy thông tin chuyến bay
+        .sort({ booking_date: -1 }); // sắp xếp theo ngày booking mới nhất
+
+      res.json(bookings);
+    } catch (error) {
+      console.error("Error getting bookings:", error);
+      res.status(500).json({
+        message: "Internal server error",
+      });
+    }
+  }
   // Get booking by reference (for both guests and registered users)
   async getBookingByReference(req, res) {
     console.log("Query parameters:", req.query);

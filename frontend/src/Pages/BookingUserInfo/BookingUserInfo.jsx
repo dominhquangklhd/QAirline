@@ -80,11 +80,16 @@ export default function BookingUserInfo() {
         if (returnFlight) {
           bookingData.return_flight_id = returnFlight._id;
         }
+        let response;
+        if (localStorage.getItem("role") != null) {
+          response = await axios.post(
+            "/bookings/user/createBooking",
+            bookingData
+          );
+        } else {
+          response = await axios.post("/bookings/createBooking", bookingData);
+        }
 
-        const response = await axios.post(
-          "/bookings/createBooking",
-          bookingData
-        );
         console.log("Booking created:", response);
         bookingCodelist.push(response._id);
       }

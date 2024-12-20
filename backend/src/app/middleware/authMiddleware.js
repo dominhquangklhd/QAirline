@@ -9,16 +9,16 @@ require("dotenv").config();
 const verifyToken = (req, res, next) => {
   let token = req.headers.authorization?.split(" ")[1];
 
-  console.log("token", token);
+  // console.log("token", token);
   if (!token) {
     return res.status(401).json({ message: "Không có token xác thực" });
   }
   try {
     token = token.replace(/"/g, "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log(decoded); // Kiểm tra xem dữ liệu trong token
+    // console.log(decoded); // Kiểm tra xem dữ liệu trong token
 
-    console.log("decoded", decoded);
+    // console.log("decoded", decoded);
     req.user = decoded;
     next();
   } catch (err) {
@@ -29,7 +29,7 @@ const verifyToken = (req, res, next) => {
 
 // Kiểm tra quyền admin
 const isAdmin = (req, res, next) => {
-  console.log(req.user);
+  // console.log(req.user);
   // console.log(req);
 
   // let role = req.headers.role;

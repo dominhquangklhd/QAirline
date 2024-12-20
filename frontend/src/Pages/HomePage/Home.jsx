@@ -8,9 +8,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className='home flex container'>
-      <div className='mainText'>
-        <h1 data-aos='fade-up' data-aos-duration='2500'>QAirline xin kính chào quý khách!</h1>
+    <div className="home flex container">
+      <div className="mainText">
+        <h1 data-aos="fade-up" data-aos-duration="2500">
+          <i>QAirline Hơn cả một chuyến bay!</i>
+        </h1>
       </div>
 
       <div className="videoDiv">

@@ -52,18 +52,38 @@ const Navbar = ({ onSearchClick }) => {
           <li className="itemButton">
             <button onClick={onSearchClick}>Đặt vé ngay</button>
           </li>
-          <li className={`listItem ${activeItem === "/" ? "active" : ""}`} onClick={() => navigateTo("/")}>
+          <li
+            className={`listItem ${activeItem === "/" ? "active" : ""}`}
+            onClick={() => navigateTo("/")}
+          >
             Trang chủ
           </li>
-          <li className={`listItem ${activeItem === "/FlightInfo" ? "active" : ""}`} onClick={() => navigateTo("/FlightInfo")}>
+          <li
+            className={`listItem ${
+              activeItem === "/FlightInfo" ? "active" : ""
+            }`}
+            onClick={() => navigateTo("/FlightInfo")}
+          >
             Thông tin chuyến bay
           </li>
-          <li className={`listItem ${activeItem === "/CancelFlight" ? "active" : ""}`} onClick={() => navigateTo("/CancelFlight")}>
+          <li
+            className={`listItem ${
+              activeItem === "/CancelFlight" ? "active" : ""
+            }`}
+            onClick={() => navigateTo("/CancelFlight")}
+          >
             Hủy vé
           </li>
-          <li className={`listItem ${activeItem === "/MyBooking" ? "active" : ""}`} onClick={() => navigateTo("/MyBooking")}>
-            My Booking
-          </li>
+          {localStorage.getItem("role").replace(/"/g, "") === "user" ? (
+            <li
+              className={`listItem ${
+                activeItem === "/MyBooking" ? "active" : ""
+              }`}
+              onClick={() => navigateTo("/MyBooking")}
+            >
+              My Booking
+            </li>
+          ) : null}
         </ul>
 
         <div className="none flex">
