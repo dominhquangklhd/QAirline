@@ -2,35 +2,49 @@
   padding-top: 150px;
   max-width: 800px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
+  background-color: #fafafa;
+  border-radius: 10px;
+  //   padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .my-booking-title {
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 24px;
+  margin-bottom: 30px;
+  font-size: 28px;
   font-weight: bold;
+  color: #0073e6;
+  text-transform: uppercase;
 }
 
 .my-booking-list {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 .my-booking-card {
-  border: 1px solid #ccc;
+  border: 1px solid #d9d9d9;
   border-radius: 8px;
-  padding: 16px;
+  padding: 20px;
   margin-bottom: 16px;
-  background: linear-gradient(135deg, #f9f9f9, #e6e6e6);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #ffffff, #f2f2f2);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
 }
 
 .my-booking-flight {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .my-booking-date,
@@ -39,14 +53,44 @@
 .my-booking-deadline,
 .my-booking-origin,
 .my-booking-destination {
-  font-size: 14px;
-  margin: 4px 0;
+  font-size: 16px;
+  margin: 6px 0;
+  color: #555;
+
+  strong {
+    color: #333;
+  }
 }
 
 .my-booking-loading,
 .my-booking-error,
 .my-booking-empty {
   text-align: center;
-  margin-top: 20px;
-  font-size: 16px;
+  margin-top: 30px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #666;
+}
+
+.my-booking-loading {
+  color: #0073e6;
+  animation: pulse 1.5s infinite;
+}
+
+.my-booking-error {
+  color: #ff4d4f;
+}
+
+.my-booking-empty {
+  color: #ff9900;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
