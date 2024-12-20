@@ -4,7 +4,7 @@ import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { ClipLoader } from "react-spinners";
-// import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
+import { smoothScrollToTop } from "../../CommonFunctions/SmoothScrollToTop";
 
 export default function BookingUserInfo() {
   const navigate = useNavigate();
@@ -132,11 +132,11 @@ export default function BookingUserInfo() {
     }
   };
 
-  // useEffect(() => {
-  //   if (!loading && !error) {
-  //     scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
-  //   }
-  // }, [loading, error]); // Theo dõi sự thay đổi của loading và error
+  useEffect(() => {
+    if (!loading && !error) {
+      scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
+    }
+  }, [loading, error]); // Theo dõi sự thay đổi của loading và error
 
   const [selectedOption, setSelectedOption] = useState("VNPay");
 
@@ -146,11 +146,11 @@ export default function BookingUserInfo() {
     Banking: "assets/payments/qr-banking.png",
   };
 
-  // const scrollToTop = () => {
-  //   setTimeout(() => {
-  //     smoothScrollToTop();
-  //   }, 100); // Đặt thời gian trì hoãn (500ms)
-  // };
+  const scrollToTop = () => {
+    setTimeout(() => {
+      smoothScrollToTop();
+    }, 100); // Đặt thời gian trì hoãn (500ms)
+  };
 
   return (
     <div className="booking-container">
