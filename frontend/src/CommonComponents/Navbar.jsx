@@ -1,15 +1,27 @@
 import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from "prop-types";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/AuthProvider";
+
+const validPaths = ["/", "/FlightInfo", "/CancelFlight", "/MyBooking"];
+
 const Navbar = ({ onSearchClick }) => {
   const { isLoggedIn, username, logout } = useAuth();
 
   const [showPopover, setShowPopover] = useState(false); // Hiển thị popover
   const navigate = useNavigate();
   const [activeItem, setActiveItem] = useState("/");
+  const location = useLocation();
+
+  useEffect(() => {
+    if (validPaths.includes(location.pathname)) {
+      setActiveItem(location.pathname);
+    } else {
+      setActiveItem(null); // Không kích hoạt bất kỳ mục nào
+    }
+  }, [location.pathname]);
 
   // Điều hướng
   const navigateTo = (endpoint) => {

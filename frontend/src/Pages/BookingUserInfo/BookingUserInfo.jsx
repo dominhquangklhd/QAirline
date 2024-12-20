@@ -125,76 +125,69 @@ export default function BookingUserInfo() {
         <section className="form-container">
           {formDataList.map((formData, index) => (
             <div key={index} className="form-grid">
-              Hành khách {index + 1}
-              <br />
-              <br />
+              <div className="header">
+                Hành khách {index + 1}
+              </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Họ*"
                   value={formData.firstName}
-                  onChange={(e) =>
-                    handleInputChange(index, "firstName", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "firstName", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Tên đệm & tên*"
                   value={formData.lastName}
-                  onChange={(e) =>
-                    handleInputChange(index, "lastName", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "lastName", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="date"
                   value={formData.birthDate}
-                  onChange={(e) =>
-                    handleInputChange(index, "birthDate", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "birthDate", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="tel"
                   placeholder="Số điện thoại*"
                   value={formData.phone}
-                  onChange={(e) =>
-                    handleInputChange(index, "phone", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "phone", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="email"
                   placeholder="Email*"
                   value={formData.email}
-                  onChange={(e) =>
-                    handleInputChange(index, "email", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "email", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="CCCD/CMND/Hộ chiếu*"
                   value={formData.idNumber}
-                  onChange={(e) =>
-                    handleInputChange(index, "idNumber", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "idNumber", e.target.value)}
                 />
               </div>
+
               <div className="form-group">
                 <input
                   type="text"
                   placeholder="Nơi ở hiện tại"
                   value={formData.address}
-                  onChange={(e) =>
-                    handleInputChange(index, "address", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange(index, "address", e.target.value)}
                 />
               </div>
             </div>

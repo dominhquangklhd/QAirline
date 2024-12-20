@@ -461,7 +461,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               )}
             </div>
           </div>
-          <div className="row2-2">
+          {/* <div className="row2-2">
             <label htmlFor="discount-code">MÃ GIẢM GIÁ</label>
             <input
               type="text"
@@ -470,7 +470,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               onChange={(e) => setDiscountCode(e.target.value)}
               placeholder="Nhập mã giảm giá (nếu có)"
             />
-          </div>
+          </div> */}
         </div>
 
         <div className="row3">
