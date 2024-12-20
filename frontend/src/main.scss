@@ -219,9 +219,41 @@ h2 {
     }
 
     .listItem {
+      position: relative;
+      cursor: pointer;
+      transition: color 0.3s ease;
+
+      &.active {
+        color: var(--HoverColor);
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -1px; 
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #007bff;
+        transition: width 0.3s ease; 
+      }
+
+      &.active::after {
+        width: 100%; /* Đầy đủ chiều rộng khi active */
+      }
+
       &:hover {
         color: var(--HoverColor);
       }
+    }
+
+    .indicator {
+      position: absolute;
+      top: 20px; /* Đặt ngay dưới danh sách */
+      height: 2px;
+      background-color: #007bff; /* Màu sắc của thanh indicator */
+      transition: all 0.3s ease; /* Hiệu ứng di chuyển */
+      width: 0;
     }
 
     .none {

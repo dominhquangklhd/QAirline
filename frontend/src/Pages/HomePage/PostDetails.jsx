@@ -7,7 +7,7 @@ function PostDetails({ post }) {
             <h2>{post.title}</h2>
             <p>{post.subtitle}</p>
             <img src={post.cover_url} alt={post.title} style={{ width: "60%", borderRadius: "8px" }} />
-            <p>{post.content}</p>
+            <p className='post-content'>{post.content}</p>
         </div>
     )
 }

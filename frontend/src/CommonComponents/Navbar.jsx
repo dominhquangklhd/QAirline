@@ -2,16 +2,18 @@ import { BsPhoneVibrate } from "react-icons/bs";
 import { AiOutlineGlobal } from "react-icons/ai";
 import PropTypes from "prop-types";
 import { useNavigate, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../Context/AuthProvider";
 const Navbar = ({ onSearchClick }) => {
   const { isLoggedIn, username, logout } = useAuth();
 
   const [showPopover, setShowPopover] = useState(false); // Hiển thị popover
   const navigate = useNavigate();
+  const [activeItem, setActiveItem] = useState("/");
 
   // Điều hướng
   const navigateTo = (endpoint) => {
+    setActiveItem(endpoint);
     navigate(endpoint);
   };
 
@@ -38,14 +40,17 @@ const Navbar = ({ onSearchClick }) => {
           <li className="itemButton">
             <button onClick={onSearchClick}>Đặt vé ngay</button>
           </li>
-          <li className="listItem" onClick={() => navigateTo("/")}>
+          <li className={`listItem ${activeItem === "/" ? "active" : ""}`} onClick={() => navigateTo("/")}>
             Trang chủ
           </li>
-          <li className="listItem" onClick={() => navigateTo("/FlightInfo")}>
+          <li className={`listItem ${activeItem === "/FlightInfo" ? "active" : ""}`} onClick={() => navigateTo("/FlightInfo")}>
             Thông tin chuyến bay
           </li>
-          <li className="listItem" onClick={() => navigateTo("/CancelFlight")}>
+          <li className={`listItem ${activeItem === "/CancelFlight" ? "active" : ""}`} onClick={() => navigateTo("/CancelFlight")}>
             Hủy vé
+          </li>
+          <li className={`listItem ${activeItem === "/MyBooking" ? "active" : ""}`} onClick={() => navigateTo("/MyBooking")}>
+            My Booking
           </li>
         </ul>
 
