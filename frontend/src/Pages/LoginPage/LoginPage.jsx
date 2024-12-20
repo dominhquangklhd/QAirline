@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
 import { useAuth } from "../../Context/AuthProvider";
 import { toast } from "react-toastify";
+
 function LoginPage() {
   const input1Ref = useRef(null);
   const input2Ref = useRef(null);
@@ -38,7 +39,7 @@ function LoginPage() {
     e.preventDefault();
     try {
       const response = await axios.post("/auth/login", formData);
-      console.log(response);
+      // console.log(response);
 
       if (!response.token) {
         setError("Mật khẩu không trùng khớp");

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import "./NavbarAdmin.scss";
-
+import { Link } from "react-router-dom";
 const NavbarAdmin = () => {
   let login = false;
   const navigate = useNavigate();
@@ -14,7 +14,9 @@ const NavbarAdmin = () => {
     <div className="sidebar">
       <div className="sidebar-header">
         <div className="app-icon">
-          <img src="./assets/Qlogo.png" alt="" />
+          <Link to="/">
+            <img src="./assets/Qlogo.png" alt="" />
+          </Link>
         </div>
       </div>
       <ul className="sidebar-list">
@@ -22,7 +24,7 @@ const NavbarAdmin = () => {
           className="sidebar-list-item active"
           onClick={() => navigateTo("/Posts")}
         >
-          <a href="#">
+          <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -46,7 +48,7 @@ const NavbarAdmin = () => {
           className="sidebar-list-item"
           onClick={() => navigateTo("/AircraftInfo")}
         >
-          <a href="#">
+          <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -69,7 +71,7 @@ const NavbarAdmin = () => {
           className="sidebar-list-item"
           onClick={() => navigateTo("/FlightsInfo")}
         >
-          <a href="#">
+          <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -91,28 +93,9 @@ const NavbarAdmin = () => {
         <li
           className="sidebar-list-item"
           onClick={() => navigateTo("/TicketsInfo")}
-        >
-          <a href="#">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              className="feather feather-inbox"
-            >
-              <polyline points="22 12 16 12 14 15 10 15 8 12 2 12" />
-              <path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z" />
-            </svg>
-            <span>Ticket Info</span>
-          </a>
-        </li>
+        ></li>
         <li className="sidebar-list-item">
-          <a href="#">
+          <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"
@@ -132,7 +115,7 @@ const NavbarAdmin = () => {
           </a>
         </li>
         <li className="sidebar-list-item">
-          <a href="#">
+          <a>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="18"

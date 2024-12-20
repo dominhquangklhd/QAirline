@@ -3,27 +3,41 @@ const jwt = require("jsonwebtoken");
 const rateLimit = require("express-rate-limit");
 const Booking = require("../models/Booking");
 const Flight = require("../models/flight");
-
-const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Types;
+require("dotenv").config();
 
 // Xác thực token
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
+  let token = req.headers.authorization?.split(" ")[1];
+
+  console.log("token", token);
   if (!token) {
     return res.status(401).json({ message: "Không có token xác thực" });
   }
   try {
+    token = token.replace(/"/g, "");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded); // Kiểm tra xem dữ liệu trong token
+
+    console.log("decoded", decoded);
     req.user = decoded;
     next();
   } catch (err) {
+    console.error("JWT verify error:", err.message); // Log lỗi chi tiết
     return res.status(401).json({ message: "Token không hợp lệ" });
   }
 };
 
 // Kiểm tra quyền admin
 const isAdmin = (req, res, next) => {
+  console.log(req.user);
+  // console.log(req);
+
+  // let role = req.headers.role;
+  // role = role.replace(/"/g, "");
+  // console.log("role", role);
+  // console.log(role == "admin");
+
+  // console.log(req.user && req.user.role === "admin");
   if (req.user && req.user.role === "admin") {
     next();
   } else {
