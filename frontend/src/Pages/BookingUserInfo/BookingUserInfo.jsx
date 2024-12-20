@@ -1,5 +1,5 @@
 // BookingUserInfo.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./BookingUserInfo.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../Apis/axios";
@@ -104,6 +104,12 @@ export default function BookingUserInfo() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (!loading && !error) {
+      scrollToTop(); // Chỉ gọi scrollToTop nếu không có lỗi và không đang loading
+    }
+  }, [loading, error]); // Theo dõi sự thay đổi của loading và error
 
   const [selectedOption, setSelectedOption] = useState("VNPay");
 
@@ -226,10 +232,9 @@ export default function BookingUserInfo() {
 
           <div className="form-actions">
             {error && <p className="error-message">{error}</p>}
-            <button onClick={() => {
-              handleSubmit();
-              if (!error) scrollToTop();
-              }} disabled={loading}>
+            <button onClick={async () => {
+              await handleSubmit();
+            }} disabled={loading}>
               {loading ? <ClipLoader size={20} /> : "Hoàn tất"}
             </button>
           </div>
