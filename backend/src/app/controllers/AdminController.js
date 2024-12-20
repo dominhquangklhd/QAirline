@@ -1,7 +1,7 @@
 // controllers/AdminController.js
 const Post = require("../models/Post");
 const Aircraft = require("../models/Aircraft");
-// const Flight = require("../models/Flight");
+const Flight = require("../models/flight");
 const Booking = require("../models/Booking");
 
 class AdminController {
@@ -108,42 +108,51 @@ class AdminController {
   // Admin: Create flight
   async createFlight(req, res) {
     const {
-      flightNumber,
-      aircraftId,
-      originId,
-      destinationId,
-      scheduledDeparture,
-      scheduledArrival,
-      basePrice,
+      flight_number,
+      origin_airport_id,
+      destination_airport_id,
+      scheduled_departure,
+      scheduled_arrival,
+      status,
+      base_price,
+      available_seats,
     } = req.body;
+    console.log(req.body);
     try {
       const flight = new Flight({
-        flightNumber,
-        aircraft: aircraftId,
-        originAirport: originId,
-        destinationAirport: destinationId,
-        scheduledDeparture,
-        scheduledArrival,
-        basePrice,
+        flight_number,
+        origin_airport_id,
+        destination_airport_id,
+        scheduled_departure,
+        scheduled_arrival,
+        status,
+        base_price,
+        available_seats,
       });
+      console.log("save fail???");
       await flight.save();
+      console.log("save success");
       res.status(201).json(flight);
     } catch (error) {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error.message + " day loi o day" });
     }
   }
 
   // Admin: Update flight time (delay)
   async updateFlightTime(req, res) {
     const { flightId } = req.params;
-    const { newDepartureTime } = req.body;
+    console.log(req.params);
+    console.log(req.body);
+    const { scheduled_departure, scheduled_arrival } = req.body;
+
     try {
       const flight = await Flight.findById(flightId);
       if (!flight) {
         return res.status(404).json({ message: "Flight not found" });
       }
 
-      flight.scheduledDeparture = newDepartureTime;
+      flight.scheduled_departure = scheduled_departure;
+      flight.scheduled_arrival = scheduled_arrival;
       await flight.save();
       res.json(flight);
     } catch (error) {
