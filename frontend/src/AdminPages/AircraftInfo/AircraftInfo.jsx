@@ -136,7 +136,7 @@ function AircraftInfo() {
             }
         }
     
-        setAircrafts([...Aircrafts, newAircraft]);
+        setAircrafts([newAircraft, ...Aircrafts]);
         setIsAddingAircraft(false);
     
         setNewAircraft({
@@ -183,12 +183,12 @@ function AircraftInfo() {
       };
 
     return (
-        <div class="app-container">
+        <div className="app-container">
             <div className="app-content">
-                <div class="app-content-header">
-                    <h1 class="app-content-headerText">Aircrafts Info</h1>
+                <div className="app-content-header">
+                    <h1 className="app-content-headerText">Aircrafts Info</h1>
                 </div>
-                <div class="app-content-actions">
+                <div className="app-content-actions">
                 <div className="search-container">
                     <input
                         className="search-bar"
@@ -204,29 +204,29 @@ function AircraftInfo() {
                         aria-label="Search"
                     ></button>
                 </div>
-                    <div class="app-content-actions-wrapper">
-                        <button class="app-content-headerButton" onClick={() => setIsAddingAircraft(true)}>Add Aircrafts</button>
+                    <div className="app-content-actions-wrapper">
+                        <button className="app-content-headerButton" onClick={() => setIsAddingAircraft(true)}>Add Aircrafts</button>
                     </div>
                 </div>
-                <div class="Aircrafts-area-wrapper tableView">
-                    <div class="Aircrafts-header">
-                        <div class="Aircraft-cell id">Id<button class="sort-button">
+                <div className="Aircrafts-area-wrapper tableView">
+                    <div className="Aircrafts-header">
+                        <div className="Aircraft-cell id">Id<button className="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button>
                         </div>
-                        <div class="Aircraft-cell manufacturer-col-name">Manufacturer<button class="sort-button">
+                        <div className="Aircraft-cell manufacturer-col-name">Manufacturer<button className="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
-                        <div class="Aircraft-cell model">Model<button class="sort-button">
+                        <div className="Aircraft-cell model">Model<button className="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
-                        <div class="Aircraft-cell seats-col-name">Total seats<button class="sort-button">
+                        <div className="Aircraft-cell seats-col-name">Total seats<button className="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
-                        <div class="Aircraft-cell manufacture-date">Manufacture date<button class="sort-button">
+                        <div className="Aircraft-cell manufacture-date">Manufacture date<button className="sort-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 512 512"><path fill="currentColor" d="M496.1 138.3L375.7 17.9c-7.9-7.9-20.6-7.9-28.5 0L226.9 138.3c-7.9 7.9-7.9 20.6 0 28.5 7.9 7.9 20.6 7.9 28.5 0l85.7-85.7v352.8c0 11.3 9.1 20.4 20.4 20.4 11.3 0 20.4-9.1 20.4-20.4V81.1l85.7 85.7c7.9 7.9 20.6 7.9 28.5 0 7.9-7.8 7.9-20.6 0-28.5zM287.1 347.2c-7.9-7.9-20.6-7.9-28.5 0l-85.7 85.7V80.1c0-11.3-9.1-20.4-20.4-20.4-11.3 0-20.4 9.1-20.4 20.4v352.8l-85.7-85.7c-7.9-7.9-20.6-7.9-28.5 0-7.9 7.9-7.9 20.6 0 28.5l120.4 120.4c7.9 7.9 20.6 7.9 28.5 0l120.4-120.4c7.8-7.9 7.8-20.7-.1-28.5z"/></svg>
                         </button></div>
-                        <div class="Aircraft-cell manage">Manage</div>
+                        <div className="Aircraft-cell manage">Manage</div>
                     </div>
                     {isAddingAircraft && (
                         <div className="Aircrafts-row new-Aircraft">
@@ -309,24 +309,6 @@ function AircraftInfo() {
                         <div key={Aircraft.id} className={`Aircrafts-row ${
                             editingAircraft === Aircraft.id ? "editing-row" : ""
                           }`}>
-                            <button className="cell-more-button">
-                                <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="18"
-                                height="18"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="feather feather-more-vertical"
-                                >
-                                <circle cx="12" cy="12" r="1" />
-                                <circle cx="12" cy="5" r="1" />
-                                <circle cx="12" cy="19" r="1" />
-                                </svg>
-                            </button>
                             <div className="Aircraft-cell id">
                                 <span>
                                     {editingAircraft === Aircraft.id ? (
@@ -388,10 +370,10 @@ function AircraftInfo() {
                                         Aircraft.manufacture_date
                                     )}
                             </div>
-                            <div class="Aircraft-cell manage">
+                            <div className="Aircraft-cell manage">
                                 {editingAircraft === Aircraft.id ? (
                                     <>
-                                    <button class="save-button" onClick={() => handleSave(Aircraft.id)}>
+                                    <button className="save-button" onClick={() => handleSave(Aircraft.id)}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M22.083,24H1.917C0.86,24,0,23.14,0,22.083V1.917C0,0.86,0.86,0,1.917,0h16.914L24,5.169v16.914
                                             C24,23.14,23.14,24,22.083,24z M20,22h2V5.998l-3-3V9c0,1.103-0.897,2-2,2H7c-1.103,0-2-0.897-2-2V2H2v20h2v-7c0-1.103,0.897-2,2-2
@@ -400,7 +382,7 @@ function AircraftInfo() {
                                         </svg>
                                     </button>
                     
-                                    <button class="cancel-button" onClick={handleCancel}>
+                                    <button className="cancel-button" onClick={handleCancel}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                             <path d="M18 6L6 18"></path>
                                             <path d="M6 6l12 12"></path>
@@ -409,13 +391,13 @@ function AircraftInfo() {
                                   </>
                                 ) : (
                                     <>
-                                        <button class="edit-button" onClick={() => handleEdit(Aircraft.id)}>
+                                        <button className="edit-button" onClick={() => handleEdit(Aircraft.id)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <path d="M12 20h9"></path>
                                                 <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z"></path>
                                             </svg>
                                         </button>
-                                        <button class="delete-button" onClick={() => handleDelete(Aircraft.id)}>
+                                        <button className="delete-button" onClick={() => handleDelete(Aircraft.id)}>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                                 <polyline points="3 6 5 6 21 6"></polyline>
                                                 <path d="M19 6l-2 14H7L5 6"></path>
