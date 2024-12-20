@@ -7,13 +7,16 @@ const TicketSuccess = () => {
   const [copied, setCopied] = useState(false);
   // Example ticket code
   const location = useLocation();
-  const booking = location.state || {};
-  console.log("booking", booking);
-  const ticketCode = booking?._id;
+  const bookingCodelist = location.state || {};
 
+  console.log("booking", bookingCodelist);
+  // const ticketCode = bookingCodelist.map((item) => item._id);
+  let ticketCode = 1;
   const copyToClipboard = async () => {
     try {
-      await navigator.clipboard.writeText(ticketCode);
+      await navigator.clipboard.writeText(
+        bookingCodelist.map((item) => item + "\n")
+      );
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -33,11 +36,15 @@ const TicketSuccess = () => {
         <h1 className="ticket-success__title">Đặt vé thành công!</h1>
         <p className="ticket-success__description">
           Cảm ơn bạn đã đặt vé. Dưới đây là mã vé của bạn:
+          <br />
+          <strong>Lưu ý: nếu có nhiều vé,các vé cách nhau bởi dấu phẩy</strong>
         </p>
 
         {/* Ticket Code */}
         <div className="ticket-success__code-container">
-          <code className="ticket-success__code">{ticketCode}</code>
+          <code className="ticket-success__code">
+            {bookingCodelist.map((item) => item + "\n")}
+          </code>
           <button
             onClick={copyToClipboard}
             className={`ticket-success__copy-button ${

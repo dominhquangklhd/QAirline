@@ -221,7 +221,6 @@ const FlightSearch = forwardRef((flightData, ref) => {
   const [showPassengerDropdown, setShowPassengerDropdown] = useState(false); // Hiện/ẩn dropdown
 
   // Tính tổng số hành khách
-  const totalPassengers = adults + children;
 
   // Hàm xử lý thay đổi số lượng hành khách
   const handlePassengerChange = (type, operation) => {
@@ -239,6 +238,10 @@ const FlightSearch = forwardRef((flightData, ref) => {
       );
     }
   };
+
+  useEffect(() => {
+    setPassengers(adults + children);
+  }, [adults, children]);
 
   const dropdownRef = useRef(null);
   const handleClickOutside = (event) => {
@@ -404,7 +407,7 @@ const FlightSearch = forwardRef((flightData, ref) => {
               <input
                 type="text"
                 id="passengers"
-                value={`${totalPassengers} hành khách`}
+                value={`${passengers} hành khách`}
                 readOnly
                 onFocus={() => setShowPassengerDropdown(true)}
               />

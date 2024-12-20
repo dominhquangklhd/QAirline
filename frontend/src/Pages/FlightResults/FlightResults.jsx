@@ -9,6 +9,7 @@ const FlightResults = () => {
   const location = useLocation();
   const { searchResults, searchParams } = location.state || {};
   console.log("searchResults", searchResults);
+  console.log("searchParams", searchParams);
   // State để lưu chuyến bay được chọn
   const [selectedOutbound, setSelectedOutbound] = useState(null);
   const [selectedReturn, setSelectedReturn] = useState(null);
@@ -47,12 +48,15 @@ const FlightResults = () => {
         outbound: selectedOutbound,
         return: selectedReturn,
         totalAmount:
-          (selectedOutbound?.price || 0) + (selectedReturn?.price || 0),
+          ((selectedOutbound?.price || 0) + (selectedReturn?.price || 0)) *
+          parseInt(searchParams.passengers),
+        passengers: searchParams.passengers,
       },
     });
     console.log("Confirmed booking:", {
       outbound: selectedOutbound,
       return: selectedReturn,
+      passengers: searchParams.passengers,
     });
   };
 
@@ -123,7 +127,8 @@ const FlightResults = () => {
           <div className="total-price">
             <strong>Tổng tiền:</strong>
             {(
-              (selectedOutbound?.price || 0) + (selectedReturn?.price || 0)
+              ((selectedOutbound?.price || 0) + (selectedReturn?.price || 0)) *
+              parseInt(searchParams.passengers)
             ).toLocaleString()}
             đ
           </div>
