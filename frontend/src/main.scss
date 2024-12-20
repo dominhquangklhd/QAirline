@@ -160,8 +160,8 @@ h2 {
     .logoDiv {
       display: flex;
       border-radius: 50%;
-      width: 100px;
-      height: 100px;
+      // width: 100px;
+      // height: 100px;
       overflow: hidden;
     }
 
@@ -230,12 +230,12 @@ h2 {
       &::after {
         content: "";
         position: absolute;
-        bottom: -1px; 
+        bottom: -1px;
         left: 0;
         width: 0;
         height: 2px;
         background-color: #007bff;
-        transition: width 0.3s ease; 
+        transition: width 0.3s ease;
       }
 
       &.active::after {
@@ -304,7 +304,7 @@ h2 {
   text-align: center;
   gap: 1rem;
   flex-direction: column;
-  
+
   // background-image: url(/assets/bg2.jpg);
   // background-size: cover;
   // background-position: left top;
@@ -1037,8 +1037,8 @@ h2 {
       .logoDiv {
         display: flex;
         border-radius: 50%;
-        width: 100px;
-        height: 100px;
+        // width: 100px;
+        // height: 100px;
         overflow: hidden;
       }
 
@@ -1129,13 +1129,11 @@ h2 {
 
     .homeImages {
       .video {
-        
       }
 
       .plane {
         position: absolute;
         width: 120%;
-
       }
     }
   }
@@ -1208,13 +1206,11 @@ h2 {
       .video {
         height: 100%;
         width: 100%;
-        
       }
     }
 
     .plane {
       width: 95%;
-
     }
   }
 
@@ -1369,8 +1365,6 @@ h2 {
   }
 
   .home {
-      
-
   }
 }
 
@@ -1390,13 +1384,11 @@ h2 {
       .video {
         height: 100%;
         width: 100%;
-        
       }
     }
 
     .plane {
       width: 95%;
-
     }
   }
 
@@ -1537,13 +1529,13 @@ h2 {
 @media screen and (max-width: 500px) {
   .navBar .navBarOne .items {
     padding-left: 4rem;
-  } 
+  }
 }
 
 @media screen and (max-width: 380px) {
   .navBar {
     border: none;
-    .navBarOne {   
+    .navBarOne {
       flex: 1;
       &::after {
         border: none;

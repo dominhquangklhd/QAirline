@@ -7,11 +7,11 @@ const TicketSuccess = () => {
   const [copied, setCopied] = useState(false);
   // Example ticket code
   const location = useLocation();
-  const bookingCodelist = location.state || {};
+  const { bookingCodelist, emailList } = location.state || {};
 
   console.log("booking", bookingCodelist);
   // const ticketCode = bookingCodelist.map((item) => item._id);
-  let ticketCode = 1;
+  // let ticketCode = 1;
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(

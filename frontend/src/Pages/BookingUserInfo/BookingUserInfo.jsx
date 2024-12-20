@@ -61,11 +61,13 @@ export default function BookingUserInfo() {
   const handleSubmit = async () => {
     setLoading(true);
     let bookingCodelist = [];
+    let emailList = [];
     try {
       for (const formData of formDataList) {
-        const bookingData = {
+        // Create booking for outbound flight
+        const outboundBookingData = {
           flight_id: outbound._id,
-          total_amount: totalAmount / passengers,
+          total_amount: totalAmount / passengers / (returnFlight ? 2 : 1),
           guest_info: {
             full_name: `${formData.firstName} ${formData.lastName}`,
             email: formData.email,
@@ -77,25 +79,47 @@ export default function BookingUserInfo() {
           status: "pending",
         };
 
-        if (returnFlight) {
-          bookingData.return_flight_id = returnFlight._id;
-        }
-        let response;
-        if (localStorage.getItem("role") != null) {
-          response = await axios.post(
-            "/bookings/user/createBooking",
-            bookingData
-          );
-        } else {
-          response = await axios.post("/bookings/createBooking", bookingData);
-        }
+        let response = await axios.post(
+          localStorage.getItem("role") != null
+            ? "/bookings/user/createBooking"
+            : "/bookings/createBooking",
+          outboundBookingData
+        );
 
-        console.log("Booking created:", response);
+        console.log("Outbound booking created:", response);
         bookingCodelist.push(response._id);
+        emailList.push(formData.email);
+
+        // Create booking for return flight (if available)
+        if (returnFlight) {
+          const returnBookingData = {
+            flight_id: returnFlight._id,
+            total_amount: totalAmount / passengers / 2,
+            guest_info: {
+              full_name: `${formData.firstName} ${formData.lastName}`,
+              email: formData.email,
+              phone: formData.phone,
+              gender: formData.gender,
+              id_number: formData.idNumber,
+              address: formData.address,
+            },
+            status: "pending",
+          };
+
+          response = await axios.post(
+            localStorage.getItem("role") != null
+              ? "/bookings/user/createBooking"
+              : "/bookings/createBooking",
+            returnBookingData
+          );
+
+          console.log("Return booking created:", response);
+          bookingCodelist.push(response._id);
+        }
       }
 
       setError(null);
-      navigate("/TicketSuccess", { state: bookingCodelist });
+      navigate("/TicketSuccess", { state: { bookingCodelist, emailList } });
     } catch (err) {
       console.error("Booking failed:", err);
       setError("Booking failed. Please try again.");

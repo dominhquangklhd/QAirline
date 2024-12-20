@@ -15,7 +15,7 @@ const NavbarAdmin = () => {
       <div className="sidebar-header">
         <div className="app-icon">
           <Link to="/">
-            <img src="./assets/Qlogo.png" alt="" />
+            <img src="./assets/QAirlineNewLogo.png" alt="" />
           </Link>
         </div>
       </div>

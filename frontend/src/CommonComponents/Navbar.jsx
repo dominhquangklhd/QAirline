@@ -33,7 +33,7 @@ const Navbar = ({ onSearchClick }) => {
       <div className="navBarOne flex">
         <Link to={"/"}>
           <div className="logoDiv">
-            <img src="./assets/Qlogo-nobg.png" alt="Logo" />
+            <img src="./assets/QAirlineNewLogo.png" alt="Logo" />
           </div>
         </Link>
         <ul className="items flex">
@@ -62,7 +62,7 @@ const Navbar = ({ onSearchClick }) => {
           >
             Hủy vé
           </li>
-          {localStorage.getItem("role").replace(/"/g, "") === "user" ? (
+          {localStorage.getItem("role") ? (
             <li
               className={`listItem ${
                 activeItem === "/MyBooking" ? "active" : ""
@@ -71,7 +71,9 @@ const Navbar = ({ onSearchClick }) => {
             >
               My Booking
             </li>
-          ) : null}
+          ) : (
+            <></>
+          )}
         </ul>
 
         <div className="none flex">
