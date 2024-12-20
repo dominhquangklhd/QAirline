@@ -1,142 +1,66 @@
-import React, {useState} from "react";
-import "./FlightsInfo.scss";
+import React, { useState, useEffect } from "react";
+import "./FlightInfo.scss";
+import AddFlight from "./AddFlight";
+import FlightResult from "./FlightResult";
+import axios from "../../Apis/axios";
+
+const Status = {
+  SEARCH: "search",
+  SHOWALL: "showall",
+  ADD: "add",
+};
+
+function formatDateTime(isoString) {
+  const date = new Date(isoString);
+
+  // Định dạng: DD/MM/YYYY HH:mm
+  const formattedDate = `${date.getDate().toString().padStart(2, "0")}/${(
+    date.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, "0")}/${date.getFullYear()} ${date
+    .getHours()
+    .toString()
+    .padStart(2, "0")}:${date.getMinutes().toString().padStart(2, "0")}`;
+
+  return formattedDate;
+}
 
 function FlightsInfo() {
-    const [newFlight, setNewFlight] = useState({
-        scheduled_departure: "",
-        scheduled_arrival: "",
-        base_price: "",
-        origin_airport_id: "",
-        destination: "",
-        status: "",
-        id: "",
-        availableSeats: "",
-    });
-    const [Flights, setFlights] = useState([
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A881",
-            availableSeats: "41",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A882",
-            availableSeats: "42",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A883",
-            availableSeats: "43",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A884",
-            availableSeats: "44",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A885",
-            availableSeats: "45",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A886",
-            availableSeats: "46",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A887",
-            availableSeats: "47",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A888",
-            availableSeats: "48",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A889",
-            availableSeats: "49",
-        },
-        {   
-            scheduled_departure: "2024-12-15",
-            scheduled_arrival: "2024-12-15",
-            base_price: "3,000,000 đ",
-            origin_airport_id: "HAN",
-            destination: "SGN",
-            status: "delayed",
-            id: "VN-A890",
-            availableSeats: "50",
-        },
-    ]);
-    const [tempFlightData, setTempFlightData] = useState({});
+  const [flightList, setFlightList] = useState([]);
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [editingFlight, setEditingFlight] = useState(null);
-    const [isAddingFlight, setIsAddingFlight] = useState(false);
-    const [error, setError] = useState("");
+  const [searchId, setSearchId] = useState("");
+  const [selectedFlight, setSelectedFlight] = useState(null);
+  const [action, setAction] = useState("showall");
 
-    const filteredFlights = Flights.filter((Flight) =>
-        Object.values(Flight).some((value) =>
-          String(value).toLowerCase().includes(searchTerm.toLowerCase())
-        )
+  useEffect(() => {
+    const fetchAircrafts = async () => {
+      try {
+        const response = await axios.get("/flights/");
+        setFlightList(response);
+        console.log("Danh sách tàu bay:", response);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách tàu bay:", error);
+      }
+    };
+
+    fetchAircrafts();
+  }, []);
+  // Hàm xử lý tìm kiếm
+  const handleSearch = () => {
+    const result = flightList.find(
+      (flight) => flight.id.toLowerCase() === searchId.toLowerCase()
     );
+    setSelectedFlight(result || null);
+    setAction(Status.SEARCH);
+  };
 
-    const handleSearch = (event) => {
-        setSearchTerm(event.target.value);
-    };
-      
-    
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            handleSearch();
-        }
-    };
+  // Hàm xử lý nhấn phím Enter
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
+  };
 
     const handleAddFlight = (e) => {
         e.preventDefault();

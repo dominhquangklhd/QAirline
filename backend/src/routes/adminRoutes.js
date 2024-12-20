@@ -11,9 +11,14 @@ router.post("/posts", AdminController.createPost);
 router.put("/posts/:id", AdminController.updatePost);
 router.delete("/posts/:id", AdminController.deletePost);
 
-router.post("/aircraft", AdminController.createAircraft);
+router.get("/aircrafts", AdminController.getAllAircraft);
+router.post("/aircrafts", AdminController.createAircraft);
+router.put("/aircraft/:id", AdminController.updateAircraft);
+router.delete("/aircraft/:id", AdminController.deleteAircraft);
+
 router.post("/flights", AdminController.createFlight);
 router.put("/flights/:flightId/delay", AdminController.updateFlightTime);
+
 router.get("/bookings/statistics", AdminController.getBookingStatistics);
 
 module.exports = router;
