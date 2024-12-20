@@ -1502,10 +1502,17 @@ h2 {
   }
 }
 
+@media screen and (max-width: 500px) {
+  .navBar .navBarOne .items {
+    padding-left: 4rem;
+  } 
+}
+
 @media screen and (max-width: 380px) {
   .navBar {
     border: none;
-    .navBarOne {
+    .navBarOne {   
+      flex: 1;
       &::after {
         border: none;
       }
@@ -1513,7 +1520,6 @@ h2 {
         display: none;
       }
       .items {
-        padding-left: 0;
         padding-right: 0;
       }
     }

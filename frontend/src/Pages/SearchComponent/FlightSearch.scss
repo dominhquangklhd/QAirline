@@ -94,7 +94,6 @@
 
     .row2-1 {
       display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
       background-color: #F9FAFB;
       border: 1px solid #d0d5dd;
@@ -291,6 +290,93 @@
   text-align: center;
 }
 
-@media screen and (max-width: 750px) {
-  
+@media screen and (max-width: 1100px) {
+  .container-flight-search {
+    .content {
+      .row2 {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1030px) {
+  .container-flight-search {
+    .content {
+      .row2 {
+        .row2-1 {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr); 
+          grid-template-rows: auto auto auto;
+
+          div.input-r2:nth-child(5) {
+            grid-column: 1 / -1;
+            justify-self: center;
+          }
+
+          .input-r2 {
+            border-bottom: 1px solid #d0d5dd;
+          }
+          
+          .no-bor {
+            border-right: none;
+          }
+
+          .passengers {
+            border: none;
+          }
+
+        }
+      }
+    }
+
+    .dropdown {
+      top: 63px;
+      left: -7rem;
+    }
+
+    .passenger-dropdown {
+      left: -2rem;
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container-flight-search {
+    .content {
+      .row2 {
+        display: flex;
+        flex-direction: column;
+
+        .row2-1 {
+          display: flex;
+          flex-direction: column;
+
+          .input-r2 {
+            border-right: none;
+            border-bottom: 1px solid #d0d5dd;
+
+            #swap-button {
+              right: 6rem;
+              top: 4rem;
+            }
+          }
+
+          .passengers {
+            border: none;
+          }
+        }
+      }
+    }
+
+    .dropdown {
+      top: 63px;
+      left: -7rem;
+    }
+
+    .passenger-dropdown {
+      left: -2rem;
+    }
+  }
 }
