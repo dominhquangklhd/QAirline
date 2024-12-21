@@ -138,13 +138,23 @@ class BookingController {
       }
 
       aircraft.total_revenue -= booking.total_amount;
-      await aircraft.save({ session });
+
       // Update booking status and flight seats
       booking.status = "cancelled";
       flight.available_seats += 1;
 
+      await aircraft.save({ session });
       // Save both changes within transaction
+      // Log trước khi save
+      console.log("Before save:", booking.status);
+
       await booking.save({ session });
+
+      // Log sau khi save
+      const updatedBooking = await Booking.findById(bookingId);
+      console.log("After save:", updatedBooking.status);
+
+      
       await flight.save({ session });
 
       // Commit transaction

@@ -88,6 +88,7 @@ function CancelFlight() {
     setError(null);
     try {
       const res = await axios.patch(`/bookings/${bookingDetails._id}/cancel`);
+      console.log(res);
       if (res.status === 200) {
         alert("Huỷ đặt chỗ thành công");
       }

@@ -90,8 +90,8 @@ const Navbar = ({ onSearchClick }) => {
 
         <div className="none flex">
           <li className="flex">
-            <AiOutlineGlobal className="icon" />
-            Ngôn ngữ
+            {/* <AiOutlineGlobal className="icon" />
+            Ngôn ngữ */}
           </li>
         </div>
 

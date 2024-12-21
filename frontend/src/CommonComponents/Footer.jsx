@@ -1,20 +1,23 @@
-import { AiFillYoutube, AiOutlineTwitter } from 'react-icons/ai'
-import { TiSocialFacebook } from 'react-icons/ti'
+import { AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
+import { TiSocialFacebook } from "react-icons/ti";
 
 const Footer = () => {
   return (
-    <div className='footer'>
-
+    <div className="footer">
       <div className="sectionContainer container grid">
         <div className="gridOne">
           <div className="logoDiv">
-            <img src="assets/Qlogo-nobg.png" alt="" className='logoFooter' />
+            <img
+              src="assets/QAirlineNewLogo.png"
+              alt=""
+              className="logoFooter"
+            />
           </div>
           <p>Tâm trí của bạn phải mạnh mẽ hơn cảm xúc, bay đi!</p>
           <div className="socialIcon flex">
-            <TiSocialFacebook className='icon' />
-            <AiOutlineTwitter className='icon' />
-            <AiFillYoutube className='icon' />
+            <TiSocialFacebook className="icon" />
+            <AiOutlineTwitter className="icon" />
+            <AiFillYoutube className="icon" />
           </div>
         </div>
 
@@ -84,9 +87,8 @@ const Footer = () => {
           </li>
         </div>
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

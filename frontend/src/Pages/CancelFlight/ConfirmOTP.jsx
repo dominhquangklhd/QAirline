@@ -7,16 +7,32 @@ import "react-toastify/dist/ReactToastify.css";
 function ConfirmOTP({ email, onConfirm, onClose, onResendOTP }) {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = () => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
     if (!otp.trim()) {
-      alert("Vui lòng nhập mã OTP");
+      toast.error("Vui lòng nhập mã OTP", { position: "top-right" });
       return;
     }
-    // thêm react toast huỷ thành công vào đây
-    toast.success("Huỷ đặt chỗ thành công", { position: "top-right" });
-    setTimeout(() => {
-      navigate("/");
-    }, 1000); // Chờ 2 giây trước khi chuyển trang
+
+    setLoading(true);
+    try {
+      // Gọi hàm onConfirm từ component cha và đợi kết quả
+      await onConfirm();
+
+      // Nếu thành công thì hiển thị toast và chuyển trang
+      toast.success("Huỷ đặt chỗ thành công", { position: "top-right" });
+      setTimeout(() => {
+        navigate("/");
+      }, 1000);
+    } catch (error) {
+      // Nếu có lỗi thì hiển thị thông báo lỗi
+      toast.error(error.response?.data?.message || "Có lỗi xảy ra", {
+        position: "top-right",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
